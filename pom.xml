@@ -114,16 +114,15 @@
     </dependencies>
     <modules>
         <module>vision-api</module>
-        <module>vision-web</module>
-    <module>vision-cus</module>
-    <module>vision-exp</module>
-    <module>vision-ppo</module>
-    <module>vision-pre</module>
-    <module>vision-rec</module>
-    <module>vision-res</module>
-    <module>vision-sys</module>
-    <module>vision-tra</module>
-    <module>vision-eureka</module>
+        <module>vision-cus</module>
+        <module>vision-exp</module>
+        <module>vision-ppo</module>
+        <module>vision-pre</module>
+        <module>vision-rec</module>
+        <module>vision-res</module>
+        <module>vision-sys</module>
+        <module>vision-tra</module>
+        <module>vision-eureka</module>
     </modules>
 
 
