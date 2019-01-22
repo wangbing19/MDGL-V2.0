@@ -1,0 +1,156 @@
+<div>
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">项目配置</h3>
+
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 350px;">
+						<input type="text" name="table_search" id="searchNameId"
+							class="form-control pull-right" placeholder="项目名">
+					
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default btn-search">
+                                <i class="fa fa-search"></i>
+							</button>
+							
+							<button type="button" class="btn btn-default btn-delete" onclick="deleteObject()">删除</button>
+							<button type="button" class="btn btn-default btn-add" onclick="enterUpdateOrInsert()">添加</button>
+							<button type="button" class="btn btn-default btn-update" onclick="enterUpdateOrInsert()">修改</button>
+						
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+				<form>
+				  <table class="table table-hover">
+					<thead>
+						<tr>
+							<th>选择</th>
+							<th>服务名称</th>
+							<th>选择状态</th>
+							<th>是否生效</th>
+							<th>创建时间</th>
+							<th>修改时间</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyId">
+					</tbody>
+				  </table>
+				</form>
+			</div>
+		</div>
+</div>
+		<script>
+			$(function(){
+				doLoadHtmlData();
+				$(".input-group-btn")
+				.on("click",".btn-add",enterUpdateOrInsert)
+				.on("click",".btn-update",enterUpdateOrInsert)
+			})
+			
+			
+		   function enterUpdateOrInsert(){
+				//alert("000000");
+				var title;
+				var url = "resSymptomType/doResSymptomTypeEdit.do";
+				if($(this).hasClass("btn-add")){
+					
+					title="项目新增";
+					$("#mainContentId").removeData("resData");
+					$("#mainContentId").load(url,function(){
+						 //设置模态框的标题
+						 $("#myModalLabel").html(title);
+						 //页面加载完成显示模态框
+					     $("#myModal").modal("show");
+					 })
+				}else if($(this).hasClass("btn-update")){
+					
+					title="项目修改";
+					var resDataId = doGetCheckedIds();
+					console.log(resDataId);
+					if(resDataId.length==0){
+						alert("请先选择");
+						return;
+					}
+					$("#mainContentId").data("resDataId",resDataId[0]);
+					$("#mainContentId").load(url,function(){
+						 //设置模态框的标题
+						 $("#myModalLabel").html(title);
+						 //页面加载完成显示模态框
+					     $("#myModal").modal("show");
+					 })
+				}
+				//在模态框的指定位置异步加载编辑页面
+				
+			}
+
+		   function doLoadHtmlData(){
+				$.post("resSymptomType/dofindObjects.do",function(result){
+					if(result.state==1){
+						doSetTableBodyRows(result.data);
+					}
+				})
+			}
+			 //呈现当前页记录
+		   function doSetTableBodyRows(records){
+			   //1.获取Tbody对象并清空
+			   var tBody=$("#tbodyId");
+			   tBody.empty();
+			   //2.迭代数据并显示在tbody中
+			   for(var i in records){
+				  //2.1 构建tr对象
+				  var tr=$("<tr></tr>");
+				  tr.data("rowData",records[i]);
+				  //2.2 构建多个td对象
+				  var tds=doCreateTds(records[i]);
+				  //2.3 将td追加到tr中
+				  tr.append(tds);
+				  //2.4 将tr追加到tbody中
+				  tBody.append(tr);
+			   }
+		   }
+		   function doCreateTds(row){
+			   var tds=
+				"<td><input type='checkbox' class='cBox' name='cItem' value='"+row.id+"'></td>"+
+				"<td>"+row.service_name+"</td>"+
+				"<td>"+row.choose_type+"</td>"+
+				"<td>"+row.service_state+"</td>"+
+				"<td>"+new Date(row.gmt_create).toLocaleString()+"</td>"+
+				"<td>"+new Date(row.gmt_modified).toLocaleString()+"</td>";
+			   return tds;
+		   }
+		   
+		   function deleteObject(){
+			   var array = doGetCheckedIds();
+			   if(!array){
+				   alert("请先选择");
+				   return;
+			   }
+			  // console.log(array);
+			  var url = "resSymptomType/doDeleteObject.do";
+			  var params = {"id":array[0]};
+			  $.post(url,params,function(result){
+				  if(result.state==1){
+					  alert("删除成功");
+					  doLoadHtmlData();
+				  }
+			  })		   
+		   }
+		   function doGetCheckedIds(){
+			   //1.定义数组用于存储选中的checkbox的值
+			   var array=[];
+			   //2.迭代所有tbody中checkbox对象并获取选中的值
+			   $("#tbodyId input[type=checkbox]")
+			   .each(function(){
+				   if($(this).prop("checked")){
+					  array.push($(this).val());
+				   }
+			   });
+			   //3.返回选中的值.
+			   return array;
+		   }
+
+		</script>

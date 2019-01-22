@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vision-parent</artifactId>
+        <groupId>com.vs</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vision-web</artifactId>
+
+    <dependencies>
+        <!-- &lt;!&ndash; -springboot 整合Web组件 整合SpringMVC 就会把传统方式的SpringMVC依赖的jar全部给下载来 &ndash;&gt;
+         &lt;!&ndash; 引入spring-boot-starter-web 帮你整合好所有相关的依赖jar包 原理 maven依赖传递 &ndash;&gt;
+
+         &lt;!&ndash; 原理： spring-boot-starter-parent< 中，整合号相关 jar依赖信息 &ndash;&gt;-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+    </dependencies>
+
+
+</project>

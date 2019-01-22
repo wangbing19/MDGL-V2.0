@@ -1,0 +1,248 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">		
+				<span class="box-title">[症状处方]</span>
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 50px;">
+											
+						<div class="input-group-btn">
+							<a href="#" class="myButton_delete btn btn-success btn-delete">删除</a>	
+							<a href="#" class="myButton_insert btn btn-default btn-add">添加</a>						
+							<a href="#" class="myButton_update btn btn-default btn-update">修改</a>						
+											
+						</div>						
+					</div>
+				</div>
+			</div>
+			
+			<div class="box-body table-responsive no-padding">		
+				<table id="menuTable" class="table table-hover">
+					<thead>
+						<tr>
+							<th data-field="selectItem" data-checkbox="true"></th>
+						</tr>
+					</thead>
+
+				</table>
+				
+				<div id="display">
+				<label for="desc">诊断处方</label>
+				
+				<div>
+						<textarea id="descById" class="form-control" name="desc" cols="50" rows="5" ></textarea>
+				</div>
+			</div>
+					
+			</div>
+		</div>
+	
+	</div>
+</div>
+
+<script type="text/javascript" src="bower_components/treegrid/jquery.treegrid.extension.js"></script>
+<script type="text/javascript" src="bower_components/treegrid/jquery.treegrid.min.js"></script>
+<script type="text/javascript" src="bower_components/treegrid/tree.table.js"></script>
+<script>
+
+</script>
+<script type="text/javascript">
+/**初始化表格的列*/
+var columns = [
+{
+	field : 'selectItem',
+	radio : true
+	
+},
+{
+	title : '症状ID',
+	field : 'id',
+	align : 'center',
+	valign : 'middle',
+	sortable : true,
+	width : '80px'
+},
+{
+	title : '症状名称',
+	field : 'symptom_name',
+	align : 'center',
+	valign : 'middle',
+	sortable : true,
+	width : '150px'
+},
+{
+	title : '上级症状',
+	field : 'parentName',
+	align : 'center',
+	valign : 'middle',	
+	width : '150px'
+},
+{
+	title : '创建时间',
+	field : 'gmt_create',
+	align : 'center',
+	valign : 'middle',
+	sortable : true,
+	width : '190px',
+	formatter : function(item, index) {
+		var gmt_create =  new Date(item.gmt_create).toLocaleString();
+		if(gmt_create=="Invalid Date") return " ";
+		else return gmt_create;
+		//console.log(riqi);
+		
+	}
+},
+{
+	title : '修改时间',
+	field : 'gmt_modified',
+	align : 'center',
+	valign : 'middle',	
+	sortable : true,
+	width : '190px',
+	formatter : function(item, index) {
+		var gmt_modified =  new Date(item.gmt_modified).toLocaleString();
+		//console.log(gmt_modified);	
+		if(gmt_modified=="Invalid Date") return "";
+		else return gmt_modified;
+		
+	}
+},
+{
+	title : '诊断处方',
+	field : 'diagnosis_desc',
+	align : 'center',
+	valign : 'middle',
+	sortable : false,
+	formatter : function(item, index) {
+		if (item.dis_type == 0) {
+			return '<span></span>';
+		}
+		if (item.dis_type == 1) {
+			//return '<span onclick="loadDesc()" class="chufang load_cf_class">诊断处方</span>';	
+			return '<span tyle="background-color:red" class="chufang load_cf_class s">诊断处方</span>';	
+		}
+	}
+}];
+
+
+$(function(){	
+	doGetObjects();
+	//获取id名为input-group-btn的div对象，
+	$(".input-group-btn")
+	.on("click",".btn-delete",doDeleteObject)//为删除按钮添加点击事件
+	.on("click",".btn-add",doLoadEditUI)
+	.on("click",".btn-update",doLoadEditUI)
+	
+	$(".treegrid-tbody").on("click",".chufang",loadDesc);
+	
+})
+
+function loadDesc(){
+	var id = doGetCheckId();
+	var params={"diagnosisId":id};
+	var url = "diagnosis/doFindDescObject.do";
+	$.post(url,params,function(resultDesc){
+		if(resultDesc.state==1){
+			var diagnosisDesc1 = resultDesc.data.diagnosisDesc;
+			if(diagnosisDesc1) $("#descById").val(resultDesc.data.diagnosisDesc);
+			else {
+				$("#descById").val("还没有处方");
+				//var chuFang = document.getElementsByClassName("load_cf_class");
+				//console.log(chuFang);
+			}	
+		}
+	})
+	
+}
+function doGetObjects(){
+	//创建table对象
+	var table = new TreeTable(
+		"menuTable",	//表的ID
+		"diagnosis/doFindObjects.do", //url
+		columns //表格的列对象
+	);  
+	table.setExpandColumn(2); //控制哪一列展开数据显示，不写默认是第一列
+	table.init();//	//初始化table对象(底层发ajax异步请求访问服务端)
+	
+	
+	
+}
+
+/***************************症状数据删除*****************************/
+function doDeleteObject(){
+	//debugger;
+	/*1、获取用户选中要删除的数据的id*/
+	var id = doGetCheckId();
+	if(!id){
+		alert("请先选择");
+		return;
+	}
+	/*2、异步提交请求删除数据*/
+	var url = "diagnosis/doDeleteObject.do";
+	var params = {"id":id};
+	$.post(url,params,function(result){
+		if(result.state==1){
+			alert(result.message);
+			doGetObjects();
+		}else{
+			alert(result.message);
+		}
+	});	
+}
+/*获取用户号选择要删除的数据的id*/
+function doGetCheckId(){
+	//获取选中的行数据（返回值为object）
+	var selections = $("#menuTable").bootstrapTreeTable("getSelections");	
+	if(selections.length==1){
+		return selections[0].id;
+	}		
+}
+/***************************症状数据添加/修改*****************************/
+
+
+/*点击添加按钮后，为id为mainContentId的标签重新加载添加/修改数据的页面，并修改标题*/
+function doLoadEditUI(){
+	var title;
+	var obj = $(this);
+	if($(this).hasClass("btn-add")){
+		title="症状添加";
+		$("#mainContentId").data("insertDisControl",1);
+		$("#mainContentId").removeData("rowData");
+		$("#mainContentId").removeData("display");
+		
+	}else if($(this).hasClass("btn-update")){
+		title="症状修改";
+		$("#mainContentId").removeData("insertDisControl");
+		/*获取选中的记录数据*/
+		var rowData = doGetCheckedItem();
+		if(!rowData) {
+			alert("请先选择一个");
+			return;
+		}
+		var disType = rowData.dis_type;
+		$("#mainContentId").data("disType",disType);
+	//	console.log(disType);	
+		
+		$("#mainContentId").data("rowData",rowData);
+		//console.log(rowData);
+		
+		
+	}
+	var url = "diagnosis/doDiagnosisInsertOrUpdate.do";
+	$("#mainContentId").load(url,function(){
+		$(".box-title").html(title);
+	})	
+}
+
+/***************************获取选中的记录数据*****************************/
+function doGetCheckedItem(){
+	var tr=$("tbody input[type='radio']:checked").parents("tr");
+	return tr.data("rowData");
+}
+
+</script>
+
+
+
+
+

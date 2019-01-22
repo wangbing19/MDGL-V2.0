@@ -1,0 +1,122 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">添加用户</h3>
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal">
+		<div class="box-body">
+			<div class="form-group">
+				<label for="expertName" class="col-sm-2 control-label">专家姓名</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="expertName">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="expertTel" class="col-sm-2 control-label">专家电话</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="expertTel">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="appointmentTime" class="col-sm-2 control-label">预约时间</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="appointmentTime">
+				</div>
+			</div>
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer">
+			<button type="button" class="btn btn-default btn-cancel">返回</button>
+			<button type="button" class="btn btn-info pull-right btn-save">保存</button>
+		</div>
+		<!-- /.box-footer -->
+	</form>
+
+</div>
+<script type="text/javascript"
+	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="bower_components/layer/layer.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		//debugger
+		//页面加载完成以后加载角色信息并初始化页面
+		doInitFormData();//执行这个方法后将对应的添加和修改的内容呈现出来
+		//事件注册
+		$(".box-footer").on("click", ".btn-cancel", doCancel)//进入添加或修改页面的取消事件附加清除data缓存
+		.on("click", ".btn-save", doSaveOrUpdate);//进入添加或修改页面的确定事件并会调用取消事件清除data缓存
+
+	});
+
+
+
+	//进入添加或修改页面的取消事件,点击确定也会调用这个方法将data中的缓存清掉
+	function doCancel() {
+		$("#mainContentId").removeData("rowData");//清除#mainContentId上的"rowData"中的数据
+		$("#mainContentId").load("exp/doExpert.do");//返回专家列表页面
+	}
+
+	//进入添加或修改页面的确定事件并会调用取消事件清除data缓存
+	function doSaveOrUpdate() {
+		var rowData = $("#mainContentId").data("rowData");
+		//debugger
+		var params = doGetEditFormData();//获取修改页面里用户修改后的数据
+		if (rowData)
+			params.id = rowData.id;
+
+		//debugger
+		//2.发起异步请求
+		var insertUrl = "exp/doInsertExp.do";
+		var updateUrl = "exp/doUpdateExp.do";
+		var url = rowData ? updateUrl : insertUrl;
+		console.log(params);
+		$.post(url, params, function(result) {
+
+			if (result.state == 1) {
+				alert(result.message);
+				//执行成功后调用这个方法将data添加的缓存清掉
+				doCancel();
+			} else {
+				alert(result.message);
+			}
+		})
+	}
+
+	//获取修改页面里用户修改后的数据
+	function doGetEditFormData() {
+		//获取用户输入的数据
+		var params = {
+			//debugger
+			expertName : $("#expertName").val(),
+			expertTel : $("#expertTel").val(),
+			appointmentTime : $("#appointmentTime").val()
+		}
+		return params;
+	}
+
+	/*虽然这个方法在点击添加和修改的时候都会执行,
+	 *但是里面会分辨data里是否有值,有值的话就往后执行,没有的话就结束方法
+	 */
+	function doInitFormData() {
+		//debugger
+		var data = $("#mainContentId").data("rowData");//"rowData"的值在user_list中赋值
+		//如果是添加到下面的判断就结束,是修改就执行判断后的内容
+		if (!data)
+			return;
+		console.log("data=" + data);
+		//初始化用户信息 为修改页面的输入框将选中id的参数对应赋值进去
+		//debugger
+		//console.log("aa="+data.id)
+		$("#expertName").val(data.expertName);
+		$("#expertTel").val(data.expertTel);
+		$("#appointmentTime").val(data.appointmentTime);
+	}
+</script>
+
+
+
+
+
+

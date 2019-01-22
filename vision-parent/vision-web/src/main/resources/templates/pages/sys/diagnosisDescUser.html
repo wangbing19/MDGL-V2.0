@@ -1,0 +1,260 @@
+<div>
+	<div>
+		<span><a href="#" class="userID">用户 ID：</a></span>&nbsp;&nbsp; <input
+			type="text" name="userInformationId" id="userId" readonly="readonly">
+	</div>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<div>
+		<span><a href="#" class="userName">用户姓名：</a></span> <input type="text"
+			name="userInformationName" id="userName" readonly="readonly">
+	</div>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<div>
+		<span><a href="#" class="userPhone">用户电话：</a></span> <input
+			type="text" name="userInformationPhone" id="userPhone"
+			readonly="readonly">
+	</div>
+	<br> <br>
+	<div class="form-group">
+		<label for="parentUserDesc" class="col-sm-2 control-label"><a
+			href="#" class="diagnosisApolo">症状选择：</a></label> <br> <br>
+		<div class="col-sm-10">
+			<input type="text" class="form-control load-sys-menu"
+				onclick="doLoadZtreeNodes()" readonly="readonly" id="parentUserDesc"
+				placeholder="症状名称"> <a href="#" class="diagnosisDownload"
+				onclick="downloadDesc()">下载</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="#"
+				class="diagnosisDownload" onclick="deleteDesc()">删除症状</a>
+		</div>
+		<br> <br>
+	</div>
+	<br> <br>
+
+	<div class="form-group" id="display_control">
+		<label for="descId" class="col-sm-2 control-label"><a
+			href="#" class="diagnosisApolo">症状处方：</a></label> <br> <br>
+		<div class="col-sm-10">
+			<textarea id="descText" class="form-control" name="desc" cols="50"
+				rows="5" placeholder="症状处方..." readonly="readonly"></textarea>
+		</div>
+	</div>
+
+	<div>
+		<a href="#" class="diagnosisDownload" onclick="doCancel()">退出</a>
+	</div>
+
+	<div class="layui-layer layui-layer-page layui-layer-molv layer-anim"
+		id="menuLayer" type="page" times="2" showtime="0" contype="object"
+		style="z-index: 59891016; width: 300px; height: 450px; top: 100px; left: 500px; display: none">
+		<div class="layui-layer-title" style="cursor: move;">选择菜单</div>
+		<div class="layui-layer-content" style="height: 358px;">
+			<div style="padding: 10px;" class="layui-layer-wrap">
+				<ul id="menuTree" class="ztree"></ul>
+				<!-- 动态加载树 -->
+			</div>
+		</div>
+		<span class="layui-layer-setwin"> <a
+			class="layui-layer-ico layui-layer-close layui-layer-close1 btn-cancel"
+			onclick="doHideTree()"></a></span>
+		<div class="layui-layer-btn layui-layer-btn-">
+			<a class="layui-layer-btn0 btn-confirm" onclick="doSetSelectNode()">确定</a>
+			<a class="layui-layer-btn1 btn-cancel" onclick="doHideTree()">取消</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript"
+	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="bower_components/layer/layer.js">
+	
+</script>
+<script type="text/javascript">
+	$(function() {
+		initUserDescDate();//初始化页面属性 用户id，姓名，电话，症状，症状处方
+	})
+
+	function doLoadZtreeNodes() {
+		//	alert(123);
+		$("#menuLayer").css("display", "block");
+		var url = "diagnosis/doFindZtreeMenuNodes.do";
+		$.getJSON(url, function(result) {
+			if (result.state == 1) {
+				//使用init函数需要先引入ztree对应的js文件
+				//console.log(result.data);
+				zTree = $.fn.zTree.init($("#menuTree"), setting, result.data);
+
+			} else {
+				alert(result.message);
+			}
+		})
+	}
+	/***********************Ztree确定按钮事件******************************/
+	function doSetSelectNode() {
+		/*1、获取选中的节点对象*/
+		var nodes = zTree.getSelectedNodes();
+		if (nodes.length == 0) {
+			doHideTree();
+			return;
+		}
+		var node = nodes[0];
+		$("#parentUserDesc").data("parentId", node.id); //症状的id     
+		$("#parentUserDesc").val(node.name); //症状的名字				
+		doHideTree();
+	}
+	/***********************Ztree取消按钮事件******************************/
+	function doHideTree() {
+		$("#menuLayer").css("display", "none");
+	}
+	function doCancel() {
+		$("#mainContentId").load("customer/doCustomerListUI.do");
+	}
+
+	function downloadDesc() {
+		var userDesc = $("#mainContentId").data("rowUserData");//获取用户的信息
+		var params0 = {
+			"userId" : userDesc.userId
+		}; //封装用户的id
+		//alert("用户的id:"+userDesc.userId)
+		$.post("diagnosisDescuser/doFindUserIdIsExiste.do", params0, function(
+				result) { //异步加载查询数据库中是否存在该用户
+			if (result.state == 1) {
+				var UserisExiste = result.data;//判断用户是否存在
+				//alert("是否存在："+UserisExiste);				
+				var params = {
+					"diagnosisId" : $("#parentUserDesc").data("parentId"), //封装症状id
+					"userId" : userDesc.userId
+				}; //封装用户id
+
+				if (!UserisExiste) { //用户存在，则修改					
+					$.post("diagnosisDescuser/doInsertDescObject.do", params,
+							function() {
+								//插入成功
+							})
+
+				} else { //用户不存在，则插入
+					$.post("diagnosisDescuser/doUpdateDescObjectByUserId.do",
+							params, function(re) {
+								//修改成功
+							})
+				}
+			}
+		})
+		var params = {
+			"diagnosisId" : $("#parentUserDesc").data("parentId")
+		};
+		$.post("diagnosis/doFindDescObject.do", params, function(result) { //通过症状id查询症状描述
+			if (result.state == 1) {
+				$("#descText").val(result.data.diagnosisDesc);
+			}
+		})
+
+	}
+
+	function deleteDesc() {
+
+		var params = {
+			"userId" : $("#mainContentId").data("rowUserData").userId
+		};
+		$.post("diagnosisDescuser/doDeleteDescObjectByUserId.do", params,
+				function(result) {
+					if (result.state == 1) {
+						alert("删除成功");
+						//$("#mainContentId").data("isExiste",0);  
+						$("#parentUserDesc").data("parentId", null);
+						$("#parentUserDesc").val("没有症状");
+						$("#descText").val("没有处方，请添加症状或下载");
+					}
+				})
+	}
+	function initUserDescDate() {
+		var userDesc = $("#mainContentId").data("rowUserData");
+		//alert(userDesc);
+		$("#userId").val(userDesc.userId);
+		$("#userName").val(userDesc.userName);
+		$("#userPhone").val(userDesc.userPhone);
+
+		var params = {
+			"userId" : userDesc.userId
+		};
+		//根据用户查询表里面是否存在该用户
+		$
+				.post(
+						"diagnosisDescuser/doFindUserIdIsExiste.do",
+						params,
+						function(result) {
+							if (result.state == 1) {
+								if (result.data == null) { //数据库中不存在
+									$("#mainContentId").data("isExiste", 0);
+									$("#parentUserDesc").val("没有症状");
+									$("#descText").val("没有处方，请添加症状或下载");
+								} else { //数据库中存在该用户
+									$("#mainContentId").data("isExiste", 1);
+									$
+											.post(
+													"diagnosisDescuser/doFindIsHaveDescObjectByUserId.do",
+													params,
+													function(result1) { //查看数据的用户是否有绑定症状
+														if (result1.state == 1) {
+															if (result1.data == null) { //没有绑定症状  返回的是症状id
+																$(
+																		"#parentUserDesc")
+																		.val(
+																				"没有症状");
+																$("#descText")
+																		.val(
+																				"没有处方，请添加症状或下载");
+															} else { //绑定了症状
+																var params1 = {
+																	"id" : result1.data
+																};
+																var params2 = {
+																	"diagnosisId" : result1.data
+																};
+																$
+																		.post(
+																				"diagnosis/doFindObject.do",
+																				params1,
+																				function(
+																						result2) { //通过症状id查询症状名字
+																					if (result2.state == 1) {
+																						$(
+																								"#parentUserDesc")
+																								.val(
+																										result2.data.symptomName);
+																					}
+																				})
+																$
+																		.post(
+																				"diagnosis/doFindDescObject.do",
+																				params2,
+																				function(
+																						result3) { //通过症状id查询症状描述
+																					if (result3.state == 1) {
+																						$(
+																								"#descText")
+																								.val(
+																										result3.data.diagnosisDesc);
+																					}
+																				})
+															}
+														}
+													})
+								}
+							}
+						})
+	}
+</script>
+<script>
+	var zTree; //zTree是第三方扩展的一个Jquery插件
+	//初始化zTree时会用到
+	var setting = {
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id", //节点数据中保存唯一标识的属性名称
+				pIdKey : "parentId", //节点数据中保存其父节点唯一标识的属性名称
+				rootPId : null
+			//根节点id
+			}
+		//json 格式javascript对象
+		}
+	}//json 格式的javascript对象
+</script>

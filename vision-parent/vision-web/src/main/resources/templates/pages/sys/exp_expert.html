@@ -1,0 +1,416 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">专家列表</h3>
+
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 350px;">
+						<input type="text" name="table_search" id="searchNameId"
+							class="form-control pull-right" placeholder="专家姓名">
+
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default btn-search">
+								<i class="fa fa-search"></i>
+							</button>
+							<button type="button" class="btn btn-default btn-add">添加</button>
+							<button type="button" class="btn btn-default btn-update">修改</button>
+							<button type="button" class="btn btn-default btn-delete">删除</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="checkAll">全选</th> 
+							<th>专家姓名</th>
+							<th>专家电话</th>
+							<th>专家信息</th>
+							<th>预约时间</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyId">
+
+					</tbody>
+				</table>
+			</div>
+			<div id="pageId" class="box-footer clearfix"></div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</div>
+<script type="text/javascript">
+	//作业，补充JS,发异步请求获取数据，呈现在页面上
+	$(function(){
+	 //分页页面加载完成，异步加载日志列表数据//pageId对应上方的id名字
+	     $("#pageId").load("doPageUI.do",function(){
+    	 doGetObjects();
+     });
+	 
+     //查询按钮事件注册
+     //在input-group-btn对象的子元素btn-search
+     //上注册一个click事件
+     $(".input-group-btn")
+     .on("click",".btn-search",doQueryObjects)//对应搜索图标按钮
+     .on("click",".btn-delete",doDeleteObjects)//对应删除按钮
+     .on("click",".btn-add,.btn-update",doLoadEditUI);//对应添加和修改按钮
+     
+     
+     $("tbody").on("click",".btn-expertReply",doexpertReply);//点击专家回复
+     
+     //设置 thead 中checkbox对象的状态监听
+     //$("#checkAll").change(doChangeTBodyCheckBoxState);
+     $("thead").on("change","#checkAll",doChangeTHeadCheckBoxState);//设置全选框是否选中
+   
+     //设置 tbody 中checkbox对象的状态监听
+     $("#tbodyId").on("change",'.cBox',doChangeTBodyCheckBoxState);
+     //$(".cBox").change(doChangeTHeadCheckBoxState);不可以
+   });
+	 /* ================================================================================== */
+	
+	
+	
+
+	
+	
+   //修改thead中checkbox对象的状态
+   function doChangeTHeadCheckBoxState(){
+	   //debugger
+	   //1.获取thead中checkbox对象的状态
+	   var state=$(this).prop("checked");
+	   //2.设置tbody中checkbox对象的状态
+	   //方法1
+	   //$("#tbodyId input[type='checkbox']")
+	   //.each(function(){
+	   $(this).prop("checked",state);
+	   //})
+	   //debugger
+	   //方法2
+	   $("#tbodyId input[type='checkbox']")
+	   .prop("checked",state);
+   }
+   
+   
+   //修改tbody中checkbox对象的状态
+   function doChangeTBodyCheckBoxState(){
+	   //1.获取tbody中所有checkbox对象状态&&操作的结果
+	      var flag=true;
+	     
+	      //debugger
+	      $("#tbodyId input[type='checkbox']")
+	      .each(function(){
+	    	  
+	    	  flag=flag&&$(this).prop("checked");
+	      });
+	      //2.设置thead中checkbox的状态值
+	      $("#checkAll").prop("checked",flag);
+   }
+	/* ========================================================================================== */
+   
+   
+   
+   
+	
+	
+	
+	
+	 //添加和修改事件
+	/* ========================================================================================== */
+   
+   function doLoadEditUI(){
+	   //1.判定点击的对象
+	   var title;
+	   if($(this).hasClass("btn-add")){
+		   //debugger
+		   $("#mainContentId").removeData("rowData")
+		   title="添加";
+		   doLoadPage(title);//方法在下面
+	   }else if($(this).hasClass("btn-update")){
+		   title="修改";
+		   var id=doGetCheckedId();//获取选中行的id
+		   //console.log("id="+id)
+		   if(!id){
+			  alert("请先选择");
+			  return;
+		   }
+		   //基于id进行查询并加载编辑页面
+		   doFindObjectById(id,title);
+	   }
+   }
+    
+   function doFindObjectById(id,title){
+	   //1.params
+	   var params={"id":id};
+	   //2.url
+	   var url="exp/doSelectExp.do";//通过id查询对应的数据
+	   //3.ajax request
+	   $.getJSON(url,params,function(result){//JsonResult
+		   if(result.state==1){
+			  console.log("aaa="+result.date);
+			  $("#mainContentId").data("rowData",result.data); //#mainContentId在starter页面
+			  //debugger
+	/********* 进入user_edit页面***************/		  
+	          doLoadPage(title);//方法在下面
+		   }else{
+			  alert(result.message);
+		   }
+	   });
+   }
+   
+   function doGetCheckedId(){
+	 return $("tbody input[name='radioId']:checked").val();
+	 //debugger
+   }
+   
+   function doLoadPage(title){
+	   var url="exp/doExpertIU.do"
+		   $.post(url,function(result){
+				if(result.state==0){
+					console.log(result);
+					alert(result.message);
+				}else{
+					$("#mainContentId").load(url,function(){
+						 $(".box-title").html(title); 
+					  });
+				}
+			})
+   }	
+   /* ========================================================================================== */
+	
+	
+	
+   
+   
+   
+   
+   
+   //执行删除操作
+    /* ===========================================================================================*/
+	
+	function doDeleteObjects(){
+		//console.log("confirm="+confirm("123"));
+		
+		//1.定义请求的URL
+		var url="exp/doDeleteExp.do";
+		//2.定义请求的参数
+		var ids=doGetCheckedIds();//array数组
+		if(ids.length==0){
+			alert("请选择");
+			return;
+		}
+		var params={"ids":ids.toString()};
+		 if(!confirm("你确认删除吗?"))return;
+		//3.执行异步删除操作
+		$.post(url,params,function(result){
+		//console.log("删除="+result.toString)
+		  if(result.state==1){
+			  alert(result.message);
+			  doChangePageCode();
+			  doGetObjects();
+		  }else{
+			  alert(result.message);
+		  }
+		  
+		})
+	}
+	
+	//删除事件中的方法
+	function doGetCheckedIds(){
+		 //<input type='checkbox' value='1' checked=true>
+		   //1.定义一数组
+		   var array=[];//new Array();
+		   //2.获取选中的checkbox的值并将其存储到数组
+		   //2.1获取tbody中的所有类型为checkbox的input元素
+		   $("#tbodyId input[type='checkbox']")
+		   //2.2迭代所有checkbox对象
+		   .each(function(){
+			   //2.3判定checked属性的值，假如为true表示选中
+			   if($(this).prop("checked")){
+				   //向数组放数据(input元素value属性的值)
+				   array.push($(this).val());
+			   }
+		   })
+		   //3.返回数组
+		   return array;
+	}
+	
+	
+	//删除后修改页码值(比如删了最后一页的最后一条需要将当前页码值减1)
+	function doChangePageCode(){
+	    //debugger
+		var pageCurrent=$("#pageId").data("pageCurrent");
+		var pageCount=$("#pageId").data("pageCount");
+		var state=$("#checkAll").prop("checked");
+		//console.log("state="+state);
+		//alert(state);
+		if(state&&pageCurrent==pageCount&&pageCurrent>1){
+			pageCurrent--;
+			$("#pageId").data("pageCurrent",pageCurrent);
+		}
+	}
+	/* ===================================================================================== */
+	
+	
+	
+	
+	
+	 //对应搜索按钮执行查询操作
+	/* ===================================================================================== */
+   function doQueryObjects(){
+	   //重新初始化页码值
+	   $("#pageId").data("pageCurrent",1);
+	   //执行查询操作
+	   doGetObjects();
+   }
+   
+   /* ===================================================================================== */
+	
+	
+   
+   
+   
+   
+   //点击专家信息按钮异步刷新页面
+   /* ===================================================================================== */
+   function doexpertReply(){
+	   //获取当前行的id
+	   //$("#mainContentId").removeData("rowData")
+	   var rowData=$(this).parents("tr").data("rowData");
+	   var id=rowData.id;//点击专家信息按钮可以获取id(已测试)
+	   $("#mainContentId").data("rowData",rowData);
+	   //debugger
+	   
+	   //获取当前行id在专家信息表中的数据
+	   doexpert(id)
+	   
+	   //进入专家信息页面的地址
+	   var url="exp/doExpertMessage.do";
+	   //点击后异步刷新进入专家信息页面
+	   $("#mainContentId").load(url,function(){
+		   
+	   })
+   }
+   
+   //获取当前行id在专家信息表中的数据
+   function doexpert(id){
+	   var params={id:id}
+	   //debugger
+	   var url="exp/doSelectExp.do";
+	   $.getJSON(url,params,function(result){
+		   //debugger
+		   if(result.state==1){
+			   //alert(result.message);
+			   console.log("message="+result.data);
+			   $("#mainContentId").data("message",result.data); //#mainContentId在starter页面
+			   console.log("message="+result.data);
+		       //debugger
+		   }else{
+			   //$("#mainContentId").data("expert",result.data);
+			   //alert(result.message);
+		   }
+	   });
+   }
+   /* ===================================================================================== */
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    //异步请求远程诊断数据并进行局部更新操作
+   /* ===================================================================================== */
+   function doGetObjects(){
+	  //debugger
+	  //1.请求url?
+	  var url="exp/doLimitExp.do";
+	  //2.请求参数
+	  var pageCurrent=$("#pageId").data("pageCurrent");//取出当前页的值
+	  console.log(pageCurrent);
+	  console.log(!pageCurrent);
+	  if(!pageCurrent)pageCurrent=1;
+	  var params={"pageCurrent":pageCurrent};//json对象
+	  console.log(params);
+	  //获取用户在搜索框输入的用户名
+	  var expertName=$("#searchNameId").val();//获取搜索框里id为searchNameId里面的值
+	  console.log("expertName="+expertName);
+	  if(expertName)params.expertName=expertName;
+	  
+	  //3.发起异步请求(getJSON是jquery中ajax函数)
+	  //3.1get请求
+	  //3.2JSON表示此方法会将json串转换json格式对象
+	  $.getJSON(url,params,function(result){
+		  //result里面的是从控制层返回到浏览器的JsonResult对象,里面有状态信息和页面查询信息
+		  //debugger
+		  
+		  console.log("result=",result);
+	      //处理结果
+	      doHandleResponseResult(result);
+	  });
+   }
+   //处理服务端响应的数据
+   function doHandleResponseResult(result){//JsonResult
+	   console.log(result);
+	   if(result.state==1){//正常数据
+		  //设置table对象中tbody部分的内容
+		  doSetTableBodyRows(result.data.records); 
+	      //设置pageId位置对应的分页数据
+	      doSetPagination(result.data);//pageObject
+	   }else{//异常数据
+		  alert(result.message) 
+	   }
+   }
+   //设置table对象中tbody部分的内容
+   function doSetTableBodyRows(records){
+	   console.log("records="+records);
+	   //1.获取tbody对象并清空数据
+	   var tBody=$("#tbodyId");
+	   console.log("tBody="+tBody)
+	   tBody.empty();//清空数据
+	   //2.将记录records追加到tbody中
+	   //for(var i=0;i<records.length;i++){}
+	   //2.1迭代记录
+	   for(var i in records){
+		  //debugger
+		  //2.2 构建tr对象(行)
+		  var tr=$("<tr></tr>");
+		  tr.data("rowData",records[i]);
+		  //2.3 构建多个td对象(列)
+		 // doxuhao()
+		  var tds=doCreateTds(records[i]);
+		  //2.4 将td追加到tr中
+		  tr.append(tds);
+		  //2.5 将tr追加到tbody中
+		  tBody.append(tr);
+	   }
+	   
+   }
+   
+   
+   
+   //创建多个tds对象
+   function doCreateTds(row){
+	   var tds=
+        "<td><input type='checkbox' name='radioId' class='cBox' value='"+row.id+"'></td>"+
+		"<td>"+row.expertName+"</td>"+
+		"<td>"+row.expertTel+"</td>"+
+		"<td><button type='button' class='btn btn-default btn-expertReply'>"+"专家信息"+"</button></td>"+
+		"<td>"+row.appointmentTime+"</td>";
+	   return tds;
+   }
+	
+</script>
+
+
+
+

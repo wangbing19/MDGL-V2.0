@@ -1,0 +1,247 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">添加菜单</h3>
+	</div>
+	<form class="form-horizontal">
+		<div class="box-body">
+		
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">症状名称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="nameId"
+						placeholder="症状名称">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="parentDesc" class="col-sm-2 control-label">上级症状</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control load-sys-menu"
+						readonly="readonly" id="parentDesc" placeholder="上级症状名称">
+				</div>
+			</div>
+			
+
+			<div class="form-group" id="display_control">
+				<label for="descId" class="col-sm-2 control-label" >症状描述</label>
+				
+				<div class="col-sm-10">
+					<!-- <input type="text" class="form-control" id="descId" cols="50" rows="5"
+						placeholder="填写相关描述...">  -->
+						<textarea id="descId" class="form-control" name="desc" cols="50" rows="5" placeholder="症状描述..."></textarea>
+				</div>
+			</div>
+		</div>
+		
+		<div class="box-footer">
+			<button type="button" class="btn btn-default btn-cancel">返回</button>
+			<button type="button" class="btn btn-info pull-right btn-save">保存</button>
+		</div>
+
+	</form>
+
+
+	<!-- zTree 对应的div -->
+	<div class="layui-layer layui-layer-page layui-layer-molv layer-anim"
+		id="menuLayer" type="page" times="2" showtime="0" contype="object"
+		style="z-index: 59891016; width: 300px; height: 450px; top: 100px; left: 500px; display: none">
+		<div class="layui-layer-title" style="cursor: move;">选择菜单</div>
+		<div class="layui-layer-content" style="height: 358px;">
+			<div style="padding: 10px;" class="layui-layer-wrap">
+				<ul id="menuTree" class="ztree"></ul>
+				<!-- 动态加载树 -->
+			</div>
+		</div>
+		<span class="layui-layer-setwin"> <a
+			class="layui-layer-ico layui-layer-close layui-layer-close1 btn-cancel"></a></span>
+		<div class="layui-layer-btn layui-layer-btn-">
+			<a class="layui-layer-btn0 btn-confirm">确定</a> <a
+				class="layui-layer-btn1 btn-cancel">取消</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript"
+	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="bower_components/layer/layer.js">
+	
+</script>
+<script type="text/javascript">
+	var zTree; //zTree是第三方扩展的一个Jquery插件
+	//初始化zTree时会用到
+	var setting = {
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id", //节点数据中保存唯一标识的属性名称
+				pIdKey : "parentId", //节点数据中保存其父节点唯一标识的属性名称
+				rootPId : null
+			//根节点id
+			}
+		//json 格式javascript对象
+		}
+	}//json 格式的javascript对象
+
+	$(document).ready(
+			function() {
+				//获取类名为form-group的div标签对象，给类名为load-sys-menu添加点击事件
+				$(".form-group")
+						.on("click", ".load-sys-menu", doLoadZtreeNodes)
+				$("#menuLayer").on("click", ".btn-confirm", doSetSelectNode) //Ztree确定按钮
+				.on("click", ".btn-cancel", doHideTree) //Ztree取消按钮
+
+				$(".box-footer").on("click", ".btn-cancel", doCancel).on(
+						"click", ".btn-save", doSaveOrUpdate)
+				
+				 //================================控制症状描述的显示与隐藏(修改时)==============================//
+				 $("#display_control").css("display", "none");					 
+				 var dis_control = $("#mainContentId").data("disType");//获取实现放入域中的数据：是否显示诊断描述
+				 if(dis_control){
+					$("#display_control").css("display", "block");  //如果不需要显示，则隐藏诊断描述标签
+				 }
+				 
+				 if($("#mainContentId").data("insertDisControl")) $("#display_control").css("display", "none");	
+				 
+				 var data=$("#mainContentId").data("rowData"); //从div中获取绑定的对象
+				 if(data) doInitEditFormData(data);//通过查找到的数据初始化表单
+
+			})
+		
+	
+		
+	/***********************加载Ztree资源******************************/
+	function doLoadZtreeNodes() {
+		$("#menuLayer").css("display", "block");
+		var url = "diagnosis/doFindZtreeMenuNodes.do";
+		$.getJSON(url, function(result) {
+			if (result.state == 1) {
+				//使用init函数需要先引入ztree对应的js文件
+				//console.log(result.data);
+				zTree = $.fn.zTree.init($("#menuTree"), setting, result.data);
+
+			} else {
+				alert(result.message);
+			}
+		})
+	}	
+	/***********************Ztree确定按钮事件******************************/
+	function doSetSelectNode() {
+		/*1、获取选中的节点对象*/
+		var nodes = zTree.getSelectedNodes();
+		if (nodes.length == 0)
+			return;
+		var node = nodes[0];
+	    $("#parentDesc").data("parentId",node.id); 
+		$("#parentDesc").val(node.name);
+		doHideTree();
+
+	}
+	/***********************Ztree取消按钮事件******************************/
+	function doHideTree() {		
+		$("#menuLayer").css("display", "none");
+	}
+
+	/***********************Cancel按钮事件******************************/
+	function doCancel() {
+		$("#mainContentId").load("diagnosis/doDiagnosis.do");
+	}
+	
+	/***********************Save按钮事件******************************/
+	function doSaveOrUpdate() {
+		
+		//debugger;
+		//获取单选框选中的数据
+		var rowData=$("#mainContentId").data("rowData"); 
+		//console.log(rowData)
+		/*1、获取表单数据*/
+		var params = doGetEditFormData();
+		console.log(params);
+		var insertUrl = "diagnosis/doInsertObject.do";
+		var updateUrl = "diagnosis/doUpdateObject.do";
+		var url=rowData?updateUrl:insertUrl;
+		if(rowData) {
+			params.id=rowData.id;	
+			if(!params.id){
+				alert("请先选择")
+				return;
+			}
+		}
+			
+		$.post(url, params, function(result) {
+			if (result.state == 1) {
+				alert(result.message);
+				//doCancel();
+			} else {
+				alert(result.message);
+			}
+		})	
+		
+		var p_id = $("#parentDesc").data("parentId"); 
+		if(!p_id){
+			if(!rowData) parentId=null;
+			else p_id = rowData.parentId;
+		}
+		console.log("p_id:"+p_id)
+		var param1={"id":p_id};
+		var find_url = "diagnosis/doFindObject.do";
+		
+		 $.post(find_url,param1,function(result){
+			if(result.state==1){
+				var is_dis=result.data.disType;
+				if(is_dis==1){
+					var updateDis_url = "diagnosis/doUpdateDisType.do";
+					var param2={"disType":0,
+							    "id":p_id};
+					$.post(updateDis_url,param2,function(result){
+						if(result.state==1){
+						//	alert("修改好了");
+						}
+					})
+				}	
+			}
+		}) 
+		doCancel();
+		
+	}
+	/***********************获取表单数据******************************/
+	function doGetEditFormData() {
+		var pDesc = $("#parentDesc").data("parentId");   /*****解决的bug****/
+		var row=$("#mainContentId").data("rowData"); 
+		if(!pDesc){
+			if(!row) pDesc=null;
+			else pDesc = row.parentId;
+			
+		} 
+		var params = {
+			symptomName : $("#nameId").val(),		
+			parentId :  pDesc,				
+			diagnosisDesc:$("#descId").val(),			
+			disType:1
+		}
+		return params;
+	}
+	/***********************获取到的数据初始化表单******************************/
+	function doInitEditFormData(data){	
+		//console.log(data);
+		$("#nameId").val(data.symptom_name);
+		$("#parentDesc").val(data.parentName);	
+			
+		url="diagnosis/doFindDescObject.do";
+		var params={"diagnosisId":data.id}
+		$.post(url,params,function(result){  //异步刷新获取症状描述的信息
+			if(result.state==1){
+				var Desc = result.data;
+				console.log(Desc);
+				if(Desc) $("#descId").val(result.data.diagnosisDesc);
+			}
+		})		
+	}
+</script>
+
+
+
+
+
+
+
+

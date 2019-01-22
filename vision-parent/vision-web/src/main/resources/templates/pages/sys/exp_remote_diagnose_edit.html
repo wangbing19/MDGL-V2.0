@@ -1,0 +1,244 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">添加用户</h3>
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal">
+		<div class="box-body">
+			<div class="form-group">
+				<label for="deptSite" class="col-sm-2 control-label">门店地址</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="deptSite">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="deptName" class="col-sm-2 control-label">门店名称</label>
+
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="deptName">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="customerName" class="col-sm-2 control-label">客户名字</label>
+
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="customerName">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="customerTel" class="col-sm-2 control-label">客户电话</label>
+
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="customerTel">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="expertId" class="col-sm-2 control-label">选择专家</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control load-sys-dept"
+						readonly="readonly" id="expertId" placeholder="上级部门">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="timeNumber" class="col-sm-2 control-label">第几次远程诊断</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="timeNumber">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="sendName" class="col-sm-2 control-label">发送人姓名</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="sendName">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="sendTel" class="col-sm-2 control-label">发送人电话</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="sendTel">
+				</div>
+			</div>
+
+		</div>
+</div>
+<!-- /.box-body -->
+<div class="box-footer">
+	<button type="button" class="btn btn-default btn-cancel">返回</button>
+	<button type="button" class="btn btn-info pull-right btn-save">保存</button>
+</div>
+<!-- /.box-footer -->
+</form>
+<div class="layui-layer layui-layer-page layui-layer-molv layer-anim"
+	id="treeLayer" type="page" times="2" showtime="0" contype="object"
+	style="z-index: 59891016; width: 300px; height: 450px; top: 100px; left: 500px; display: none">
+	<div class="layui-layer-title" style="cursor: move;">专家姓名</div>
+	<div class="layui-layer-content" style="height: 358px;">
+		<div style="padding: 10px;" class="layui-layer-wrap">
+			<ul id="zTreeId" class="ztree"></ul>
+			<!-- 动态加载树 -->
+		</div>
+	</div>
+	<span class="layui-layer-setwin"> <a
+		class="layui-layer-ico layui-layer-close layui-layer-close1 btn-cancel"></a></span>
+	<div class="layui-layer-btn layui-layer-btn-">
+		<a class="layui-layer-btn0 btn-confirm">确定</a> <a
+			class="layui-layer-btn1 btn-cancel">取消</a>
+	</div>
+</div>
+</div>
+<script type="text/javascript"
+	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="bower_components/layer/layer.js"></script>
+<script type="text/javascript">
+ var zTree; 
+ //初始化zTree时会用到
+ var setting = {
+	data : {
+		simpleData : {
+			enable : true,
+			idKey : "id",  //节点数据中保存唯一标识的属性名称
+			pIdKey : "parentId",  //节点数据中保存其父节点唯一标识的属性名称
+			rootPId : null  //根节点id
+		}//json 格式javascript对象
+	}
+ }//json 格式的javascript对象
+ $(document).ready(function(){
+	 //debugger
+	 //页面加载完成以后加载角色信息并初始化页面
+	  doInitFormData();//执行这个方法后将对应的添加和修改的内容呈现出来
+	 //事件注册
+	 $(".box-footer")
+	 .on("click",".btn-cancel",doCancel)//进入添加或修改页面的取消事件附加清除data缓存
+	 .on("click",".btn-save",doSaveOrUpdate);//进入添加或修改页面的确定事件并会调用取消事件清除data缓存
+	 
+	  $("#treeLayer")
+	  .on("click",".btn-cancel",doHideTree)//点击上级部门弹出的树结构的取消和关闭事件
+	  .on("click",".btn-confirm",doConfirm);//点击上级部门弹出的树结构的确定事件
+	 
+	 $(".form-horizontal")
+	 .on("click",".load-sys-dept",doLoadZTreeNodes);//点击专家姓名的点击事件
+ });
+ 
+ //点击上级部门弹出的树结构的取消和关闭事件
+ function doHideTree(){
+	  $("#treeLayer").css("display","none");
+ }
+ 
+ //点击上级部门弹出的树结构的确定事件
+ function doConfirm(){
+	  //1.获取选中的记录(id,name);
+	  var selectedNodes=zTree.getSelectedNodes();
+	  var node=selectedNodes[0];
+	  //2.将id和name填写或绑定在具体对象上
+	  $("#expertId").val(node.name);
+	  console.log("node.id="+node.id)
+	  $("#expertId").data("expertId",node.id)
+	  //3.隐藏zTree对应的Div
+	  doHideTree();
+ }
+ //点击上级部门的点击事件
+ function doLoadZTreeNodes(){
+	  var url="exp/doFindZTreeNodes.do";
+	  $("#treeLayer").css("display","block");
+	  $.getJSON(url,function(result){
+		  if(result.state==1){
+			  console.log("result.data="+result.data)
+			  zTree = $.fn.zTree.init($("#zTreeId"),setting,result.data);
+		  }else{
+			  alert(result.message);
+		  }
+	  });
+ }
+ 
+ //进入添加或修改页面的取消事件,点击确定也会调用这个方法将data中的缓存清掉
+ function doCancel(){
+	$("#mainContentId").removeData("rowData");//清除#mainContentId上的"rowData"中的数据
+	$("#mainContentId").load("dia/doRemoteDiagnose.do");//返回远程诊断页面
+ }
+ 
+ //进入添加或修改页面的确定事件并会调用取消事件清除data缓存
+ function doSaveOrUpdate(){
+	 var rowData=$("#mainContentId").data("rowData");
+	 //debugger
+	 var params=doGetEditFormData();//获取修改页面里用户修改后的数据
+	 if(rowData)params.id=rowData.id;
+	 
+	 //debugger
+	 //2.发起异步请求
+	 var insertUrl="dia/doSaveObject.do";
+	 var updateUrl="dia/doUpdate.do";
+	 var url=rowData?updateUrl:insertUrl;
+	 console.log(params);
+	 $.post(url,params,function(result){
+		 
+		 if(result.state==1){
+			 alert(result.message);
+			//执行成功后调用这个方法将data添加的缓存清掉
+			 doCancel();
+		 }else{
+			alert(result.message);
+		 }
+	 })
+ }
+ 
+ //获取修改页面里用户修改后的数据
+ function doGetEditFormData(){
+	 //获取用户输入的数据
+	 var params={
+	    //debugger
+		deptSite:$("#deptSite").val(),
+		deptName:$("#deptName").val(),
+		customerName:$("#customerName").val(),
+		customerTel:$("#customerTel").val(),
+		expertId:$("#expertId").data("expertId"),
+		timeNumber:$("#timeNumber").val(),
+		sendName:$("#sendName").val(),
+		sendTel:$("#sendTel").val()
+	 }
+	 return params;
+ }
+ 
+
+ 
+/*虽然这个方法在点击添加和修改的时候都会执行,
+ *但是里面会分辨data里是否有值,有值的话就往后执行,没有的话就结束方法
+ */
+ function doInitFormData(){
+	 //debugger
+     var data=$("#mainContentId").data("rowData");//"rowData"的值在user_list中赋值
+     //如果是添加到下面的判断就结束,是修改就执行判断后的内容
+     if(!data)return;
+	 console.log("data="+data);
+	 //初始化用户信息 为修改页面的输入框将选中id的参数对应赋值进去
+	 //debugger
+	 //console.log("aa="+data.id)
+	 $("#deptSite").val(data.deptSite);
+	 $("#deptName").val(data.deptName);
+	 $("#customerName").val(data.customerName);
+	 $("#customerTel").val(data.customerTel);
+	 $("#expertId").val(data.expert.expertName);
+	//console.log("data.user.sysDept.idss="+data.user.sysDept.id);
+	// $("#deptId").data("deptId",data.user.sysDept.id);
+	 $("#timeNumber").val(data.timeNumber);
+	 $("#sendName").val(data.sendName);
+	 $("#sendTel").val(data.sendTel);
+	 //初始化用户角色信息,将选中id对应的角色赋值进去
+	 var ids=data.roleIds;
+	 for(var i in ids){
+	  $("#rolesId input[value='"+ids[i]+"']")
+	  .prop("checked",true);
+	 }
+ }
+ 
+
+</script>
+
+
+
+
+
+

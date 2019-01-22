@@ -1,0 +1,94 @@
+<!-- Horizontal Form -->
+ <div >
+ 	<div class="box-header with-border">
+        <h3 class="box-title">修改项目</h3>
+      </div>
+      
+     <div>
+		<span><a href="#" class="userID">项目名称：</a></span>&nbsp;&nbsp; <input
+			type="text" name="userInformationId" id="xmName">
+	</div>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<div>
+		<span><a href="#" class="userName">选择状态：</a></span> <input type="checkBox"
+			name="userInformationName" id="userName">  必选/可选
+	</div>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<div>
+		<span><a href="#" class="userPhone">是否生效：</a></span> <input
+			type="checkBox" name="userInformationPhone" id="userPhone"> 是/否
+	</div>
+	
+	<div class="layui-layer-btn layui-layer-btn-">
+			<a class="layui-layer-btn0 btn-confirm" onclick="doInsertOrUpdate()">确定</a>
+			<a class="layui-layer-btn1 btn-cancel" onclick="doCancel()">取消</a>
+	</div>
+     
+</div>
+ <script type="text/javascript">
+ $(function(){
+	 var resDataId=$("#mainContentId").data("resDataId"); //从div中获取绑定的对象
+	 if(resDataId) {
+		 doInitEditFormData(resDataId);//通过查找到的数据初始化表单
+	    // alert(resDataId);
+	 }
+ })
+ function doCancel(){
+	 $("#mainContentId").load("resSymptomType/doResSymptomTypeList.do");	 
+ }
+ function doInsertOrUpdate(){
+	 var insertUrl = "resSymptomType/doSaveObject.do";
+	 var updateUrl = "resSymptomType/doupdateObject.do";
+	 var resDataId=$("#mainContentId").data("resDataId");
+	 var url=resDataId?updateUrl:insertUrl;	 
+	 var params = getAllHtmlDate();
+	 if(resDataId) params.id=resDataId;
+	 $.post(url,params,function(result){
+		 if(result.state==1){
+			 alert(result.message);
+		 }
+	 })
+	 doCancel();
+	
+ }
+ function getAllHtmlDate(){
+	 var serviceName = $("#xmName").val();
+	 var chooseType; 
+		 if(document.getElementById("userName").checked) chooseType=1;
+		 else chooseType=0;
+		 
+	 var serviceState;
+	 if(document.getElementById("userPhone").checked) serviceState=1;
+	 else   serviceState=0;
+	 
+	 var params = {
+			 "serviceName":serviceName,
+			 "chooseType":chooseType,
+			 "serviceState":serviceState
+	 };
+	 return params;
+ }
+ function doInitEditFormData(resDataId){
+	 var url = "resSymptomType/dofindPageObject.do";
+	 var params = { "id":resDataId};
+	 $.post(url,params,function(result){
+		 if(result.state==1){
+			 console.log(result);
+			 $("#xmName").val(result.data[0].service_name);
+			 if(result.data[0].choose_type==1){
+				 document.getElementById("userName").checked=true;
+				
+			 }else{
+				 document.getElementById("userName").checked=false;
+			 }
+			 
+			 if(result.data[0].service_state==1){
+				 document.getElementById("userPhone").checked=true;
+			 }else{
+				 document.getElementById("userPhone").checked=false;
+			 }
+		 }
+	 })
+ }
+
+</script>

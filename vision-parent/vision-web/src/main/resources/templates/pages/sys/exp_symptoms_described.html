@@ -1,0 +1,138 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+	<!-- form start -->
+	<form class="form-horizontal">
+		<div class="box-body">
+			<div class="form-group">
+				<label for="symptomsDescribed" class="col-sm-2 control-label">症状描述</label>
+
+				<div class="col-sm-10">
+					<!-- <input type="text" style="width:1000px; height:500px" maxlength="1500"
+					name="symptomsDesc" class="form-control" id="symptomsDescribed"/> -->
+					<textarea id="symptomsDescribed" class="form-control" rows="10" cols="5"  style="resize:none;width:1000px;height:200px;
+					font-size:15pt;"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="symptomsRemark" class="col-sm-2 control-label">症状备注</label>
+				<div class="col-sm-10">
+					<!-- <input type="text" name="symptomsDesc" class="form-control" id="symptomsRemark"> -->
+					<textarea id="symptomsRemark" class="form-control" rows="10" cols="5"  style="resize:none;width:500px;height:200px;
+					font-size:15pt;"></textarea>
+				</div>
+			</div>
+		</div>
+		<!-- /.box-body -->
+	</form>
+</div>
+
+<div class="box-footer">
+	<button type="button" class="btn btn-default btn-cancel">取消</button>
+	<button type="button" class="btn btn-info pull-right btn-save">保存</button>
+</div>
+
+<script type="text/javascript">
+ 
+
+ 
+$(document).ready(function(){
+	doInitFormData();
+	
+	 $(".box-footer")
+	 .on("click",".btn-cancel",doCancel)//进入添加或修改页面的取消事件附加清除data缓存
+	 .on("click",".btn-save",doSaveOrUpdate);//进入添加或修改页面的确定事件并会调用取消事件清除data缓存
+ })	 
+	 
+ 
+ 
+ 
+ function doSaveOrUpdate(){
+	 //将数据封装到"symptoms"中
+	 var symptoms=$("#mainContentId").data("symptoms");
+	 var rowData=$("#mainContentId").data("rowData");
+	 
+	 //获取修改后的数据
+	 var params=doGetEditFormData();
+	 
+	//如果rowData有值则取出id的值赋给remoteDiagnoseId
+	if(rowData)params.remoteDiagnoseId=rowData.id;
+	
+	//debugger
+	// 根据"symptoms"是否有数据判断是添加还是修改
+	 var insertUrl="sym/doInsertSym.do";
+	 var updateUrl="sym/doUpdateSym.do";
+	 var url=symptoms?updateUrl:insertUrl
+	 
+   $.post(url,params,function(result){
+				 
+	if(result.state==1){
+		alert(result.message);
+		//执行成功后调用这个方法将data添加的缓存清掉
+		doCancel();
+	}else{
+		alert(result.message);
+	}
+	})
+ }
+ 
+ 
+//获取用户输入的数据
+ function doGetEditFormData(){
+/* 	 var pp = document.getElementsByName("symptomsDesc")[0].val;
+	 var params={
+		"symptomsDescribed":document.getElementsByName("symptomsDesc")[0].val,
+		"symptomsRemark":document.getElementsByName("symptomsDesc")[1].val
+	 } */
+	 var params={
+		//debugger
+		symptomsDescribed:$("#symptomsDescribed").val(),
+		symptomsRemark:$("#symptomsRemark").val()
+	 }
+	 return params;
+ }
+ 
+ 
+ 
+ 
+ //进入添加或修改页面的取消事件,点击确定也会调用这个方法将data中的缓存清掉
+ function doCancel(){
+	$("#mainContentId").removeData("rowData");//清除#mainContentId上的"rowData"中的数据
+	$("#mainContentId").removeData("symptoms");//清除#mainContentId上的"symptoms"中的数据
+	$("#mainContentId").load("dia/doRemoteDiagnose.do");//返回远程诊断页面
+ }
+ 
+ 
+ /*虽然这个方法在点击添加和修改的时候都会执行,
+  *但是里面会分辨data里是否有值,有值的话就往后执行,没有的话就结束方法
+  */
+  function doInitFormData(){
+ 	 //debugger
+      var data=$("#mainContentId").data("symptoms");//"rowData"的值在exp_remote_diagnose中赋值
+      //如果是添加到下面的判断就结束,是修改就执行判断后的内容
+      console.log("data1="+data);
+      if(!data)return;
+ 	 console.log("data2="+data);
+ 	 //初始化用户信息 为修改页面的输入框将选中id的参数对应赋值进去
+ 	 //debugger
+ 	 //console.log("aa="+data.id)
+ 	 $("#symptomsDescribed").val(data.symptomsDescribed);
+ 	 $("#symptomsRemark").val(data.symptomsRemark);
+ 	 
+ 	
+  }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ </script>
+
+
+
+
+
+
+
