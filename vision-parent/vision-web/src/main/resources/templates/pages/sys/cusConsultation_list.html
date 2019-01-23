@@ -104,7 +104,7 @@
    //页面加载完成异步加载当前页数据
    function doGetObjects(){
 	   //debugger
-	   var url="cusConsultation/doFindPageObjects.do";
+	   var url="cusConsultation/doFindPageObjects";
 	   var pageCurrent=$("#pageId").data("pageCurrent");
 	   if(!pageCurrent)pageCurrent=1;
 	   var params={"pageCurrent":pageCurrent}
