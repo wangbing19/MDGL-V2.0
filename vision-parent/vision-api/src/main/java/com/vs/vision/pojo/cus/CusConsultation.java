@@ -1,5 +1,7 @@
-package com.vs.cus.pojo;
+package com.vs.vision.pojo.cus;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -11,8 +13,8 @@ import java.util.Date;
 @TableName("cus_consultation")
 public class CusConsultation {
 
-    /**序号*/
-    private int id;
+    @TableId(type = IdType.AUTO)
+    private int id; /**序号*/
     /**姓名*/
     private String name;
     /**年龄*/
