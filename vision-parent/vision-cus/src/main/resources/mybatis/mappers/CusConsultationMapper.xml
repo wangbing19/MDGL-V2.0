@@ -11,16 +11,13 @@
 			<if test="name!=null and name!=''">
 				name like concat("%",#{name},"%")
 			</if>
-			<!-- tel条件 -->
-			<if test="tel!=null and tel!=''">
-				or name like concat("%",#{tel},"%")
-			</if>
+			
 		</where>
 	</sql>
 	
 	<!-- 基于用户姓名及分页条件查询,无用户名输入基于分页条件查询 -->
 	<select id="findPageObjects" resultType="com.vs.vision.pojo.cus.CusConsultation">
-		select id,name,tel,r_d rD,l_d lD,r_cva rCva,l_cva lCva,tutor,gmt_modified gmtModified 
+		select *
 		from cus_consultation 
         <include refid="queryWhereId"/>
 		limit #{startIndex},#{pageSize}

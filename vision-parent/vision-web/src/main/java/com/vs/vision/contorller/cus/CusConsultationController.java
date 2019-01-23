@@ -1,6 +1,7 @@
 package com.vs.vision.contorller.cus;
 
-import com.alibaba.druid.util.StringUtils;
+import com.vs.vision.pojo.cus.CusConsultation;
+import com.vs.vision.pojo.cus.vo.CusConsultationVo;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/cusConsultation")
@@ -29,14 +28,10 @@ public class CusConsultationController {
     /**基于用户/电话及当前页码值条件查询用户信息*/
     @RequestMapping("/doFindPageObjects")
     @ResponseBody
-    public JsonResult FindPageObjects(String name, String tel, Integer pageCurrent){
-        Map<String,String> map = new HashMap<>();
-        map.put("name",name);
-        map.put("tel",tel);
-        map.put("pageCurrent",pageCurrent.toString());
-        
+    public JsonResult FindPageObjects(CusConsultationVo cusConsultationVo){
         try {
-        	PageObject pageObject = restTemplate.getForObject(provider_url+"/cusConsultation/findPageObjects", PageObject.class, map);
+//        	PageObject<CusConsultation> pageObject = restTemplate.getForObject(provider_url+"/cusConsultation/findPageObjects?name={name}&tel={tel}&pageCurrent={pageCurrent}", PageObject.class,cusConsultationVo);
+        	PageObject<CusConsultation> pageObject = restTemplate.postForObject(provider_url+"/cusConsultation/findPageObjects", cusConsultationVo, PageObject.class);
         	if(!(pageObject.getRecords().size()==0)) {
         		return JsonResult.oK(pageObject);
         	}
