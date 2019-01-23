@@ -18,6 +18,7 @@ public class PageObject<T> implements Serializable{//类泛型
 	private int pageSize=3;
 	/**当前页的页码*/
 	private int pageCurrent=1;
+	
 	public List<T> getRecords() {
 		return records;
 	}

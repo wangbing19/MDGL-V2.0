@@ -1,11 +1,12 @@
 package com.vs.cus.service;
 
-import com.vs.vision.vo.JsonResult;
+import com.vs.vision.pojo.cus.CusConsultation;
+import com.vs.vision.vo.PageObject;
 
 import java.util.Map;
 
 public interface CusConsultationService {
 
-
-    JsonResult findPageObjects(Map<String, String> map);
+	/**基于用户/电话及当前页码值条件查询用户信息*/
+    PageObject<CusConsultation> findPageObjects(Map<String, String> map);
 }
