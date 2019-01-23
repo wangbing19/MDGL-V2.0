@@ -85,7 +85,7 @@
             <artifactId>spring-data-redis</artifactId>
         </dependency>
 
-        <!--导入pojo插件 -->
+        <!--&lt;!&ndash;导入pojo插件 &ndash;&gt;-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
