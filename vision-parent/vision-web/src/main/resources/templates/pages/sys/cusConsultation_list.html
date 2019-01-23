@@ -46,7 +46,7 @@
 </div>
 <script type="text/javascript">
    $(document).ready(function(){
-	   $("#pageId").load("doPageUI.do",function(){
+	   $("#pageId").load("doPageUI",function(){
 		   $("#mainContentId").removeData("rowData");
 		   doGetObjects();
 	   });
@@ -104,25 +104,25 @@
    //页面加载完成异步加载当前页数据
    function doGetObjects(){
 	   //debugger
-	   var url="cusConsultation/doFindPageObjects.do";
+	   var url="cusConsultation/doFindPageObjects";
 	   var pageCurrent=$("#pageId").data("pageCurrent");
 	   if(!pageCurrent)pageCurrent=1;
 	   var params={"pageCurrent":pageCurrent}
 	   params.name=$("#searchNameId").val().trim();
 	   console.log(params);
 	   $.getJSON(url,params,function(result){
-		   console.log(result);
+		  // console.log(result);
 		   //debugger
 		   doHandleResponseResult(result);
 	   });
    }
    
    function doHandleResponseResult(result){
-	   if(result.state==1){
+	   if(result.state==200){
 		  doSetTableBodyRows(result.data.records);
 		  doSetPagination(result.data);
 		}else{
-		  alert(result.message);
+		  alert(result.msg);
 	   }
    }
    //通过服务端返回的数据初始化页面

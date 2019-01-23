@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WebController {
 
-    @RequestMapping("/find")
- //   @ResponseBody
+    /**
+     * 实现首页跳转
+     * @return
+     */
+    @RequestMapping("/index")
     public String find(){
         return "pages/starter";
     }
