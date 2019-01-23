@@ -133,10 +133,12 @@ $(function(){
 	.on("click",".btn-add",doLoadEditUI)
 	.on("click",".btn-update",doLoadEditUI)
 	
-	$(".treegrid-tbody").on("click",".chufang",loadDesc);
+	$(".treegrid-tbody").on("click",".chufang",loadDesc);//给诊断处方按钮创建点击事件
 	
 })
 
+
+//******************************加载对应的诊断描述*****************************/
 function loadDesc(){
 	var id = doGetCheckId();
 	var params={"diagnosisId":id};
@@ -154,6 +156,8 @@ function loadDesc(){
 	})
 	
 }
+
+//******************************************初始化诊断处方表************************/
 function doGetObjects(){
 	//创建table对象
 	var table = new TreeTable(
