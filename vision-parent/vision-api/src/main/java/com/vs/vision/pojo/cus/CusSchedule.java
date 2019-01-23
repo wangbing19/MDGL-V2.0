@@ -1,4 +1,4 @@
-package com.vs.cus.pojo;
+package com.vs.vision.pojo.cus;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
