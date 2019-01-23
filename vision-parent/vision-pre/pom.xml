@@ -12,4 +12,11 @@
     <artifactId>vision-pre</artifactId>
 
 
+    <dependencies>
+    	<dependency>
+    		<groupId>com.vs</groupId>
+    		<artifactId>vision-api</artifactId>
+    		<version>1.0-SNAPSHOT</version>
+    	</dependency>
+    </dependencies>
 </project>

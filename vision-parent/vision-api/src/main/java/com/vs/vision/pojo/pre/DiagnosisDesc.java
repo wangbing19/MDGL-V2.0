@@ -1,4 +1,4 @@
- package com.vs.pre.pojo;
+package com.vs.vision.pojo.pre;
 
 import java.util.Date;
 
@@ -10,12 +10,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 @Data
 @Accessors(chain=true)
-@TableName("pre_diagnosis_user")
-public class DiagnosisUser {
+@TableName("pre_diagnosis_desc")
+public class DiagnosisDesc {
 	@TableId(type=IdType.AUTO)
 	private Integer id;
-	private Integer userId;
 	private Integer diagnosisId;
+	private String diagnosisDesc;
 	private Date gmtCreate;
 	private Date gmtModified;
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SysResult implements Serializable {
+public class JsonResult implements Serializable {
     // 定义jackson对象
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -26,33 +26,33 @@ public class SysResult implements Serializable {
     // 响应中的数据
     private Object data;
 
-    public static SysResult build(Integer status, String msg, Object data) {
-        return new SysResult(status, msg, data);
+    public static JsonResult build(Integer status, String msg, Object data) {
+        return new JsonResult(status, msg, data);
     }
 
-    public static SysResult oK(Object data) {
-        return new SysResult(data);
+    public static JsonResult oK(Object data) {
+        return new JsonResult(data);
     }
 
-    public static SysResult oK() {
-        return new SysResult(null);
+    public static JsonResult oK() {
+        return new JsonResult(null);
     }
 
-    public SysResult() {
+    public JsonResult() {
 
     }
 
-    public static SysResult build(Integer status, String msg) {
-        return new SysResult(status, msg, null);
+    public static JsonResult build(Integer status, String msg) {
+        return new JsonResult(status, msg, null);
     }
 
-    public SysResult(Integer status, String msg, Object data) {
+    public JsonResult(Integer status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
     }
 
-    public SysResult(Object data) {
+    public JsonResult(Object data) {
         this.status = 200;
         this.msg = "OK";
         this.data = data;
@@ -94,10 +94,10 @@ public class SysResult implements Serializable {
      * @param clazz SysResult中的object类型
      * @return
      */
-    public static SysResult formatToPojo(String jsonData, Class<?> clazz) {
+    public static JsonResult formatToPojo(String jsonData, Class<?> clazz) {
         try {
             if (clazz == null) {
-                return MAPPER.readValue(jsonData, SysResult.class);
+                return MAPPER.readValue(jsonData, JsonResult.class);
             }
             JsonNode jsonNode = MAPPER.readTree(jsonData);
             JsonNode data = jsonNode.get("data");
@@ -122,9 +122,9 @@ public class SysResult implements Serializable {
      * @param json
      * @return
      */
-    public static SysResult format(String json) {
+    public static JsonResult format(String json) {
         try {
-            return MAPPER.readValue(json, SysResult.class);
+            return MAPPER.readValue(json, JsonResult.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,7 +138,7 @@ public class SysResult implements Serializable {
      * @param clazz 集合中的类型
      * @return
      */
-    public static SysResult formatToList(String jsonData, Class<?> clazz) {
+    public static JsonResult formatToList(String jsonData, Class<?> clazz) {
         try {
             JsonNode jsonNode = MAPPER.readTree(jsonData);
             JsonNode data = jsonNode.get("data");

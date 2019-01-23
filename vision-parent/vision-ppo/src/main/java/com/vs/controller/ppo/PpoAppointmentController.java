@@ -3,7 +3,7 @@ package com.vs.controller.ppo;
 
 import com.vs.service.ppo.PpoAppointmentservice;
 import com.vs.vision.pojo.ppo.PpoAppointment;
-import com.vs.vision.vo.SysResult;
+import com.vs.vision.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ public class PpoAppointmentController {
 
     @RequestMapping("doFindPageObjects.do")
     @ResponseBody
-    public SysResult doFindPageObjects(String appointmentName, Integer pageCurrent) {
+    public JsonResult doFindPageObjects(String appointmentName, Integer pageCurrent) {
 
         return null;
 

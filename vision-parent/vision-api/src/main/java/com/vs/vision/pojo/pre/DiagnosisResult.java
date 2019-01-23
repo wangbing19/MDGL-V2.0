@@ -1,4 +1,4 @@
-package com.vs.pre.pojo;
+package com.vs.vision.pojo.pre;
 
 import java.util.Date;
 
