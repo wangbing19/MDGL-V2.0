@@ -22,6 +22,11 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <dependency>
+        	<groupId>com.vs</groupId>
+        	<artifactId>vision-api</artifactId>
+        	<version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
