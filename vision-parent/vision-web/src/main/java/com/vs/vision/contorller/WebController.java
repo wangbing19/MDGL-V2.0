@@ -14,6 +14,11 @@ public class WebController {
     public String find(){
         return "pages/starter";
     }
+    
+    @RequestMapping("doPageUI.do")
+	  public String doPageUI(){
+		  return "pages/common/page";
+	  }
 
 
 

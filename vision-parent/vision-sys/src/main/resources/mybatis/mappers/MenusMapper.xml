@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.vs.sys.mappers.MenusMapper" >
+	<select id="findPermissions"
+           resultType="string">
+       select permission <!-- sys:user:update -->
+       from sys_menus
+       where id in 
+       <foreach collection="menuIds"
+                open="("
+                close=")"
+                separator=","
+                item="item">
+            #{item}
+       </foreach>
+     </select>
+
+    <update id="updateObject"
+            parameterType="com.vs.vision.pojo.sys.Menus">
+         update sys_menus
+         set
+           name=#{name},
+           type=#{type},
+           sort=#{sort},
+           url=#{url},
+           parent_id=#{parentId},
+           permission=#{permission},
+           modified_user=#{modifiedUser},
+           modified_time=now()
+        where id=#{id}
+    </update>
+    
+    <insert id="insertObject"
+            parameterType="com.vs.vision.pojo.sys.Menus">
+          insert into sys_menus
+          (name,url,type,sort,note,parent_id,permission,
+          created_time,modified_time,created_user,modified_user)
+          values
+          (#{name},#{url},#{type},#{sort},#{note},#{parentId},#{permission},
+          now(),now(),#{createdUser},#{modifiedUser})
+    </insert>
+
+    <select id="findZtreeMenuNodes"
+            resultType="com.vs.vision.vo.Node">
+        select id,name,parent_id parentId
+        from sys_menus        
+    </select>
+    
+
+    <select id="getChildCount"
+            resultType="int">
+            select count(*)
+            from sys_menus
+            where parent_id=#{id}        
+    </select>
+    
+    <delete id="deleteObject">
+           delete from sys_menus
+           where id=#{id}
+    </delete>
+
+    <select id="findObjects" resultType="map">
+        select c.id,c.name,c.url,c.type,c.sort,c.note,c.parent_id parentId,c.permission,(select name
+                    from sys_menus p
+                    where c.parent_id=p.id) parentName
+        from sys_menus c
+    </select>
   
 </mapper>

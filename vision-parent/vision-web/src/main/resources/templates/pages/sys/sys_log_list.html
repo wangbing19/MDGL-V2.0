@@ -114,15 +114,15 @@
 		var params={"ids":ids.toString()};
 		//3.执行异步的删除操作
 		$.post(url,params,function(result){
-			if(result.state==1){
-				alert(result.message);
+			if(result.status==200){
+				alert(result.msg);
 				
 				//修改页码值
 				doChangePageCode();
 				
 				doGetObjects();
 			}else{
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 		
@@ -179,13 +179,13 @@
 	}
 	//处理服务端响应的问题
 	function doHandleResponseResult(result){
-		if(result.state==1){//正常数据
+		if(result.status==200){//正常数据
 			//设置table中的相应数据
 			doSetTableBodyRows(result.data.records);
 			//设置pageId位置对应的分页数据
 			doSetPagination(result.data);//result.data->pageObject
 		}else{//异常数据
-			alert(result.message);
+			alert(result.msg);
 		}
 	}
 	//设置table对象中tBody部分的内容

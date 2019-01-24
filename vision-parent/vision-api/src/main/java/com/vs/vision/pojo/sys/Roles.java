@@ -1,8 +1,9 @@
 package com.vs.vision.pojo.sys;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Roles {
+public class Roles implements Serializable{
     private Long id;
 
     private String name;
@@ -72,4 +73,12 @@ public class Roles {
     public void setModifiedUser(String modifiedUser) {
         this.modifiedUser = modifiedUser;
     }
+
+	@Override
+	public String toString() {
+		return "Roles [id=" + id + ", name=" + name + ", note=" + note + ", createdTime=" + createdTime
+				+ ", modifiedTime=" + modifiedTime + ", createdUser=" + createdUser + ", modifiedUser=" + modifiedUser
+				+ "]";
+	}
+    
 }

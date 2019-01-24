@@ -1,8 +1,9 @@
 package com.vs.vision.pojo.sys;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Logs {
+public class Logs implements Serializable{
     private Long id;
 
     private String username;

@@ -311,7 +311,7 @@
 			function doLoadUI(id, url) {
 				$("#" + id).click(function() {
 					 $.post(url,function(result){
-							if(result.state==0){
+							if(result.status==200){
 								$("#mainContentId").load("doNullUI.do",function(){
 								});
 							}else{
