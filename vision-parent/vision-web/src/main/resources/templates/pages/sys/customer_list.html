@@ -101,8 +101,9 @@
 	 return $("tbody input[name='radioId']:checked").val();
    }
    function doLoadPage(title){
-	   var url="customer/doCustomerEditUI"
+	   var url="customer/doCustomerEditUI";
 	   $("#mainContentId").load(url,function(){
+		  
 		   $(".box-title").html(title);
 	   }) 
    }
@@ -195,7 +196,7 @@
 	   var rowData=$(this).parents("tr").data("rowData");
 	   var params={"id":rowData.id};
 	   //2.url
-	   var url="customer/doDeleteObject.do"
+	   var url="customer/doDeleteObject"
 	   //3.ajax request
 	   $.post(url,params,function(result){
 		   if(result.status==200){

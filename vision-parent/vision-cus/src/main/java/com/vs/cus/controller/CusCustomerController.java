@@ -67,5 +67,41 @@ public class CusCustomerController {
 		return null;
 	}
 	
+	/**将CusCustomer类型数据添加到数据库*/
+	@RequestMapping("/saveObject")
+	@ResponseBody
+	public Integer saveObject(@RequestBody CusCustomer cusCustomer) {
+		try {
+			return cusCustomerService.saveObject(cusCustomer);
+		} catch (Exception e) {
+			System.out.println("根据咨询表id查询客户表信息有无=============错误=================");
+		}
+		return null;
+	}
+	
+	/**基于id删除客户信息*/
+	@RequestMapping("/deleteObject")
+	@ResponseBody
+	public Integer deleteObject(@RequestBody Integer id) {
+		try {
+			return cusCustomerService.deleteObject(id);
+		} catch (Exception e) {
+			System.out.println("基于id删除客户信息=============错误=================");
+		}
+		return null;
+	}
+	
+	/**基于客户id修改客户信息*/
+	@RequestMapping("/updateObject")
+	@ResponseBody
+	public Integer updateObject(@RequestBody CusCustomer cusCustomer) {
+		try {
+			return cusCustomerService.updateObject(cusCustomer);
+		} catch (Exception e) {
+			System.out.println("根据咨询表id查询客户表信息有无=============错误=================");
+		}
+		return null;
+	}
+	
 	
 }

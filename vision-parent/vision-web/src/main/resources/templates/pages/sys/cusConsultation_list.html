@@ -195,7 +195,7 @@
 				var url="cusConsultation/doFindObjectById";
 				//3.ajax request
 				$.getJSON(url,params,function(result){//JsonResult
-				if(result.state==1){
+				if(result.status==200){
 					var customerData = {
 							"consultationId":result.data.id,
 							"name":result.data.name,
@@ -208,6 +208,7 @@
 					
 				//	console.log($("#mainContentId").data("customerData"));
 					var title = "添加用户";
+					console.log(customerData);
 					$("#mainContentId").load("customer/doCustomerEditUI",function(){
 						$(".box-title").html(title);
 					   });
@@ -217,7 +218,7 @@
 				   });
 				
 				}else{
-					alert(result.msg);
+					alert("已有数据,无法添加");
 				}
 			   });
 		
