@@ -60,5 +60,41 @@ public class CusCustomerController {
 		return JsonResult.build(201, "修改查询失败");
 	}
 
+	/**基于用户id修改用户状态*/
+	@RequestMapping("doUpdateStateById")
+	@ResponseBody
+	public JsonResult doUpdateStateById(CusVo cusVo) {
+		try {
+			Integer row = restTemplate.postForObject(provider_url+"/customer/updateStateById", cusVo, Integer.class);
+			if(row != 0 || row == null) {
+				return JsonResult.oK();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "状态修改失败");
+	}
+	
+	/**根据咨询表id查询客户表信息有无*/
+	@RequestMapping("doFindConsultationByConsultationId")
+	@ResponseBody
+	public JsonResult doFindConsultationIdByConsultationId(Integer consultationId) {
+		try {
+			Integer row = restTemplate.postForObject(provider_url+"/customer/findConsultationByConsultationId", consultationId, Integer.class);
+			if(row == 0 || row == 1) {
+				return JsonResult.oK(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "已有数据,无法添加");
+	}
+	
+	/**跳转到新增或修改信息*/
+	@RequestMapping("doCustomerEditUI")
+	public String doCustomerEditUI() {
+		return "pages/sys/customer_edit";
+	}
+	
 
 }

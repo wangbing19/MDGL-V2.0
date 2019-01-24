@@ -10,4 +10,8 @@ public interface CusCustomerService {
 	PageObject<CusCustomer> findPageObjects(CusVo cusVo);
 	/**基于客户id查询客户所有信息*/
 	CusCustomer findObjectById(Integer id);
+	/**基于用户id修改用户状态*/
+	Integer updateStateById(CusVo cusVo);
+	/**根据咨询表id查询客户表信息有无*/
+	Integer findConsultationByConsultationId(Integer consultationId);
 }

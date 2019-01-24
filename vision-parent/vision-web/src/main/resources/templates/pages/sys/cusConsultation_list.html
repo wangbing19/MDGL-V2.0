@@ -186,13 +186,13 @@
 	//	console.log(params)
 		
 		var consultationId={"consultationId":id}
-		$.getJSON("customer/doFindConsultationIdByConsultationId.do",consultationId,function(result){//JsonResult
+		$.getJSON("customer/doFindConsultationByConsultationId",consultationId,function(result){//JsonResult
 		//	console.log("111111");
 		//	console.log(result);
 			if(result.data==0){
 				
 				//2.url
-				var url="cusConsultation/doFindObjectById.do";
+				var url="cusConsultation/doFindObjectById";
 				//3.ajax request
 				$.getJSON(url,params,function(result){//JsonResult
 				if(result.state==1){
@@ -208,16 +208,16 @@
 					
 				//	console.log($("#mainContentId").data("customerData"));
 					var title = "添加用户";
-					$("#mainContentId").load("customer/doCustomerEditUI.do",function(){
+					$("#mainContentId").load("customer/doCustomerEditUI",function(){
 						$(".box-title").html(title);
 					   });
 					}else{
-						alert(result.message);
+						alert(result.msg);
 					}
 				   });
 				
 				}else{
-					alert("已有数据，无法添加");
+					alert(result.msg);
 				}
 			   });
 		

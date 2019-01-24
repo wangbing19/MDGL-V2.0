@@ -5,6 +5,10 @@ import lombok.Data;
 @Data
 public class CusVo {
 
+	/**id*/
+	private int id;
+	/**状态state*/
+	private int state;
 	/**姓名*/
 	private String name;
 	/**电话*/
@@ -12,8 +16,11 @@ public class CusVo {
 	/**起始页码值*/
 	private Integer pageCurrent;
 	 /**门店id*/
-    private int userId;
+    private Integer userId;
     /**上级门店id*/
-    private int userParentId;
+    private Integer userParentId;
+    /**登录用户*/
+    private String user;
+    
 	
 }
