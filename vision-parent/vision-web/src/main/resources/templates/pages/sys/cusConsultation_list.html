@@ -77,20 +77,20 @@
 	   //1.params绑定id
 	   var params={"id":id};
 	   //2.url
-	   var url="cusConsultation/doFindObjectById.do";
+	   var url="cusConsultation/doFindObjectById";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
+		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
 	          doLoadPage(title);
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
    
    function doLoadPage(title){
-	   var url="cusConsultation/doCusConsultationEditUI.do";
+	   var url="cusConsultation/doCusConsultationEditUI";
 	   $("#mainContentId").load(url,function(){
 		   $(".box-title").html(title);
 	   }) 
@@ -148,14 +148,14 @@
 		var id=rowData.id;
 		var params={"id":id};
 		//2.url
-		var url="cusConsultation/doDeleteObject.do"
+		var url="cusConsultation/doDeleteObject"
 		//3.ajax request
 		$.post(url,params,function(result){
-			if(result.state==1){
+			if(result.status==200){
 			//	alert(result.message);
 				doGetObjects();
 			}else{
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	   
@@ -183,12 +183,12 @@
 		var rowData=$(this).parents("tr").data("rowData");
 		var id=rowData.id;
 		var params={"id":id};
-		console.log(params)
+	//	console.log(params)
 		
 		var consultationId={"consultationId":id}
 		$.getJSON("customer/doFindConsultationIdByConsultationId.do",consultationId,function(result){//JsonResult
-			console.log("111111");
-			console.log(result);
+		//	console.log("111111");
+		//	console.log(result);
 			if(result.data==0){
 				
 				//2.url
