@@ -14,8 +14,4 @@ public class WebController {
     public String find(){
         return "pages/starter";
     }
-
-
-
-
 }
