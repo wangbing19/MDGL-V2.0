@@ -246,13 +246,9 @@
 					   "userId":result.data.id,
 					   "userName":result.data.name,
 					   "userPhone":result.data.tel};
-<<<<<<< HEAD
-			  $("#mainContentId").data("rowUserData",descObject);  
-			  $("#mainContentId").load("diagnosisDescuser/doDiagnosisDescUserUI");
-=======
+
 			  $("#mainContentId").data("rowUserData",descObject); 
 			  $("#mainContentId").load("diagnosis/doDiagnosisDescUser");
->>>>>>> branch 'master' of https://github.com/wangbing19/MDGL-V2.0.git
 		   }else{
 			  alert(result.msg);
 		   }
