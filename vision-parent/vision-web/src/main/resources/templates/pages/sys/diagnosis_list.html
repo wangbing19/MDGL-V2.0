@@ -70,13 +70,13 @@ var columns = [
 	sortable : true,
 	width : '150px'
 },
-/* {
+/*  {
 	title : '上级症状',
 	field : 'parentName',
 	align : 'center',
 	valign : 'middle',	
 	width : '150px'
-}, */
+}, */ 
 {
 	title : '创建时间',
 	field : 'gmtCreate',
@@ -142,6 +142,8 @@ function loadDesc(){
 	$.post(url,params,function(resultDesc){
 		if(resultDesc.status==200){
 			var diagnosisDesc1 = resultDesc.data.diagnosisDesc;
+			/* console.log("症状处方描述")
+			console.log(diagnosisDesc1); */
 			if(diagnosisDesc1) $("#descById").val(resultDesc.data.diagnosisDesc);
 			else {
 				$("#descById").val("还没有处方");
@@ -218,7 +220,7 @@ function doLoadEditUI(){
 			alert("请先选择一个");
 			return;
 		}
-		var disType = rowData.dis_type;
+		var disType = rowData.disType;
 		$("#mainContentId").data("disType",disType);
 	//	console.log(disType);	
 		

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vs.pre.mapper.DiagnosisDescMapper">
+
+	<!-- 修改症状关系表中的数据 -->
+	<update id="updateObject"
+		parameterType="com.vs.vision.vo.DiagnosisDate">
+		update pre_diagnosis_desc set
+		diagnosis_desc=#{diagnosisDesc},gmt_modified=now() where
+		diagnosis_id=#{id}
+	</update>
+	
+	<!-- 根据症状id向症状描述表插入数据 -->
+	<insert id="insertObjectByDiagnosisId">
+	insert into pre_diagnosis_desc values(null,#{diagnosisId},null,now(),now())
+	</insert>
+</mapper>

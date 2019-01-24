@@ -13,6 +13,8 @@ import com.vs.pre.mapper.DiagnosisUserMapper;
 import com.vs.vision.pojo.pre.DiagnosisDesc;
 import com.vs.vision.pojo.pre.DiagnosisResult;
 import com.vs.vision.pojo.pre.DiagnosisUser;
+import com.vs.vision.vo.DiagnosisDate;
+import com.vs.vision.vo.Node;
 @Service
 public class DiagnosisResultServiceImpl implements DiagnosisResultService{
 	@Autowired
@@ -27,7 +29,7 @@ public class DiagnosisResultServiceImpl implements DiagnosisResultService{
 		System.out.println("我是实现类");
 		return diagnosisResultMapper.selectList(null);
 	}
-	//格局症状id删除数据
+	//根据症状id删除数据
 	@Override
 	public String deleteResultObjectById(Integer diagnosisId) {
 		
@@ -63,9 +65,46 @@ public class DiagnosisResultServiceImpl implements DiagnosisResultService{
 		Integer deleteAfterCount = diagnosisResultMapper.selectCount(queryWrapper4);
 		System.out.println("删除后，对应的父级症状的子症状个数："+deleteAfterCount);
 		if(deleteAfterCount==0) {
-			diagnosisResultMapper.updateDisType(selectById.getParentId());
+			diagnosisResultMapper.updateDisType(1,selectById.getParentId());
 		}		
 		return "删除成功";
+	}
+	//查询ztree节点信息
+	@Override
+	public List<Node> findZtreeMenuNodes() {
+		List<Node> ztree =  diagnosisResultMapper.findZtreeMenuNodes();
+		System.out.println("ztree节点数据："+ztree);
+		return ztree;
+	}
+	@Override
+	public String findParentNameById(Integer id) {
+	
+		DiagnosisResult selectById = diagnosisResultMapper.selectById(id);
+		DiagnosisResult selectParentById = diagnosisResultMapper.selectById(selectById.getParentId());
+		return selectParentById.getSymptomName();
+		
+	}
+	@Override
+	public String updateObject(DiagnosisDate diagnosisDate) {
+		//更新症状结果表
+		diagnosisResultMapper.updateObject(diagnosisDate);
+		diagnosisDescMapper.updateObject(diagnosisDate);
+		return "更新成功";
+	}
+	@Override
+	public DiagnosisResult findObjectById(Integer id) {
+		return diagnosisResultMapper.selectById(id);
+	}
+	@Override
+	public String updateDisTypeById(Integer disType, Integer id) {
+		diagnosisResultMapper.updateDisTypeById(disType,id);
+		return "修改显示状态成功";
+	}
+	@Override
+	public String insertObject(DiagnosisResult diagnosisResult) {
+		diagnosisResultMapper.insertObject(diagnosisResult);
+		diagnosisDescMapper.insertObjectByDiagnosisId(diagnosisResult.getId());
+		return "添加成功";
 	}
 }
 
