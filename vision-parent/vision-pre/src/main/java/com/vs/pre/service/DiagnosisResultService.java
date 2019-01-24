@@ -8,4 +8,6 @@ public interface DiagnosisResultService {
 
 	List<DiagnosisResult> doFindObjects();
 
+	String deleteResultObjectById(Integer diagnosisId);
+
 }

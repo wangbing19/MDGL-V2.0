@@ -30,7 +30,7 @@
 				<label for="desc">诊断处方</label>
 				
 				<div>
-						<textarea id="descById" class="form-control" name="desc" cols="50" rows="5" ></textarea>
+						<textarea id="descById" class="form-control" name="desc" cols="50" rows="5" readonly="readonly"></textarea>
 				</div>
 			</div>
 					
@@ -140,7 +140,7 @@ function loadDesc(){
 	var params={"diagnosisId":id};
 	var url = "diagnosis/doFindDescObject.do";
 	$.post(url,params,function(resultDesc){
-		if(resultDesc.state==1){
+		if(resultDesc.status==200){
 			var diagnosisDesc1 = resultDesc.data.diagnosisDesc;
 			if(diagnosisDesc1) $("#descById").val(resultDesc.data.diagnosisDesc);
 			else {
@@ -180,11 +180,11 @@ function doDeleteObject(){
 	var url = "diagnosis/doDeleteObject.do";
 	var params = {"id":id};
 	$.post(url,params,function(result){
-		if(result.state==1){
-			alert(result.message);
+		if(result.status==200){
+			alert(result.data);
 			doGetObjects();
 		}else{
-			alert(result.message);
+			alert(result.data);
 		}
 	});	
 }
