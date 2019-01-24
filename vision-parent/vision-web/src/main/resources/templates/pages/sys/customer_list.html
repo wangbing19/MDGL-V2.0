@@ -85,7 +85,7 @@
 	   //1.params
 	   var params={"id":id};
 	   //2.url
-	   var url="customer/doFindObjectById.do";
+	   var url="customer/doFindObjectById";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
 		   if(result.status==200){
@@ -101,7 +101,7 @@
 	 return $("tbody input[name='radioId']:checked").val();
    }
    function doLoadPage(title){
-	   var url="customer/doCustomerEditUI.do"
+	   var url="customer/doCustomerEditUI"
 	   $("#mainContentId").load(url,function(){
 		   $(".box-title").html(title);
 	   }) 
@@ -114,7 +114,7 @@
 	   var newValid=rowData.state?0:1;
 	   var params={"id":rowData.id,"state":newValid};
 	   //url
-	   var url="customer/doUpdateStateById.do";
+	   var url="customer/doUpdateStateById";
 	   //ajax request
        var btn=$(this);//获取点击的button对象
 	   $.post(url,params,function(result){
@@ -247,7 +247,7 @@
 					   "userName":result.data.name,
 					   "userPhone":result.data.tel};
 			  $("#mainContentId").data("rowUserData",descObject); 
-			  $("#mainContentId").load("diagnosisDescuser/doDiagnosisDescUserUI");
+			  $("#mainContentId").load("diagnosis/doDiagnosisDescUser");
 		   }else{
 			  alert(result.msg);
 		   }

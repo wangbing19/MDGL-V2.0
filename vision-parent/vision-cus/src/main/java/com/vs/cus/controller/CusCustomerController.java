@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vs.cus.service.CusCustomerService;
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
 @Controller
@@ -41,6 +42,30 @@ public class CusCustomerController {
     	}
     	return null;
     }
+    
+	/**基于用户id修改用户状态*/
+	@RequestMapping("updateStateById")
+	@ResponseBody
+	public Integer doUpdateStateById(@RequestBody CusVo cusVo) {
+		try {
+			return cusCustomerService.updateStateById(cusVo);
+		} catch (Exception e) {
+			System.out.println("基于用户id修改用户状态=============错误=================");
+		}
+		return null;
+	}
+	
+	/**根据咨询表id查询客户表信息有无*/
+	@RequestMapping("findConsultationByConsultationId")
+	@ResponseBody
+	public Integer findConsultationByConsultationId(@RequestBody Integer consultationId) {
+		try {
+			return cusCustomerService.findConsultationByConsultationId(consultationId);
+		} catch (Exception e) {
+			System.out.println("根据咨询表id查询客户表信息有无=============错误=================");
+		}
+		return null;
+	}
 	
 	
 }
