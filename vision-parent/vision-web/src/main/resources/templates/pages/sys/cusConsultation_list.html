@@ -46,7 +46,7 @@
 </div>
 <script type="text/javascript">
    $(document).ready(function(){
-	   $("#pageId").load("doPageUI.do",function(){
+	   $("#pageId").load("doPageUI",function(){
 		   $("#mainContentId").removeData("rowData");
 		   doGetObjects();
 	   });
@@ -66,7 +66,7 @@
 			var rowData=$(this).parents("tr").data("rowData");
 			var id=rowData.id;
 			 title="修改咨询表";
-			console.log("id="+id)
+		//	console.log("id="+id)
 		   //基于id进行查询并加载编辑页面
 		   doFindObjectById(id,title);
 	   }
@@ -77,20 +77,20 @@
 	   //1.params绑定id
 	   var params={"id":id};
 	   //2.url
-	   var url="cusConsultation/doFindObjectById.do";
+	   var url="cusConsultation/doFindObjectById";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
+		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
 	          doLoadPage(title);
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
    
    function doLoadPage(title){
-	   var url="cusConsultation/doCusConsultationEditUI.do";
+	   var url="cusConsultation/doCusConsultationEditUI";
 	   $("#mainContentId").load(url,function(){
 		   $(".box-title").html(title);
 	   }) 
@@ -109,20 +109,20 @@
 	   if(!pageCurrent)pageCurrent=1;
 	   var params={"pageCurrent":pageCurrent}
 	   params.name=$("#searchNameId").val().trim();
-	   console.log(params);
+	//   console.log(params);
 	   $.getJSON(url,params,function(result){
-		   console.log(result);
+		  // console.log(result);
 		   //debugger
 		   doHandleResponseResult(result);
 	   });
    }
    
    function doHandleResponseResult(result){
-	   if(result.state==1){
+	   if(result.status==200){
 		  doSetTableBodyRows(result.data.records);
 		  doSetPagination(result.data);
 		}else{
-		  alert(result.message);
+		  alert(result.msg);
 	   }
    }
    //通过服务端返回的数据初始化页面
@@ -131,6 +131,7 @@
 	  var tBody=$("#tbodyId");
 	  tBody.empty();
 	  //2.迭代data内容将数据追加到tbody中
+	//  console.log(data);
 	  for(var i in data){
 		  var tr=$("<tr></tr>");
 		  tr.data("rowData",data[i]);
@@ -147,14 +148,14 @@
 		var id=rowData.id;
 		var params={"id":id};
 		//2.url
-		var url="cusConsultation/doDeleteObject.do"
+		var url="cusConsultation/doDeleteObject"
 		//3.ajax request
 		$.post(url,params,function(result){
-			if(result.state==1){
+			if(result.status==200){
 			//	alert(result.message);
 				doGetObjects();
 			}else{
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	   
@@ -162,13 +163,13 @@
    
    //获取返回的值
    function doCreateTds(row,i){
-	  // console.log(row);
+	//   console.log(row);
 	   var tds=
 	   "<td>"+(parseInt(i)+1)+"</td>"+
 	   "<td>"+row.name+"</td>"+
        "<td>"+row.tel+"</td>"+
-       "<td>"+"L:"+row.lD+"<br/>"+"R:"+row.rD+"</td>"+
-       "<td>"+"L:"+row.lCva+"<br/>"+"R:"+row.rCva+"</td>"+
+       "<td>"+"L:"+row.ld+"<br/>"+"R:"+row.rd+"</td>"+
+       "<td>"+"L:"+row.lcva+"<br/>"+"R:"+row.rcva+"</td>"+
        "<td>"+row.tutor+"</td>"+
        "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
        "<td><button type='button' class='btn-delete'>"+"删除"+"</button>"+
@@ -182,19 +183,19 @@
 		var rowData=$(this).parents("tr").data("rowData");
 		var id=rowData.id;
 		var params={"id":id};
-		console.log(params)
+	//	console.log(params)
 		
 		var consultationId={"consultationId":id}
-		$.getJSON("customer/doFindConsultationIdByConsultationId.do",consultationId,function(result){//JsonResult
-			console.log("111111");
-			console.log(result);
+		$.getJSON("customer/doFindConsultationByConsultationId",consultationId,function(result){//JsonResult
+		//	console.log("111111");
+		//	console.log(result);
 			if(result.data==0){
 				
 				//2.url
-				var url="cusConsultation/doFindObjectById.do";
+				var url="cusConsultation/doFindObjectById";
 				//3.ajax request
 				$.getJSON(url,params,function(result){//JsonResult
-				if(result.state==1){
+				if(result.status==200){
 					var customerData = {
 							"consultationId":result.data.id,
 							"name":result.data.name,
@@ -207,16 +208,17 @@
 					
 				//	console.log($("#mainContentId").data("customerData"));
 					var title = "添加用户";
-					$("#mainContentId").load("customer/doCustomerEditUI.do",function(){
+					console.log(customerData);
+					$("#mainContentId").load("customer/doCustomerEditUI",function(){
 						$(".box-title").html(title);
 					   });
 					}else{
-						alert(result.message);
+						alert(result.msg);
 					}
 				   });
 				
 				}else{
-					alert("已有数据，无法添加");
+					alert("已有数据,无法添加");
 				}
 			   });
 		

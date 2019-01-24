@@ -20,7 +20,4 @@ public class WebController {
 		  return "pages/common/page";
 	  }
 
-
-
-
 }

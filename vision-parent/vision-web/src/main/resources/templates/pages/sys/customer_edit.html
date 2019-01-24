@@ -1,196 +1,200 @@
 <!-- Horizontal Form -->
- <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title">添加用户</h3>
-      </div>
-      <!-- /.box-header -->
-      <!-- form start -->
-      <form class="form-horizontal">
-        <div class="box-body">
-          <div class="form-group">
-            <label for="nameId" class="col-sm-2 control-label">用户名</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="nameId" placeholder="姓名" maxlength="10">
-            </div>
-          </div>
-          
-          
-          <div class="form-group">
-            <label for="ageId" class="col-sm-2 control-label">年龄</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="ageId" placeholder="年龄" maxlength="3">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="birthdayId" class="col-sm-2 control-label" ">生日</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="birthdayId" placeholder="生日:1998/12/12" maxlength="10" ><!--readonly="readonly" onClick="WdatePicker()"  -->
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="genderId" class="col-sm-2 control-label">性别</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="genderId" placeholder="性别" maxlength="1">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="homeId" class="col-sm-2 control-label">家庭地址</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="homeId" placeholder="家庭地址" maxlength="30">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="schoolId" class="col-sm-2 control-label">学校地址</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="schoolId" placeholder="学校地址" maxlength="30">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="guardianId" class="col-sm-2 control-label">监护人</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="guardianId" placeholder="监护人(必填)" maxlength="10">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="telId" class="col-sm-2 control-label">电话</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="telId" placeholder="电话(必填)" maxlength="11">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="lastGuardianId" class="col-sm-2 control-label">次级监护人</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="lastGuardianId" placeholder="(选填)" maxlength="10">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="lastGuardianTelId" class="col-sm-2 control-label">备用电话</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="lastGuardianTelId" placeholder="(选填)" maxlength="11">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="remarkId" class="col-sm-2 control-label">信息备注</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="remarkId" placeholder="(选填)" maxlength="100">
-            </div>
-          </div>
-          
-            </div>
-          </div>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          <button type="button" class="btn btn-default btn-cancel">返回</button>
-          <button type="button" class="btn btn-info pull-right btn-save">保存</button>
-        </div>
-        <!-- /.box-footer -->
-      </form>
-    </div>
-<script type="text/javascript" src="bower_components/ztree/jquery.ztree.all.min.js"></script>
-<script type="text/javascript" src="bower_components/layer/layer.js"></script>
-<!-- 日期查看器，在生日旁 -->
-<script type="text/javascript" src="bower_components/My97DatePicker/WdatePicker.js"> </script>
-<script type="text/javascript">
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">添加用户</h3>
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal">
+		<div class="box-body" style="width: 800px;margin:0 150px;">
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">用户名</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="nameId"
+						placeholder="姓名" maxlength="10">
+				</div>
+			</div>
 
- $(document).ready(function(){
-	 //页面加载完成以后加载角色信息并初始化页面
-	// doLoadRoles();
-	 doInitFormData();
-	 //事件注册
-	 $(".box-footer")
-	 .on("click",".btn-cancel",doCancel)
-	 .on("click",".btn-save",doSaveOrUpdate);
-	 
-	 
- });
- /**改变该类的css属性，隐藏或显示 
-	  $("#treeLayer").css("display","none");
-  */
- function doCancel(){
-	$("#mainContentId").removeData("rowData");
-	$("#mainContentId").load("customer/doCustomerListUI.do");
- }
- function doSaveOrUpdate(){
-	 var rowData=$("#mainContentId").data("rowData");
-	 //1.获取表单数据
-	 var params=doGetEditFormData();
-	 if(rowData)params.id=rowData.id;
-	 //2.发起异步请求
-	 var insertUrl="customer/doSaveObject.do";
-	 var updateUrl="customer/doUpdateObject.do";
-	 var url=rowData?updateUrl:insertUrl;
-	// console.log(params);
-	 $.post(url,params,function(result){
-		 
-		 if(result.state==1){
-		//	 alert(result.message);
-			 doCancel();
-		 }else{
-			alert(result.message);
-		 }
-	 })
- }
- function doGetEditFormData(){
-	 //获取用户输入的数据
-	 var customerData = $("#mainContentId").data("customerData");
-	 if(customerData){
-		 var consultationId = customerData.consultationId;
-	 }
-	 var params={
-	    name:$("#nameId").val(),
-	    age:$("#ageId").val(),
-	    birthday:$("#birthdayId").val(),
-	    gender:$("#genderId").val(),
-	    home:$("#homeId").val(),
-	    school:$("#schoolId").val(),
-	    guardian:$("#guardianId").val(),
-	    tel:$("#telId").val(),
-	    lastGuardian:$("#lastGuardianId").val(),
-	    lastGuardianTel:$("#lastGuardianTelId").val(),
-	    remark:$("#remarkId").val(),
-	    consultationId:consultationId
-	 }
-	//console.log(params);
-	 return params;
- }
- 
- // function doLoadRoles(){
-//		  doInitFormData();//修改时
- //} 
-  
- function doInitFormData(){
-	 var data=$("#mainContentId").data("rowData");
-	 var customerData = $("#mainContentId").data("customerData");
-	 if(customerData){
-		 $("#nameId").val(customerData.name);
-		 $("#ageId").val(customerData.age);
-		 $("#genderId").val(customerData.gender);
-		 $("#telId").val(customerData.tel);
-	 }else if(!data){
-		 return;
-	 }else{
-    // if(!data)return;
-	 //初始化用户信息 
-	 $("#ageId").val(data.age);//.cusCustomer
-	 $("#nameId").val(data.name);
-	 $("#birthdayId").val(new Date(data.birthday).toLocaleString());
-	 $("#genderId").val(data.gender);
-	 $("#homeId").val(data.home);
-	 $("#schoolId").val(data.school);
-	 $("#guardianId").val(data.guardian);
-	 $("#telId").val(data.tel);
-	// console.log("+++"+data.tel);
-	 $("#lastGuardianId").val(data.lastGuardian);
-	 $("#lastGuardianTelId").val(data.lastGuardianTel);
-	 $("#remarkId").val(data.remark);   
-	 }
- }
+
+			<div class="form-group">
+				<label for="ageId" class="col-sm-2 control-label">年龄</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="ageId" placeholder="年龄"
+						maxlength="3">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="birthdayId" class="col-sm-2 control-label">生日</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="birthdayId"
+						placeholder="生日:1998/12/12" maxlength="10">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="genderId" class="col-sm-2 control-label">性别</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="genderId"
+						placeholder="性别" maxlength="1">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="homeId" class="col-sm-2 control-label">家庭地址</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="homeId"
+						placeholder="家庭地址" maxlength="30">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="schoolId" class="col-sm-2 control-label">学校地址</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="schoolId"
+						placeholder="学校地址" maxlength="30">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="guardianId" class="col-sm-2 control-label">监护人</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="guardianId"
+						placeholder="监护人(必填)" maxlength="10">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="telId" class="col-sm-2 control-label">电话</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="telId"
+						placeholder="电话(必填)" maxlength="11">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="lastGuardianId" class="col-sm-2 control-label">次级监护人</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="lastGuardianId"
+						placeholder="(选填)" maxlength="10">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="lastGuardianTelId" class="col-sm-2 control-label">备用电话</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="lastGuardianTelId"
+						placeholder="(选填)" maxlength="11">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="remarkId" class="col-sm-2 control-label">信息备注</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="remarkId"
+						placeholder="(选填)" maxlength="100">
+				</div>
+			</div>
+
+		</div>
+	</form>
+
+
+	<!-- /.box-body -->
+	<div class="box-footer">
+		<button type="button" class="btn btn-default btn-cancel">返回</button>
+		<button type="button" class="btn btn-info pull-right btn-save">保存</button>
+	</div>
+	<!-- /.box-footer -->
+</div>
+
+<script type="text/javascript"
+	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="bower_components/layer/layer.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				//页面加载完成以后加载角色信息并初始化页面
+				// doLoadRoles();
+				doInitFormData();
+				//事件注册
+				$(".box-footer").on("click", ".btn-cancel", doCancel).on(
+						"click", ".btn-save", doSaveOrUpdate);
+
+			});
+
+	function doCancel() {
+		$("#mainContentId").removeData("rowData");
+		$("#mainContentId").load("customer/doCustomerListUI");
+	}
+	function doSaveOrUpdate() {
+		var rowData = $("#mainContentId").data("rowData");
+		//1.获取表单数据
+		var params = doGetEditFormData();
+		if (rowData)
+			params.id = rowData.id;
+		//2.发起异步请求
+		var insertUrl = "customer/doSaveObject";
+		var updateUrl = "customer/doUpdateObject";
+		var url = rowData ? updateUrl : insertUrl;
+		// console.log(params);
+		$.post(url, params, function(result) {
+
+			if (result.status == 200) {
+				//	 alert(result.message);
+				doCancel();
+			} else {
+				alert(result.msg);
+			}
+		})
+	}
+	function doGetEditFormData() {
+		//获取用户输入的数据
+		var customerData = $("#mainContentId").data("customerData");
+		if (customerData) {
+			var consultationId = customerData.consultationId;
+		}
+		var params = {
+			name : $("#nameId").val(),
+			age : $("#ageId").val(),
+			birthday : $("#birthdayId").val(),
+			gender : $("#genderId").val(),
+			home : $("#homeId").val(),
+			school : $("#schoolId").val(),
+			guardian : $("#guardianId").val(),
+			tel : $("#telId").val(),
+			lastGuardian : $("#lastGuardianId").val(),
+			lastGuardianTel : $("#lastGuardianTelId").val(),
+			remark : $("#remarkId").val(),
+			consultationId : consultationId
+		}
+		//console.log(params);
+		return params;
+	}
+
+	function doInitFormData() {
+		var data = $("#mainContentId").data("rowData");
+		var customerData = $("#mainContentId").data("customerData");
+		if (customerData) {
+			$("#nameId").val(customerData.name);
+			$("#ageId").val(customerData.age);
+			$("#genderId").val(customerData.gender);
+			$("#telId").val(customerData.tel);
+		} else if (!data) {
+			return;
+		} else {
+			// if(!data)return;
+			//初始化用户信息 
+			$("#ageId").val(data.age);//.cusCustomer
+			$("#nameId").val(data.name);
+			$("#birthdayId").val(new Date(data.birthday).toLocaleString());
+			$("#genderId").val(data.gender);
+			$("#homeId").val(data.home);
+			$("#schoolId").val(data.school);
+			$("#guardianId").val(data.guardian);
+			$("#telId").val(data.tel);
+			// console.log("+++"+data.tel);
+			$("#lastGuardianId").val(data.lastGuardian);
+			$("#lastGuardianTelId").val(data.lastGuardianTel);
+			$("#remarkId").val(data.remark);
+		}
+	}
 </script>
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+

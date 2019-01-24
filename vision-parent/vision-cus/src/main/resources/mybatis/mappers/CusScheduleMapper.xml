@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vs.cus.mapper.CusScheduleMapper">
-
+	
+	<!-- 根据客户id(customer_id)查询总数 -->
+	<select id="findByCustomerId" parameterType="int" resultType="int">
+		select count(*) from cus_schedule 
+		where customer_id=#{id}
+	</select>
+	
 
 </mapper>

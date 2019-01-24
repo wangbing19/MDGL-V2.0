@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vs.vision.mapper.RemoteDiagnoseMapper">
+
+
+
+	<!-- 通过sql元素定义sql语句中的共性 -->
+	<sql id="queryWhereId">
+		<where>
+			<if test="customerName!=null and customerName!=''">
+				customer_name like concat("%",#{customerName},"%")
+			</if>
+
+			<!-- <if test="registerParentid !=1"> register_parentid= #{registerParentid} 
+				</if> <if test="registerParentid ==1"> register_parentid=1 </if> -->
+		</where>
+	</sql>
+
+
+
+	<resultMap id="expDiagnoseMap"
+		type="com.vs.vision.pojo.exp.ExpRemoteDiagnoseVo">
+		<!-- 关联查询 -->
+		<!-- association定义关联对象的封装规则 select:表明当前属性时调用什么select指定的方法查出的结果 column:指定将哪一列的值传给这个方法 
+			property:将column的值传入select方法查出的结果封装到property属性中 -->
+		<association property="expert" column="expert_id"
+			select="com.vs.vision.mapper.ExpertMapper.findId">
+		</association>
+	</resultMap>
+
+
+	<!-- 对应前端页面用户管理模块呈现页面, 从前端获取当前页码值的开始下标并返回指定长度的信息 和获取输入框中username的值 并在数据库进行分页查询返回查询的信息 -->
+	<select id="findPageObjects" resultMap="expDiagnoseMap">
+		select * from exp_remote_diagnose
+		<include refid="queryWhereId" />
+		order by gmt_create desc
+		limit #{startIndex},#{pageSize}
+		<!-- limit 子句为分页查询子句,第一个参数代表下标位置 -->
+	</select>
+
+
+	<!-- 查询对应客户姓名的数量,如果没输入客户姓名则查询远程诊断表中的所有数量 -->
+	<select id="getRowCount" resultType="int">
+		select count(*) from exp_remote_diagnose
+		<include refid="queryWhereId" />
+	</select>
+
+
+
+
+	<!-- 删除一条:获取选中的id并删除id对应的数据 -->
+	<!-- <delete id="delete" parameterType="int"> delete from exp_remote_diagnose 
+		where id in <foreach collection="ids" open="(" close=")" separator="," item="item"> 
+		#{item} </foreach> </delete> -->
+
+	<!-- 对应前端用户管理模块中的修改作用,将从前端获取的数据发送给数据库做修改 -->
+	<!-- <update id="update" parameterType="com.md.sys.entity.exp.ExpRemoteDiagnose"> 
+		update exp_remote_diagnose <set> <if test="deptSite!=null and deptSite!=''"> 
+		dept_site=#{deptSite}, </if> <if test="deptName!=null and deptName!=''"> 
+		dept_name=#{deptName}, </if> <if test="customerName!=null and customerName!=''"> 
+		customer_name=#{customerName}, </if> <if test="customerTel!=null and customerTel!=''"> 
+		customer_tel=#{customerTel}, </if> <if test="expertId!=null and expertId!=''"> 
+		expert_id=#{expertId}, </if> <if test="timeNumber!=null and timeNumber!=''"> 
+		time_number=#{timeNumber}, </if> <if test="sendName!=null and sendName!=''"> 
+		send_name=#{sendName}, </if> <if test="sendTel!=null and sendTel!=''"> send_tel=#{sendTel}, 
+		</if> modified_user=#{modifiedUser}, gmt_modified=now() </set> where id=#{id} 
+		</update> -->
+
+
+	<!-- 通过选择的id在修改页面获取远程诊断表对应id中的信息 -->
+	<!-- <select id="select" resultMap="expDiagnoseMap"> select * from exp_remote_diagnose 
+		where id=#{id} </select> -->
+
+	<!-- 是否解决的点击事件切换 -->
+	<!-- <update id="validById"> update exp_remote_diagnose set valid=#{valid}, 
+		modified_user=#{modifiedUser}, gmt_modified=now() where id=#{id} </update> -->
+</mapper>
