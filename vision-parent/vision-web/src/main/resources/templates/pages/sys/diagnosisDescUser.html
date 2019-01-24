@@ -30,8 +30,8 @@
 	<br> <br>
 
 	<div class="form-group" id="display_control">
-		<label for="descId" class="col-sm-2 control-label"><a
-			href="#" class="diagnosisApolo">症状处方：</a></label> <br> <br>
+		<label for="descId" class="col-sm-2 control-label"><a href="#"
+			class="diagnosisApolo">症状处方：</a></label> <br> <br>
 		<div class="col-sm-10">
 			<textarea id="descText" class="form-control" name="desc" cols="50"
 				rows="5" placeholder="症状处方..." readonly="readonly"></textarea>
@@ -76,13 +76,13 @@
 		$("#menuLayer").css("display", "block");
 		var url = "diagnosis/doFindZtreeMenuNodes.do";
 		$.getJSON(url, function(result) {
-			if (result.state == 1) {
+			if (result.status == 200) {
 				//使用init函数需要先引入ztree对应的js文件
 				//console.log(result.data);
 				zTree = $.fn.zTree.init($("#menuTree"), setting, result.data);
 
 			} else {
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	}
@@ -104,7 +104,7 @@
 		$("#menuLayer").css("display", "none");
 	}
 	function doCancel() {
-		$("#mainContentId").load("customer/doCustomerListUI.do");
+		$("#mainContentId").load("customer/doCustomerListUI"); 
 	}
 
 	function downloadDesc() {
@@ -113,9 +113,8 @@
 			"userId" : userDesc.userId
 		}; //封装用户的id
 		//alert("用户的id:"+userDesc.userId)
-		$.post("diagnosisDescuser/doFindUserIdIsExiste.do", params0, function(
-				result) { //异步加载查询数据库中是否存在该用户
-			if (result.state == 1) {
+		$.post("diagnosis/doFindUserIdIsExiste.do", params0, function(result) { //异步加载查询数据库中是否存在该用户
+			if (result.status == 200) {
 				var UserisExiste = result.data;//判断用户是否存在
 				//alert("是否存在："+UserisExiste);				
 				var params = {
@@ -124,14 +123,14 @@
 				}; //封装用户id
 
 				if (!UserisExiste) { //用户存在，则修改					
-					$.post("diagnosisDescuser/doInsertDescObject.do", params,
+					$.post("diagnosis/doInsertDescObject.do", params,
 							function() {
 								//插入成功
 							})
 
 				} else { //用户不存在，则插入
-					$.post("diagnosisDescuser/doUpdateDescObjectByUserId.do",
-							params, function(re) {
+					$.post("diagnosis/doUpdateDescObjectByUserId.do",
+							params, function() {
 								//修改成功
 							})
 				}
@@ -141,7 +140,7 @@
 			"diagnosisId" : $("#parentUserDesc").data("parentId")
 		};
 		$.post("diagnosis/doFindDescObject.do", params, function(result) { //通过症状id查询症状描述
-			if (result.state == 1) {
+			if (result.status == 200) {
 				$("#descText").val(result.data.diagnosisDesc);
 			}
 		})
@@ -153,9 +152,9 @@
 		var params = {
 			"userId" : $("#mainContentId").data("rowUserData").userId
 		};
-		$.post("diagnosisDescuser/doDeleteDescObjectByUserId.do", params,
+		$.post("diagnosis/doDeleteDescObjectByUserId.do", params,
 				function(result) {
-					if (result.state == 1) {
+					if (result.status == 200) {
 						alert("删除成功");
 						//$("#mainContentId").data("isExiste",0);  
 						$("#parentUserDesc").data("parentId", null);
@@ -175,71 +174,39 @@
 			"userId" : userDesc.userId
 		};
 		//根据用户查询表里面是否存在该用户
-		$
-				.post(
-						"diagnosisDescuser/doFindUserIdIsExiste.do",
-						params,
-						function(result) {
-							if (result.state == 1) {
-								if (result.data == null) { //数据库中不存在
-									$("#mainContentId").data("isExiste", 0);
-									$("#parentUserDesc").val("没有症状");
-									$("#descText").val("没有处方，请添加症状或下载");
-								} else { //数据库中存在该用户
-									$("#mainContentId").data("isExiste", 1);
-									$
-											.post(
-													"diagnosisDescuser/doFindIsHaveDescObjectByUserId.do",
-													params,
-													function(result1) { //查看数据的用户是否有绑定症状
-														if (result1.state == 1) {
-															if (result1.data == null) { //没有绑定症状  返回的是症状id
-																$(
-																		"#parentUserDesc")
-																		.val(
-																				"没有症状");
-																$("#descText")
-																		.val(
-																				"没有处方，请添加症状或下载");
-															} else { //绑定了症状
-																var params1 = {
-																	"id" : result1.data
-																};
-																var params2 = {
-																	"diagnosisId" : result1.data
-																};
-																$
-																		.post(
-																				"diagnosis/doFindObject.do",
-																				params1,
-																				function(
-																						result2) { //通过症状id查询症状名字
-																					if (result2.state == 1) {
-																						$(
-																								"#parentUserDesc")
-																								.val(
-																										result2.data.symptomName);
-																					}
-																				})
-																$
-																		.post(
-																				"diagnosis/doFindDescObject.do",
-																				params2,
-																				function(
-																						result3) { //通过症状id查询症状描述
-																					if (result3.state == 1) {
-																						$(
-																								"#descText")
-																								.val(
-																										result3.data.diagnosisDesc);
-																					}
-																				})
-															}
-														}
-													})
-								}
+		$.post("diagnosis/doFindUserIdIsExiste.do",params,function(result) {
+			if (result.status == 200) {
+				if (result.data == null) { //数据库中不存在
+					$("#mainContentId").data("isExiste", 0);
+						$("#parentUserDesc").val("没有症状");
+						$("#descText").val("没有处方，请添加症状或下载");
+				} 
+				else { //数据库中存在该用户
+					$("#mainContentId").data("isExiste", 1);
+					$.post("diagnosis/doFindIsHaveDescObjectByUserId.do",params,function(result1) { //查看数据的用户是否有绑定症状
+						if (result1.status == 200) {
+							if (result1.data == null) { //没有绑定症状  返回的是症状id
+								$("#parentUserDesc").val("没有症状");
+								$("#descText").val("没有处方，请添加症状或下载");
+							} else { //绑定了症状
+								var params1 = {"id" : result1.data};
+								var params2 = {"diagnosisId" : result1.data};
+								$.post("diagnosis/doFindObject.do",params1,function(result2) { //通过症状id查询症状名字
+									if (result2.status == 200) {
+										$("#parentUserDesc").val(result2.data.symptomName);
+									}
+								})
+								$.post("diagnosis/doFindDescObject.do",params2,function(result3) { //通过症状id查询症状描述
+									if (result3.status == 200) {
+										$("#descText").val(result3.data.diagnosisDesc);
+									}
+								})
 							}
-						})
+				        }
+					})
+				}
+			}
+		})
 	}
 </script>
 <script>

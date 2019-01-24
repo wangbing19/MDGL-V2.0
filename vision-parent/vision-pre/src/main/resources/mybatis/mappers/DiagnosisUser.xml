@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vs.pre.mapper.DiagnosisUserMapper">
+	<!-- 向用户插入用户与症状的关系 -->
+	<insert id="insertUserDiagbosisObject">
+	insert into pre_diagnosis_user values(null,#{userId},#{diagnosisId},now(),now())
+	</insert>
+	
+	<!-- 给指定用户写入症状信息（数据更新） -->
+	<update id="updateUserDiagbosisObject">
+	update pre_diagnosis_user set diagnosis_id=#{diagnosisId},gmt_modified=now() where user_id=#{userId}
+	</update>
+	
+</mapper>

@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.vs.vision.pojo.pre.DiagnosisDesc;
 import com.vs.vision.pojo.pre.DiagnosisResult;
+import com.vs.vision.pojo.pre.DiagnosisUser;
 import com.vs.vision.vo.DiagnosisDate;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.Node;
@@ -71,7 +73,7 @@ public class WebDiagnosisResultController {
 	}
 	
 	//请求后台加载ztree节点资源
-	@RequestMapping("/doFindZtreeMenuNodes.do")
+	@RequestMapping("/doFindZtreeMenuNodes.do") 
 	@ResponseBody
 	public JsonResult doFindZtreeMenuNodes() {
 		System.out.println("请求后台加载ztree资源");
@@ -131,6 +133,71 @@ public class WebDiagnosisResultController {
 		String url = local_url+"/diagnosisResult/insertObject";
 		String insertMessage = restTemplate.postForObject(url, diagnosisResult,String.class);
 		return JsonResult.oK(insertMessage);
+	}
+	//跳转用户处方界面
+	@RequestMapping("/doDiagnosisDescUser")
+	public String doDiagnosisDescUser() {
+		return "pages/sys/diagnosisDescUser";
+	}
+	//查询用户症状关系表中是否存在选中的用户
+	@RequestMapping("/doFindUserIdIsExiste.do")
+	@ResponseBody
+	public JsonResult doFindUserIdIsExiste(Integer userId) {
+		System.out.println("前台请求查询用户症状关系表中是否存在用户："+userId);
+		String url = local_url+"/diagnosisUser/findUserIdIsExiste";
+		MultiValueMap map = new LinkedMultiValueMap<>();
+		map.add("userId", userId);
+		DiagnosisUser userIsExiste = restTemplate.postForObject(url, map, DiagnosisUser.class);
+		System.out.println("前台查询用户是否存在返回的数据："+userIsExiste);
+		return JsonResult.oK(userIsExiste);
+	}
+	
+	//根据用户的id查询该用户是否绑定的有症状
+	@RequestMapping("/doFindIsHaveDescObjectByUserId.do")
+	@ResponseBody
+	public JsonResult doFindIsHaveDescObjectByUserId(Integer userId) {	
+		String url = local_url+"/diagnosisUser/findUserIdIsExiste";
+		MultiValueMap map = new LinkedMultiValueMap<>();
+		map.add("userId", userId);
+		DiagnosisUser userIsExiste = restTemplate.postForObject(url, map, DiagnosisUser.class);
+		return JsonResult.oK(userIsExiste.getDiagnosisId());
+	}
+	//根据用户id删除症状关系
+	@RequestMapping("/doDeleteDescObjectByUserId.do")
+	@ResponseBody
+	public JsonResult doDeleteDescObjectByUserId(Integer userId) {
+		System.out.println("前台请求删除用户："+userId+"的症状");
+		String url = local_url + "/diagnosisUser/deleteDescObjectByUserId";
+		MultiValueMap map = new LinkedMultiValueMap<>();
+		map.add("userId", userId);
+		String deleteMessage = restTemplate.postForObject(url, map, String.class);
+		return JsonResult.oK(deleteMessage);
+	}
+	
+	//新增用户症状关系表
+	@RequestMapping("/doInsertDescObject.do")
+	@ResponseBody
+	public JsonResult doInsertDescObject(Integer userId,Integer diagnosisId) {
+		System.out.println("点击下载按钮后前台请求新增用户症状关系表：userid:"+userId+"diagnosisId:"+diagnosisId);
+		String url = local_url+"/diagnosisUser/insertUserDiagbosisObject";
+		MultiValueMap map = new LinkedMultiValueMap<>();
+		map.add("userId", userId);
+		map.add("diagnosisId", diagnosisId);
+		String insertMessage = restTemplate.postForObject(url, map, String.class);
+		return JsonResult.oK();
+	}
+	
+	//更新用户症状关系表
+	@RequestMapping("/doUpdateDescObjectByUserId.do")
+	@ResponseBody
+	public JsonResult doUpdateDescObjectByUserId(Integer userId,Integer diagnosisId) {
+		System.out.println("点击下载按钮后前台请求更新用户症状关系表：userid:"+userId+"diagnosisId:"+diagnosisId);
+		String url = local_url+"/diagnosisUser/updateUserDiagbosisObject";
+		MultiValueMap map = new LinkedMultiValueMap<>();
+		map.add("userId", userId);
+		map.add("diagnosisId", diagnosisId);
+		String insertMessage = restTemplate.postForObject(url, map, String.class);
+		return JsonResult.oK();
 	}
 }
 
