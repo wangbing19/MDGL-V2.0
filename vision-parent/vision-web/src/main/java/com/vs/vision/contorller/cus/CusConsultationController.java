@@ -1,7 +1,7 @@
 package com.vs.vision.contorller.cus;
 
 import com.vs.vision.pojo.cus.CusConsultation;
-import com.vs.vision.pojo.cus.vo.CusConsultationVo;
+import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -20,7 +20,7 @@ public class CusConsultationController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @RequestMapping("doCusConsultationListUI")
+    @RequestMapping("/doCusConsultationListUI")
     public String doCusConsultationListUI(){
         return "pages/sys/cusConsultation_list";
     }
@@ -28,13 +28,13 @@ public class CusConsultationController {
     /**基于用户/电话及当前页码值条件查询用户信息*/
     @RequestMapping("/doFindPageObjects")
     @ResponseBody
-    public JsonResult FindPageObjects(CusConsultationVo cusConsultationVo){
+    public JsonResult FindPageObjects(CusVo cusVo){
         try {
         	//获取登录用户id及上级id
-        	cusConsultationVo.setUserId(0);
-        	cusConsultationVo.setUserParentId(0);
+        	cusVo.setUserId(0);
+        	cusVo.setUserParentId(0);
         	
-        	PageObject<CusConsultation> pageObject = restTemplate.postForObject(provider_url+"/cusConsultation/findPageObjects", cusConsultationVo, PageObject.class);
+        	PageObject<CusConsultation> pageObject = restTemplate.postForObject(provider_url+"/cusConsultation/findPageObjects", cusVo, PageObject.class);
         	if(!(pageObject.getRecords().size()==0)) {
         		return JsonResult.oK(pageObject);
         	}
@@ -45,14 +45,14 @@ public class CusConsultationController {
     }
     
     /**跳转到修改或新增信息*/
-	@RequestMapping("doCusConsultationEditUI")
+	@RequestMapping("/doCusConsultationEditUI")
 	public String doCusConsultationEditUI() {
 		return "pages/sys/cusConsultation_edit";
 	}
     
 	
 	/**将CusCustomer类型数据添加到数据库*/
-	@RequestMapping("doSaveObject")
+	@RequestMapping("/doSaveObject")
 	@ResponseBody
 	public JsonResult doSaveObject(CusConsultation cusConsultation) {
 		try {
@@ -69,7 +69,7 @@ public class CusConsultationController {
 	}
 	
 	/**基于id删除咨询表信息*/
-	@RequestMapping("doDeleteObject")
+	@RequestMapping("/doDeleteObject")
 	@ResponseBody
 	public JsonResult doDeleteObject(Integer id) {
 		try {
@@ -84,7 +84,7 @@ public class CusConsultationController {
 	}
 	
 	/**基于咨询表id,查询相关id所有信息*/
-	@RequestMapping("doFindObjectById")
+	@RequestMapping("/doFindObjectById")
 	@ResponseBody
 	public JsonResult doFindObjectById(Integer id) {
 		try {
@@ -99,7 +99,7 @@ public class CusConsultationController {
 	}
 	
 	/**基于咨询表id更改用户信息*/
-	@RequestMapping("doUpdateObject")
+	@RequestMapping("/doUpdateObject")
 	@ResponseBody
 	public JsonResult doUpdateObject(CusConsultation cusConsultation) {
 		try {

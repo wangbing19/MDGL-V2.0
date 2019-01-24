@@ -66,7 +66,7 @@
 			var rowData=$(this).parents("tr").data("rowData");
 			var id=rowData.id;
 			 title="修改咨询表";
-			console.log("id="+id)
+		//	console.log("id="+id)
 		   //基于id进行查询并加载编辑页面
 		   doFindObjectById(id,title);
 	   }
@@ -109,7 +109,7 @@
 	   if(!pageCurrent)pageCurrent=1;
 	   var params={"pageCurrent":pageCurrent}
 	   params.name=$("#searchNameId").val().trim();
-	   console.log(params);
+	//   console.log(params);
 	   $.getJSON(url,params,function(result){
 		  // console.log(result);
 		   //debugger
@@ -131,7 +131,7 @@
 	  var tBody=$("#tbodyId");
 	  tBody.empty();
 	  //2.迭代data内容将数据追加到tbody中
-	  console.log(data);
+	//  console.log(data);
 	  for(var i in data){
 		  var tr=$("<tr></tr>");
 		  tr.data("rowData",data[i]);
@@ -163,7 +163,7 @@
    
    //获取返回的值
    function doCreateTds(row,i){
-	   console.log(row);
+	//   console.log(row);
 	   var tds=
 	   "<td>"+(parseInt(i)+1)+"</td>"+
 	   "<td>"+row.name+"</td>"+

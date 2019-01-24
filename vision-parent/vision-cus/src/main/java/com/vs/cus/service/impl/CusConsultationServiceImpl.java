@@ -5,7 +5,7 @@ import com.vs.cus.mapper.CusConsultationMapper;
 import com.vs.cus.service.CusConsultationService;
 import com.vs.vision.exception.ServiceException;
 import com.vs.vision.pojo.cus.CusConsultation;
-import com.vs.vision.pojo.cus.vo.CusConsultationVo;
+import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.vo.PageObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +22,17 @@ public class CusConsultationServiceImpl implements CusConsultationService {
 
 	/**基于用户/电话及当前页码值条件查询用户信息*/
 	@Override
-	public PageObject<CusConsultation> findPageObjects(CusConsultationVo cusConsultationVo) {
+	public PageObject<CusConsultation> findPageObjects(CusVo cusVo) {
 
-		String name = cusConsultationVo.getName();
+		String name = cusVo.getName();
 		if("".equals(name)) {
 			name = null;
 		}
-		String tel = cusConsultationVo.getTel();
-		Integer pageCurrent = cusConsultationVo.getPageCurrent();
+		String tel = cusVo.getTel();
+		Integer pageCurrent = cusVo.getPageCurrent();
 		//	System.out.println(pageCurrent);
-		int userId = cusConsultationVo.getUserId();
-		int userParentId = cusConsultationVo.getUserParentId();
+		int userId = cusVo.getUserId();
+		int userParentId = cusVo.getUserParentId();
 
 		//1.数据合法性验证
 		if(pageCurrent==null||pageCurrent<=0)

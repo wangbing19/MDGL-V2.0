@@ -2,7 +2,7 @@ package com.vs.cus.controller;
 
 import com.vs.cus.service.CusConsultationService;
 import com.vs.vision.pojo.cus.CusConsultation;
-import com.vs.vision.pojo.cus.vo.CusConsultationVo;
+import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.vo.PageObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class CusConsultationController {
     /**基于用户/电话及当前页码值条件查询用户信息*/
     @RequestMapping("/findPageObjects")
     @ResponseBody
-    public PageObject<CusConsultation> findPageObjects(@RequestBody CusConsultationVo cusConsultationVo){
+    public PageObject<CusConsultation> findPageObjects(@RequestBody CusVo cusVo){
     	try {
-    		 return cusConsultationService.findPageObjects(cusConsultationVo);
+    		 return cusConsultationService.findPageObjects(cusVo);
 		} catch (Exception e) {
 			System.out.println("基于用户/电话及当前页码值条件查询用户信息=============错误=================");
 		}

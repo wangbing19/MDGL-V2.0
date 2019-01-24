@@ -50,7 +50,7 @@
 </div>
 <script type="text/javascript">
    $(document).ready(function(){
-	   $("#pageId").load("doPageUI.do",function(){
+	   $("#pageId").load("doPageUI",function(){
 		   $("#mainContentId").removeData("rowData");
 		   doGetObjects();
 	   });
@@ -88,11 +88,11 @@
 	   var url="customer/doFindObjectById.do";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
+		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
 	          doLoadPage(title);
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
@@ -118,14 +118,14 @@
 	   //ajax request
        var btn=$(this);//获取点击的button对象
 	   $.post(url,params,function(result){
-    	   if(result.state==1){
+    	   if(result.status==200){
     		 //  alert(result.message);
     		 
     		   doGetObjects();//重新查询刷新
     		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
     		  // doEditRow(btn,rowData.state);
     	   }else{
-    		   alert(result.message);
+    		   alert(result.msg);
     	   }
        })    
    }    
@@ -150,7 +150,7 @@
    }
    //页面加载完成异步加载当前页数据
    function doGetObjects(){
-	   var url="customer/doFindPageObjects.do";
+	   var url="customer/doFindPageObjects";
 	   var pageCurrent=$("#pageId").data("pageCurrent");
 	   if(!pageCurrent)pageCurrent=1;
 	   var params={"pageCurrent":pageCurrent}
@@ -162,11 +162,11 @@
 	   });
    }
    function doHandleResponseResult(result){
-	   if(result.state==1){
+	   if(result.status==200){
 		  doSetTableBodyRows(result.data.records);
 		  doSetPagination(result.data);
 		}else{
-		  alert(result.message);
+		  alert(result.msg);
 	   }
    }
    //通过服务端返回的数据初始化页面
@@ -198,11 +198,11 @@
 	   var url="customer/doDeleteObject.do"
 	   //3.ajax request
 	   $.post(url,params,function(result){
-		   if(result.state==1){
+		   if(result.status==200){
 			//   alert(result.message);
 			   doGetObjects();
 		   }else{
-			   alert(result.message);
+			   alert(result.msg);
 		   }
 	   })
 	   
@@ -239,17 +239,17 @@
 			  return;
 	   }
 	   var params={"id":id};
-	   var url="customer/doFindObjectById.do";
+	   var url="customer/doFindObjectById";
 	   $.post(url,params,function(result){
-		   if(result.state==1){
+		   if(result.status==200){
 			   var descObject={
 					   "userId":result.data.id,
 					   "userName":result.data.name,
 					   "userPhone":result.data.tel};
 			  $("#mainContentId").data("rowUserData",descObject); 
-			  $("#mainContentId").load("diagnosisDescuser/doDiagnosisDescUserUI.do");
+			  $("#mainContentId").load("diagnosisDescuser/doDiagnosisDescUserUI");
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   })
    }
@@ -258,24 +258,24 @@
 	   var rowData=$(this).parents("tr").data("rowData");
 	   var id=rowData.id;
 	   var params={"id":id};
-	   var url="customer/doFindObjectById.do";
+	   var url="customer/doFindObjectById";
 	   $.post(url,params,function(result){
-		   if(result.state==1){
+		   if(result.status==200){
 			   var params={"id":result.data.consultationId};
-			   var url="cusConsultation/doFindObjectById.do";
+			   var url="cusConsultation/doFindObjectById";
 			   $.getJSON(url,params,function(result){
-				   if(result.state==1){
+				   if(result.status==200){
 					  $("#mainContentId").data("rowData",result.data); 
-					  var url="cusConsultation/doCusConsultationEditUI.do";
+					  var url="cusConsultation/doCusConsultationEditUI";
 					  $("#mainContentId").load(url,function(){
 						  $(".box-title").html("查看/修改 咨询表");
 					  }) 
 				   }else{
-					  alert(result.message);
+					  alert(result.msg);
 				   }
 			   });  
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   })
    }
@@ -298,14 +298,14 @@
 	   console.log(params);
 	   var url="cusDiagnose/doFindObjectByCustomerId.do";
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
+		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
 			  var url="cusDiagnose/doCusDiagnoseEditUI.do";
 			   $("#mainContentId").load(url,function(){
 				   $(".box-title").html("查看/修改 诊断表");
 			   }) 
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
