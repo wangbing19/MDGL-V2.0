@@ -18,7 +18,7 @@ public interface CusConsultationMapper extends BaseMapper<CusConsultation> {
 	 */
 	List<CusConsultation> findPageObjects(
 			@Param("name")String name,
-			@Param("tel")String tel,
+		//	@Param("tel")String tel,
 			@Param("startIndex")Integer startIndex,
 			@Param("pageSize")Integer pageSize);
 }
