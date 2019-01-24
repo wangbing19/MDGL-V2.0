@@ -132,6 +132,12 @@ public class WebDiagnosisResultController {
 		String insertMessage = restTemplate.postForObject(url, diagnosisResult,String.class);
 		return JsonResult.oK(insertMessage);
 	}
+	//跳转用户处方界面
+	@RequestMapping("/doDiagnosisDescUser")
+	@ResponseBody
+	public String doDiagnosisDescUser() {
+		return "pages/sys/diagnosisDescUser";
+	}
 }
 
 
