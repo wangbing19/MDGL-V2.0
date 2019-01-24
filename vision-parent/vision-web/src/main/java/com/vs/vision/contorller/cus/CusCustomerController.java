@@ -35,7 +35,7 @@ public class CusCustomerController {
 			cusVo.setUserId(0);
 			cusVo.setUserParentId(0);
 			PageObject<CusCustomer> pageObject = restTemplate.postForObject(provider_url+"/customer/findPageObjects", cusVo, PageObject.class);
-			if(!(pageObject.getRecords().size()==0)) {
+			if(pageObject.getRecords().size()!=0) {
 				return JsonResult.oK(pageObject);
 			}
 		} catch (Exception e) {

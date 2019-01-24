@@ -1,6 +1,7 @@
 package com.vs.vision.pojo.cus;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -13,8 +14,21 @@ import java.util.Date;
 @TableName("cus_diagnose")
 public class CusDiagnose {
 
+	/**客户姓名*/
+	@TableField(exist=false)	//mybatis入库操作时,忽略该字段
+	private String customerName;
+	/**客户电话*/
+	@TableField(exist=false)	//mybatis入库操作时,忽略该字段
+	private String customerTel;
+	
     @TableId(type = IdType.AUTO)
     private int id; /**序号*/
+    /**门店id*/
+    private Integer userId;
+    /**上级门店id*/
+    private Integer userParentId;
+    /**客户表id*/
+    private Integer customerId;
     /**右眼球面镜（近视）*/
     private double rDs;
     /**右眼柱面镜（散光）*/
@@ -65,10 +79,6 @@ public class CusDiagnose {
     private String parentCooperationDuringTraining;
     /**诊断师*/
     private String diagnostics;
-    /**门店/用户id*/
-    private int userId;
-    /**客户表id*/
-    private int customerId;
     /**建表时间*/
     private Date gmtCreate;
     /**修改时间*/
