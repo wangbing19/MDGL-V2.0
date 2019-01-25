@@ -32,18 +32,15 @@ public class CusScheduleController {
 	}
 	
 	/**基于id删除课程信息*/
-	@RequestMapping("/doDeleteObject")
+	@RequestMapping("/deleteObject")
 	@ResponseBody
-	public JsonResult doDeleteObject(Integer id) {
+	public Integer deleteObject(@RequestBody Integer id) {
 		try {
-		//	Integer rows = restTemplate.postForObject(provider_url+"/schedule/deleteObject", id, Integer.class);
-		//	if(rows !=0 && rows !=null) {
-		//		return JsonResult.oK();
-		//	}
+			return cusScheduleService.deleteObject(id);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("基于id删除课程信息=============错误=================");
 		}
-		return JsonResult.build(201, "该数据可能已经被删除");
+		return null;
 	}
 	
 }
