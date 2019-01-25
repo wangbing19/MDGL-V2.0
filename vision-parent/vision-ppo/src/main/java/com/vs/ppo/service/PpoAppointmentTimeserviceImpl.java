@@ -48,22 +48,31 @@ public class PpoAppointmentTimeserviceImpl implements PpoAppointmentTimeservice{
 		String parseTime = null;
 		parseTime = formatter.format(strDate);
 		parseTime=parseTime.replace(" ","T");
-		System.out.println("66666666666"+parseTime);
+		//System.out.println("66666666666"+parseTime);
 		return parseTime;
 	}
+	
+	
 	@Override
 	public Integer saveTime(PpoAppTime ppoAppTime) {
-		
+		 Integer appointmentId = ppoAppTime.getAppointmentId();
+		 QueryWrapper<PpoAppointmentTime> queryWrapper = new QueryWrapper();
+		 queryWrapper.eq("appointment_id", appointmentId);
+		 ppoAppointmentTimeMapper.delete(queryWrapper);
 	 PpoAppointmentTime ppoAppointmentTime =new PpoAppointmentTime();
 	// System.out.println("11111111111111"+dateFormat(ppoAppTime.getStartTime()));
-	 //System.out.println("22222222222222"+dateFormat(ppoAppTime.getEndTime()));
+	// System.out.println("22222222222222"+dateFormat(ppoAppTime.getEndTime()));
 	 ppoAppointmentTime.setStartTime(dateFormat(ppoAppTime.getStartTime()));
 	 ppoAppointmentTime.setEndTime(dateFormat(ppoAppTime.getEndTime()));
 	 ppoAppointmentTime.setGmtCreate(new Date());
 	 ppoAppointmentTime.setGmtModified(ppoAppointmentTime.getGmtCreate());
+	 ppoAppointmentTime.setAppointmentId(ppoAppTime.getAppointmentId());
 	 int insert = ppoAppointmentTimeMapper.insert(ppoAppointmentTime);
 		return insert;
 	}
+	
+	
+	
 	@Override
 	public Integer updateTime(PpoAppTime ppoAppTime) {
 		//通过用户Id删除数据
@@ -79,24 +88,27 @@ public class PpoAppointmentTimeserviceImpl implements PpoAppointmentTimeservice{
 		 ppoAppointmentTime.setGmtCreate(new Date());
 		 ppoAppointmentTime.setGmtModified(ppoAppointmentTime.getGmtCreate());
 		 int insert = ppoAppointmentTimeMapper.insert(ppoAppointmentTime);
-		
 		return insert;
 	}
+	
+	
+	
 	@Override
 	public List<PpoAppTime> findTime(PpoAppTime ppoAppTime) {
-		PpoAppTime ppoAppTimes=new PpoAppTime();
+	//	System.out.println(ppoAppTime.toString());
 		List<PpoAppTime> result=new ArrayList<>();
 		Integer appointmentId = ppoAppTime.getAppointmentId();
 		QueryWrapper<PpoAppointmentTime> queryWrapper = new QueryWrapper();
 		queryWrapper.eq("appointment_id", appointmentId);
 		List<PpoAppointmentTime> selectList = ppoAppointmentTimeMapper.selectList(queryWrapper);
 		for (PpoAppointmentTime ppoAppointmentTime : selectList) {
+			PpoAppTime ppoAppTimes=new PpoAppTime();
 			ppoAppTimes.setStartTime(formatDate(ppoAppointmentTime.getStartTime()));
 			ppoAppTimes.setEndTime(formatDate(ppoAppointmentTime.getEndTime()));
-			ppoAppTimes.setAppointmentId(ppoAppointmentTime.getAppointmentId());
+		//	ppoAppTimes.setAppointmentId(ppoAppointmentTime.getAppointmentId());
 			result.add(ppoAppTimes);
-			
 		}
+		//System.out.println(result.toString());
 		return result;
 	}
 

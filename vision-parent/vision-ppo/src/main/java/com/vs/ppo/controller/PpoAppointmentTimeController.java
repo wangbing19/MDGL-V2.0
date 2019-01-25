@@ -15,7 +15,11 @@ import com.vs.vision.pojo.ppo.vo.PpoAppTime;
 public class PpoAppointmentTimeController {
 	@Autowired
 	private PpoAppointmentTimeservice ppoAppointmentTimeservice;
-	
+	/**
+	 * 保存训练师时间
+	 * @param ppoAppTime
+	 * @return
+	 */
 	@RequestMapping("/saveTime")
 	@ResponseBody
 	public Integer saveTime(@RequestBody PpoAppTime ppoAppTime) {
@@ -27,6 +31,12 @@ public class PpoAppointmentTimeController {
 		}
 		return null;
 	}
+	
+	/**
+	 * 修改训练师时间
+	 * @param ppoAppTime
+	 * @return
+	 */
 	@RequestMapping("/UpdateTime")
 	@ResponseBody
 	public Integer doupdateappointmentTime(@RequestBody PpoAppTime ppoAppTime) {
@@ -40,6 +50,11 @@ public class PpoAppointmentTimeController {
 		return null;
 	}
 	
+	/**
+	 * 通过id查询该训练师的训练时间
+	 * @param ppoAppTime
+	 * @return
+	 */
 	@RequestMapping("/findTime")
 	@ResponseBody
 	public List<PpoAppTime> findappointmentTime(@RequestBody PpoAppTime ppoAppTime) {
