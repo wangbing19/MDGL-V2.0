@@ -195,7 +195,7 @@
 						</span> </a>
 						<ul class="treeview-menu">
 							<li><a id="load-dept-id">充值记录</a></li>
-							<li><a id="load-dept-id">充值类型</a></li>
+							<li><a id="load-activity-id">充值类型</a></li>
 						</ul></li>
 					<!-- ************************************************** -->
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
@@ -309,6 +309,7 @@
 				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI.do")
 				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList.do")
 				doLoadUI("load-cus-schedule-id","schedule/doScheduleListUI")
+				doLoadUI("load-activity-id","activity/doLoadActivityUI.do")
 			});
 			function doLoadUI(id, url) {
 				$("#" + id).click(function() {

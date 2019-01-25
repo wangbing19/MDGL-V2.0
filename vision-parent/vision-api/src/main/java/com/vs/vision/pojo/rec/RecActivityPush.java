@@ -16,8 +16,6 @@ public class RecActivityPush {
 	private Long id;
 	/**标题*/
 	private String title;
-	/**内容*/
-	private String content;
 	/**充值金额*/
 	private Double payAmount;
 	/**赠送金额*/
