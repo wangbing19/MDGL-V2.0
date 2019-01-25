@@ -30,9 +30,9 @@ public class CusSchedule {
     /**课程训练数*/
     private Integer courseTraining;
     /**课程项目数*/
-    private Double numberOfCourse;
+    private Integer numberOfCourse;
     /**总价格*/
-    private Integer totalPrice;
+    private Double totalPrice;
     /**诊断师*/
     private String diagnostics;
     /**建表时间*/
