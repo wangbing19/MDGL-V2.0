@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.vs.vision.annoation.RequiresLog;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.sys.RestTemplateParmas;
 
@@ -47,6 +48,7 @@ public class SysLogController {
 	 * @param page
 	 * @return
 	 */
+	@RequiresLog("2019日志查询")
 	@RequestMapping("doFindPageObjects.do")
 	@ResponseBody
 	public JsonResult doFindPageObjects(String username, @RequestParam(value = "pageCurrent", required = false) Integer pageCurrent) {

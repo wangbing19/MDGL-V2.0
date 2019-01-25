@@ -54,4 +54,10 @@ public class LogServiceImpl implements LogService{
 		pageObject.setPageCount(pageCount);
 		return pageObject;
 	}
+
+	@Override
+	public void insertObject(Logs log) {
+		logsMapper.insertObject(log);
+		
+	}
 }

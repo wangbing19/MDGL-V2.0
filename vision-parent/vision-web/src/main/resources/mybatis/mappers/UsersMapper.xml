@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vs.vision.mapper.UsersMapper" >
+ 	
+ 	<!-- 基于用户名查找用户信息 -->
+	<select id="findUserByUserName"
+		resultType="com.vs.vision.pojo.sys.Users">
+		select *
+		from sys_users
+		where username=#{username}
+	</select>
+
+
+	<select id="findObjectByColumn" resultType="int">
+		select count(*)
+		from
+		sys_users
+		where ${columnName}=#{columnValue}
+	</select>
+
+	<update id="doUpdateObject">
+		update sys_users
+		<set>
+			<if test="customerLimit!=null and customerLimit!=''">
+				customer_limit=#{customerLimit},
+			</if>
+			<if test="deptLimit!=null and deptLimit!=''">
+				dept_limit=#{deptLimit},
+			</if>
+			<if test="role!=null and role!=''">
+				role=#{role},
+			</if>
+			<if test="address!=null and address!=''">
+				address=#{address},
+			</if>
+			<if test="salt!=null and salt!=''">
+				salt=#{salt},
+			</if>
+			<if test="parentId!=null and parentId!=''">
+				parent_id=#{parentId},
+			</if>
+			<if test="password!=null and password!=''">
+				password=#{password},
+			</if>
+			<if test="email!=null and email!=''">
+				email=#{email},
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				mobile=#{mobile},
+			</if>
+			<if test="parentId!=null and parentId!=''">
+				parent_id=#{parentId},
+			</if>
+			<if test="modifiedUser!=null and modifiedUser!=''">
+				modified_user=#{modifiedUser},
+			</if>
+			modified_time=now()
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 基于用户id查询用户以及用户对应的部门信息 -->
+	<select id="doFindObjectById" resultMap="sysUserVO">
+		select a.*, b.username parentUsername
+		from sys_users a  left join
+		sys_users b on a.parent_id=b.id where a.id=#{id}
+		
+	</select>
+
+	<!-- 保存用户自身信息 -->
+	<insert id="doinsertObject"
+		parameterType="com.vs.vision.pojo.sys.Users">
+
+		insert into sys_users
+		(username,password,role,parent_id,salt,address,email,mobile,valid,customer_limit,
+		dept_limit,created_time,modified_time,created_user,modified_user)
+		values
+		(#{username}, #{password}, #{role}, #{parentId}, #{salt}, #{address}, #{email}, #{mobile},
+		#{valid}, #{customerLimit}, #{deptLimit}, now(), now(), #{createdUser}, #{createdUser}
+		)
+
+	</insert>
+
+	<!-- 用户的禁用启用 -->
+	<update id="doValidById">
+		update sys_users
+		set valid=#{valid},
+		modified_user=#{modifiedUser},
+		modified_time=now()
+		where id=#{id}
+	</update>
+
+	<!-- 通过sql元素定义sql语句中的共性 -->
+	<sql id="queryWhereId">
+		<where>
+			<if test="username!=null and username!=''">
+				username like concat("%",#{username},"%")
+			</if>
+		</where>
+	</sql>
+
+	<select id="getRowCount" resultType="int">
+		select count(*)
+		from sys_users
+		<include refid="queryWhereId" />
+	</select>
+
+
+	<resultMap type="com.vs.vision.pojo.sys.Users"
+		id="sysUserVO">
+	</resultMap>
+	
+	<select id="findPageObjects" resultMap="sysUserVO">
+		select a.*, b.username parent_username
+		from sys_users a left join
+		sys_users b on
+		a.parent_id=b.id
+		order by a.created_time desc limit #{startIndex},#{pageSize}
+	</select>
+	
+	<select id="searchPageObjects" resultMap="sysUserVO">
+		select a.*, b.username parent_username
+		from sys_users a left join
+		sys_users b on
+		a.parent_id=b.id
+		where
+		<if test="username!=null and username!=''">
+			a.username like concat("%",#{username},"%")
+		</if>
+		order by a.created_time desc limit #{startIndex},#{pageSize}
+	</select>
+
+	<select id="findZTreeNodes" resultType="com.vs.vision.vo.Node">
+		select distinct
+		id,username name,parent_id parentId from sys_users
+	</select>
+</mapper>
