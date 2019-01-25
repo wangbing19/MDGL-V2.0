@@ -71,12 +71,12 @@
 		   var params={"id":id};
 		   var url="role/doFindObjectById.do";
 		   $.getJSON(url,params,function(result){
-			   if(result.state==1){
+			   if(result.status==200){
 				   console.log(result.data);
 				  $("#mainContentId").data("data",result.data);
 				  doLoadPageUI(title);//异步加载页面  
 			   }else{
-				  alert(result.message); 
+				  alert(result.msg); 
 			   }
 		   });
 	   }
@@ -100,11 +100,12 @@
 	   var url="role/doDeleteObject.do"
 	   //3.ajax request
 	   $.post(url,params,function(result){
-		   if(result.state==1){
-			   alert(result.message);
+		   console.log(result);
+		   if(result.status==200){
+			   alert(result.msg);
 			   doGetObjects();
 		   }else{
-			   alert(result.message);
+			   alert(result.msg);
 		   }
 	   })
 	   
@@ -135,14 +136,14 @@
    }
    function doHandleResponseResult(result){
 	   
-	   if(result.state==1){
+	   if(result.status==200){
 		  doSetTableBodyRows(result.data.records);
 		  doSetPagination(result.data);
 	   }else{
-		  doSetTableBodyErrors(result.message);
+		  doSetTableBodyErrors(result.msg);
 	   }
    }
-   function doSetTableBodyErrors(message){
+   function doSetTableBodyErrors(msg){
 	   //获取body对象并清空
 	   var tBody=$("#tbodyId");
 	   tBody.empty();
@@ -153,7 +154,7 @@
 	   var len=$("table th").length;
 	   var td=$("<td></td>");
 	   td.prop("colspan",len);
-	   td.append(message);
+	   td.append(msg);
 	   tr.append(td);
 	   //将tr追加到tbody
 	   tBody.append(tr);

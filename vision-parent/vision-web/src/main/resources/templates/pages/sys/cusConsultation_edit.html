@@ -1,7 +1,7 @@
 <!-- Horizontal Form -->
-<div class="box box-info">
-	<div class="box-header with-border">
-		<h3 class="box-title">添加用户</h3>
+<div class="box box-info box-header">
+	<div class="with-border">
+		<h3 class="box-title">添加用户咨询表</h3>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -14,454 +14,466 @@
 				<!-- style="margin: 75px;" -->
 				<div>
 					<!-- style="text-align: center" -->
-					<h1 style="display: block;">
+					<h1 style="display: block; text-align: center;">
 						<div>
-							<div>
+							<div class="getName">
 								<p>基本信息咨询表</p>
 							</div>
 						</div>
 					</h1>
-					<div style="font-size: 100%;">
+					<div>
 						<div>
 							<!-- style="text-align: center" -->
 							<div data-type="description" data-id="q-34-iyZk"
-								style="display: block;">
+								style="display: block; text-align: center; margin-top: 40px; font-size: 120%;">
 								<div>
 									<div class="description_content">
-										<span> <strong>姓名：</strong>
-											<input type="text"
+										<span> <strong>姓名：</strong> <input type="text"
 											role="textbox" placeholder="(必填)" maxlength="10"
 											style="width: 112px;" id="nameID"></span> <span> <strong>年龄：</strong>
 											<input type="text" role="textbox" maxlength="3"
 											style="width: 112px;" id="ageID"></span> <span> <strong>性别：</strong>
 											<input type="text" role="textbox" maxlength="1"
 											style="width: 112px;" id="sexID"></span> <span> <strong>联系方式：</strong>
-											<input type="text"
-											role="textbox" placeholder="(必填)" maxlength="11"
-											style="width: 112px;" id="phoneID"></span>
+											<input type="text" role="textbox" placeholder="(必填)"
+											maxlength="11" style="width: 112px;" id="phoneID"></span>
+										<button type="button" onclick="doTest()" style="float: right;">测试</button>
 									</div>
 								</div>
 							</div>
 							<br />
-							<div class="survey_prefix"
-								style="display: block; margin-top: 40px;">
-								<div class="inner">
-									<h2 class="prefix_content">
-										<p style="color: #00a2d4;">
-											<strong>主要信息采集</strong>
-										</p>
-									</h2>
+							<div style="margin: 0 auto; font-size: 110%;">
+								<div class="survey_prefix"
+									style="display: block; margin-top: 40px;">
+									<div class="inner">
+										<h2 class="prefix_content">
+											<p style="color: #00a2d4;">主要信息采集</p>
+										</h2>
+									</div>
 								</div>
-							</div>
-							<br />
-							<div class="form-group">
-								<label for="ageId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										1.您从什么时候发现视力下降：&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="text" class="fill_blank needsclick" role="textbox"
-											aria-labelledby="questionTitle_q-7-5MOe" style="width: 50px;"
-											id="whitchEyeID">&nbsp;眼&nbsp; &nbsp; &nbsp; &nbsp;
-										&nbsp; &nbsp; <input type="text" class="fill_blank needsclick"
-											role="textbox" aria-labelledby="questionTitle_q-7-5MOe"
-											style="width: 50px;" id="yearID">&nbsp;年&nbsp; &nbsp;
-										&nbsp; &nbsp; &nbsp; &nbsp; <input type="text"
-											class="fill_blank needsclick" role="textbox"
-											aria-labelledby="questionTitle_q-7-5MOe" style="width: 28px;"
-											id="monthID">&nbsp;月
-									</p>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="diagnoseId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<tr>
-										2.是否到专业医疗机构确诊：
-										<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-										<input type="radio" name="diagnose" id="diagnoseId" value="1">是
-										<input type="radio" name="diagnose" id="diagnoseId" value="0">否
-									</tr>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="oculopathyId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<tr>
-										3.确认为何种病症:
-										<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-										<input type="radio" name="oculopathy" id="oculopathyId"
-											value="0">近视
-										<input type="radio" name="oculopathy" id="oculopathyId"
-											value="1">远视
-										<input type="radio" name="oculopathy" id="oculopathyId"
-											value="2">弱视
-										<input type="radio" name="oculopathy" id="oculopathyId"
-											value="3">斜视
-										<input type="radio" name="oculopathy" id="oculopathyId"
-											value="4">其他
-										<input type="text" name="oculopathyOther" id="oculopathyOtherId">
-									</tr>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="correctionMethodId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<tr>
-										4.发现症状后采用何种矫正方法:
-										<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-										<input type="checkbox" name="correctionMethod" id="correctionMethodId" value="0">训练
-										<input type="checkbox" name="correctionMethod" id="correctionMethodId" value="1">配镜
-										<input type="checkbox" name="correctionMethod" id="correctionMethodId" value="2">手术
-									</tr>
-								</div>
-							</div>
+								<br />
 
-							<div class="form-group">
-								<label for="effectId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										5.效果如何:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="effect" id="effectId" value="0">效果好
-										<input type="radio" name="effect" id="effectId" value="1">效果不佳
-									</p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="visualAcuityId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										6.现视力情况:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="visualAcuity" id="visualAcuityId"
-											value="0">无变化 <input type="radio" name="visualAcuity"
-											id="visualAcuityId" value="1">继续下降 <input
-											type="radio" name="visualAcuity" id="visualAcuityId"
-											value="1">有提升
-									</p>
-								</div>
-							</div>
-							<hr/>
-							<div class="question question_description"
-								id="question_q-12-emxw" data-type="description"
-								data-id="q-12-emxw" style="display: block;">
-								<div class="inner">
-									<div class="description_content">
-										<p style="color: #00a2d4;">
-											<strong>遗传因素排查</strong>
+								<div class="form-group">
+									<label for="ageId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											1.您从什么时候发现视力下降：&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="text" class="fill_blank needsclick" role="textbox"
+												aria-labelledby="questionTitle_q-7-5MOe"
+												style="width: 50px;" id="whitchEyeID">&nbsp;眼&nbsp;
+											&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="text"
+												class="fill_blank needsclick" role="textbox"
+												aria-labelledby="questionTitle_q-7-5MOe"
+												style="width: 50px;" id="yearID">&nbsp;年&nbsp;
+											&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="text"
+												class="fill_blank needsclick" role="textbox"
+												aria-labelledby="questionTitle_q-7-5MOe"
+												style="width: 28px;" id="monthID">&nbsp;月
 										</p>
 									</div>
 								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="fVisionConditionId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										7.父亲:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;近视( <input
-											type="radio" name="fVisionCondition" id="fVisionConditionId"
-											value="0">轻 <input type="radio"
-											name="fVisionCondition" id="fVisionConditionId" value="1">中
-										<input type="radio" name="fVisionCondition"
-											id="fVisionConditionId" value="2">重)&nbsp; &nbsp;远视(
-										<input type="radio" name="fVisionCondition"
-											id="fVisionConditionId" value="3">轻 <input
-											type="radio" name="fVisionCondition" id="fVisionConditionId"
-											value="4">中 <input type="radio"
-											name="fVisionCondition" id="fVisionConditionId" value="5">重)&nbsp;
-										&nbsp;散光( <input type="radio" name="fVisionCondition"
-											id="fVisionConditionId" value="6">轻 <input
-											type="radio" name="fVisionCondition" id="fVisionConditionId"
-											value="7">中 <input type="radio"
-											name="fVisionCondition" id="fVisionConditionId" value="8">重)<br />&nbsp;
-										&nbsp; &nbsp; &nbsp; <input type="radio"
-											name="fVisionCondition" id="fVisionConditionId" value="9">斜视
-										<input type="radio" name="fVisionCondition"
-											id="fVisionConditionId" value="10">弱视 <input
-											type="radio" name="fVisionCondition" id="fVisionConditionId"
-											value="11">其他眼病 <input type="text"
-											name="fVisionCondition" id="fVisionConditionOther"> <input
-											type="radio" name="fVisionCondition" id="fVisionConditionId"
-											value="12">无
-									</p>
+								<div class="form-group">
+									<label for="diagnoseId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<tr>
+											2.是否到专业医疗机构确诊：
+											<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="radio" name="diagnose" id="diagnoseId" value="1">是
+											<input type="radio" name="diagnose" id="diagnoseId" value="0">否
+										</tr>
+									</div>
 								</div>
-							</div>
+								<div class="form-group">
+									<label for="oculopathyId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<tr>
+											3.确认为何种病症:
+											<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="radio" name="oculopathy" id="oculopathyId"
+												value="0">近视
+											<input type="radio" name="oculopathy" id="oculopathyId"
+												value="1">远视
+											<input type="radio" name="oculopathy" id="oculopathyId"
+												value="2">弱视
+											<input type="radio" name="oculopathy" id="oculopathyId"
+												value="3">斜视
+											<input type="radio" name="oculopathy" id="oculopathyId"
+												value="4">其他
+											<input type="text" name="oculopathyOther"
+												id="oculopathyOtherId">
+										</tr>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="correctionMethodId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<tr>
+											4.发现症状后采用何种矫正方法:
+											<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="checkbox" name="correctionMethod"
+												id="correctionMethodId" value="0">训练
+											<input type="checkbox" name="correctionMethod"
+												id="correctionMethodId" value="1">配镜
+											<input type="checkbox" name="correctionMethod"
+												id="correctionMethodId" value="2">手术
+										</tr>
+									</div>
+								</div>
 
-							<div class="form-group">
-								<label for="mVisionConditionId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										8.母亲:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;近视( <input
-											type="radio" name="mVisionCondition" id="mVisionConditionId"
-											value="0">轻 <input type="radio"
-											name="mVisionCondition" id="mVisionConditionId" value="1">中
-										<input type="radio" name="mVisionCondition"
-											id="mVisionConditionId" value="2">重)&nbsp; &nbsp;远视(
-										<input type="radio" name="mVisionCondition"
-											id="mVisionConditionId" value="3">轻 <input
-											type="radio" name="mVisionCondition" id="mVisionConditionId"
-											value="4">中 <input type="radio"
-											name="mVisionCondition" id="mVisionConditionId" value="5">重)&nbsp;
-										&nbsp;散光( <input type="radio" name="mVisionCondition"
-											id="mVisionConditionId" value="6">轻 <input
-											type="radio" name="mVisionCondition" id="mVisionConditionId"
-											value="7">中 <input type="radio"
-											name="mVisionCondition" id="mVisionConditionId" value="8">重)<br />
-										&nbsp; &nbsp; &nbsp; &nbsp; <input type="radio"
-											name="mVisionCondition" id="mVisionConditionId" value="9">斜视
-										<input type="radio" name="mVisionCondition"
-											id="mVisionConditionId" value="10">弱视 <input
-											type="radio" name="mVisionCondition" id="mVisionConditionId"
-											value="11">其他眼病 <input type="text"
-											name="mVisionCondition" id="mVisionConditionOther"> <input
-											type="radio" name="mVisionCondition" id="mVisionConditionId"
-											value="12">无
-									</p>
-								</div>
-							</div>
-							<hr/>
-							<div class="question question_description"
-								id="question_q-18-k96o" data-type="description"
-								data-id="q-18-k96o" style="display: block;">
-								<div class="inner">
-									<div class="description_content">
-										<p style="color: #00a2d4;">
-											<strong>睡眠状况</strong>
+								<div class="form-group">
+									<label for="effectId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											5.效果如何:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="effect" id="effectId" value="0">效果好
+											<input type="radio" name="effect" id="effectId" value="1">效果不佳
 										</p>
 									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<label for="sleepingTimeId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										9.睡眠状况:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="sleepingTime" id="sleepingTimeId"
-											value="0">6小时 <input type="radio" name="sleepingTime"
-											id="sleepingTimeId" value="1">7小时 <input type="radio"
-											name="sleepingTime" id="sleepingTimeId" value="2">8小时
-										<input type="radio" name="sleepingTime" id="sleepingTimeId"
-											value="3">9小时 <input type="radio" name="sleepingTime"
-											id="sleepingTimeId" value="4">10小时 <input
-											type="radio" name="sleepingTime" id="sleepingTimeId"
-											value="5">11小时
-									</p>
-								</div>
-							</div>
-							<hr/>
-							<div class="question question_description"
-								id="question_q-20-vrjI" data-type="description"
-								data-id="q-20-vrjI" style="display: block;">
-								<div class="inner">
-									<div class="description_content">
-										<p style="color: #00a2d4;">
-											<strong>用眼习惯采集</strong>
+								<div class="form-group">
+									<label for="visualAcuityId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											6.现视力情况:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="visualAcuity" id="visualAcuityId"
+												value="0">无变化 <input type="radio"
+												name="visualAcuity" id="visualAcuityId" value="1">继续下降
+											<input type="radio" name="visualAcuity" id="visualAcuityId"
+												value="1">有提升
 										</p>
 									</div>
 								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="eyeProjectId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<tr>
-										10.用眼项目:
-										<span style="color: #53aaf3;">[多选题]</span>
-										<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-										<input type="checkbox" name="eyeProject" id="eyeProjectId" value="0">看书
-										<input type="checkbox" name="eyeProject" id="eyeProjectId" value="1">看电视
-										<input type="checkbox" name="eyeProject" id="eyeProjectId" value="2">玩手机平板
-										<input type="checkbox" name="eyeProject" id="eyeProjectId" value="3">其他
-										<input type="text" name="eyeProjectOther" id="eyeProjectOtherId">
-									</tr>
+								<hr />
+								<div class="question question_description"
+									id="question_q-12-emxw" data-type="description"
+									data-id="q-12-emxw" style="display: block;">
+									<div class="inner">
+										<div class="description_content">
+											<p style="color: #00a2d4;">
+												<strong>遗传因素排查</strong>
+											</p>
+										</div>
+									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<label for="readingTimeId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										11.每次看书、作业的时长：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="readingTime" id="readingTimeId" value="0">1小时
-										<input type="radio" name="readingTime" id="readingTimeId"
-											value="1">1-2小时 <input type="radio"
-											name="readingTime" id="readingTimeId" value="2">2-3小时
-										<input type="radio" name="readingTime" id="readingTimeId"
-											value="3">3-4小时
-									</p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="readingDistanceId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										12.看书距离：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="readingDistance" id="readingDistanceId"
-											value="0">10厘米 <input type="radio"
-											name="readingDistance" id="readingDistanceId" value="1">10-15厘米
-										<input type="radio" name="readingDistance"
-											id="readingDistanceId" value="2">15-20厘米 <input
-											type="radio" name="readingDistance" id="readingDistanceId"
-											value="3">20-30厘米 <input type="radio"
-											name="readingDistance" id="readingDistanceId" value="4">30厘米
-									</p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="watchingTimeId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										13.单次看电视时长：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="watchingTime" id="watchingTimeId"
-											value="0">1小时 <input type="radio" name="watchingTime"
-											id="watchingTimeId" value="1">1-2小时 <input
-											type="radio" name="watchingTime" id="watchingTimeId"
-											value="2">2-3小时 <input type="radio"
-											name="watchingTime" id="watchingTimeId" value="3">3-4小时
-									</p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="watchingDistanceId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										14.看电视距离：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="watchingDistance" id="watchingDistanceId"
-											value="0">2米 <input type="radio"
-											name="watchingDistance" id="watchingDistanceId" value="1">2-3米
-										<input type="radio" name="watchingDistance"
-											id="watchingDistanceId" value="2">3-4米 <input
-											type="radio" name="watchingDistance" id="watchingDistanceId"
-											value="3">4米
-									</p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="eyePositionId" class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<tr>
-										15.用眼姿势（有无）：
-										<span style="color: #53aaf3;">[多选题]</span>
-										<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-										<input type="checkbox" name="eyePosition" id="eyePositionId"
-											value="0">歪头
-										<input type="checkbox" name="eyePosition" id="eyePositionId"
-											value="1">斜眼
-										<input type="checkbox" name="eyePosition" id="eyePositionId"
-											value="2">躺着看
-										<input type="checkbox" name="eyePosition" id="eyePositionId"
-											value="3">在车上看
-										<input type="checkbox" name="eyePosition" id="eyePositionId"
-											value="4">走路看书
-										<input type="checkbox" name="eyePosition" id="eyePositionId"
-											value="5">其他
-										<input type="text" name="eyePositionOther" id="eyePositionOtherId">
-									</tr>
-								</div>
-							</div>
-							<hr/>
-							<div class="question question_description"
-								id="question_q-29-QlzB" data-type="description"
-								data-id="q-29-QlzB" style="display: block;">
-								<div class="inner">
-									<div class="description_content">
-										<p style="color: #00a2d4;">
-											<strong>用眼环境</strong>
+								<div class="form-group">
+									<label for="fVisionConditionId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											7.父亲:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;近视( <input
+												type="radio" name="fVisionCondition" id="fVisionConditionId"
+												value="0">轻 <input type="radio"
+												name="fVisionCondition" id="fVisionConditionId" value="1">中
+											<input type="radio" name="fVisionCondition"
+												id="fVisionConditionId" value="2">重)&nbsp; &nbsp;远视(
+											<input type="radio" name="fVisionCondition"
+												id="fVisionConditionId" value="3">轻 <input
+												type="radio" name="fVisionCondition" id="fVisionConditionId"
+												value="4">中 <input type="radio"
+												name="fVisionCondition" id="fVisionConditionId" value="5">重)&nbsp;
+											&nbsp;散光( <input type="radio" name="fVisionCondition"
+												id="fVisionConditionId" value="6">轻 <input
+												type="radio" name="fVisionCondition" id="fVisionConditionId"
+												value="7">中 <input type="radio"
+												name="fVisionCondition" id="fVisionConditionId" value="8">重)<br />&nbsp;
+											&nbsp; &nbsp; &nbsp; <input type="radio"
+												name="fVisionCondition" id="fVisionConditionId" value="9">斜视
+											<input type="radio" name="fVisionCondition"
+												id="fVisionConditionId" value="10">弱视 <input
+												type="radio" name="fVisionCondition" id="fVisionConditionId"
+												value="11">其他眼病 <input type="text"
+												name="fVisionCondition" id="fVisionConditionOther">
+											<input type="radio" name="fVisionCondition"
+												id="fVisionConditionId" value="12">无
 										</p>
 									</div>
 								</div>
-							</div>
 
-
-							<div class="form-group">
-								<label for="homeLightingEnvironmentId"
-									class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										16.家庭环境光线：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="homeLightingEnvironment"
-											id="homeLightingEnvironmentId" value="0">强光 <input
-											type="radio" name="homeLightingEnvironment"
-											id="homeLightingEnvironmentId" value="1">适宜 <input
-											type="radio" name="homeLightingEnvironment"
-											id="homeLightingEnvironmentId" value="2">偏暗 <input
-											type="radio" name="homeLightingEnvironment"
-											id="homeLightingEnvironmentId" value="3">暗 <input
-											type="radio" name="homeLightingEnvironment"
-											id="homeLightingEnvironmentId" value="4">光线闪烁
-									</p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="classroomLightingEnvironmentId"
-									class="col-sm-2 control-label"></label>
-								<div class="col-sm-10">
-									<p>
-										17.教室环境光线：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-											type="radio" name="classroomLightingEnvironment"
-											id="classroomLightingEnvironmentId" value="0">强光 <input
-											type="radio" name="classroomLightingEnvironment"
-											id="classroomLightingEnvironmentId" value="1">适宜 <input
-											type="radio" name="classroomLightingEnvironment"
-											id="classroomLightingEnvironmentId" value="2">偏暗 <input
-											type="radio" name="classroomLightingEnvironment"
-											id="classroomLightingEnvironmentId" value="3">暗 <input
-											type="radio" name="classroomLightingEnvironment"
-											id="classroomLightingEnvironmentId" value="4">光线闪烁
-									</p>
-								</div>
-							</div>
-							<hr/>
-							<div class="question question_description"
-								id="question_q-30-yGgM" data-type="description"
-								data-id="q-30-yGgM" style="display: block;">
-								<div class="inner">
-									<div class="description_content">
-										<p style="color: #00a2d4;">
-											<strong>视力检查</strong>
+								<div class="form-group">
+									<label for="mVisionConditionId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											8.母亲:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;近视( <input
+												type="radio" name="mVisionCondition" id="mVisionConditionId"
+												value="0">轻 <input type="radio"
+												name="mVisionCondition" id="mVisionConditionId" value="1">中
+											<input type="radio" name="mVisionCondition"
+												id="mVisionConditionId" value="2">重)&nbsp; &nbsp;远视(
+											<input type="radio" name="mVisionCondition"
+												id="mVisionConditionId" value="3">轻 <input
+												type="radio" name="mVisionCondition" id="mVisionConditionId"
+												value="4">中 <input type="radio"
+												name="mVisionCondition" id="mVisionConditionId" value="5">重)&nbsp;
+											&nbsp;散光( <input type="radio" name="mVisionCondition"
+												id="mVisionConditionId" value="6">轻 <input
+												type="radio" name="mVisionCondition" id="mVisionConditionId"
+												value="7">中 <input type="radio"
+												name="mVisionCondition" id="mVisionConditionId" value="8">重)<br />
+											&nbsp; &nbsp; &nbsp; &nbsp; <input type="radio"
+												name="mVisionCondition" id="mVisionConditionId" value="9">斜视
+											<input type="radio" name="mVisionCondition"
+												id="mVisionConditionId" value="10">弱视 <input
+												type="radio" name="mVisionCondition" id="mVisionConditionId"
+												value="11">其他眼病 <input type="text"
+												name="mVisionCondition" id="mVisionConditionOther">
+											<input type="radio" name="mVisionCondition"
+												id="mVisionConditionId" value="12">无
 										</p>
 									</div>
 								</div>
-							</div>
-
-
-							<div class="form-group">
-								<div class="col-sm-10">
-									<tr>
-										<label for="rDId" class="col-sm-2 control-label">18.裸眼远视力（5米）:</label>
-										&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 右眼&nbsp;
-										<input type="text" name="rD" id="rDId">&nbsp; &nbsp;
-										&nbsp; 左眼&nbsp;
-										<input type="text" name="lD" id="lDId">
-									</tr>
+								<hr />
+								<div class="question question_description"
+									id="question_q-18-k96o" data-type="description"
+									data-id="q-18-k96o" style="display: block;">
+									<div class="inner">
+										<div class="description_content">
+											<p style="color: #00a2d4;">
+												<strong>睡眠状况</strong>
+											</p>
+										</div>
+									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<div class="col-sm-10">
-									<tr>
-										<label for="rCvaId" class="col-sm-2 control-label">19.矫正远视力（5米）:</label>
-										&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 右眼&nbsp;
-										<input type="text" name="rCva" id="rCvaId">&nbsp;
-										&nbsp; &nbsp; 左眼&nbsp;
-										<input type="text" name="lCva" id="lCvaId">
-									</tr>
+								<div class="form-group">
+									<label for="sleepingTimeId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											9.睡眠状况:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="sleepingTime" id="sleepingTimeId"
+												value="0">6小时 <input type="radio"
+												name="sleepingTime" id="sleepingTimeId" value="1">7小时
+											<input type="radio" name="sleepingTime" id="sleepingTimeId"
+												value="2">8小时 <input type="radio"
+												name="sleepingTime" id="sleepingTimeId" value="3">9小时
+											<input type="radio" name="sleepingTime" id="sleepingTimeId"
+												value="4">10小时 <input type="radio"
+												name="sleepingTime" id="sleepingTimeId" value="5">11小时
+										</p>
+									</div>
 								</div>
-							</div>
-							<div class="form-group" style="padding-right: 0px">
-								<p>
-									<label for="tutorId" class="col-sm-2 control-label">咨询导师</label>
-									<input type="text" name="tutor" id="tutorId">
-								</p>
-								<p>
-									<label for="gmtModifiedId" class="col-sm-2 control-label">时间</label>
-									<input type="text" name="gmtModified" id="gmtModifiedId">
-								</p>
+								<hr />
+								<div class="question question_description"
+									id="question_q-20-vrjI" data-type="description"
+									data-id="q-20-vrjI" style="display: block;">
+									<div class="inner">
+										<div class="description_content">
+											<p style="color: #00a2d4;">
+												<strong>用眼习惯采集</strong>
+											</p>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="eyeProjectId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<tr>
+											10.用眼项目:
+											<span style="color: #53aaf3;">[多选题]</span>
+											<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="checkbox" name="eyeProject" id="eyeProjectId"
+												value="0">看书
+											<input type="checkbox" name="eyeProject" id="eyeProjectId"
+												value="1">看电视
+											<input type="checkbox" name="eyeProject" id="eyeProjectId"
+												value="2">玩手机平板
+											<input type="checkbox" name="eyeProject" id="eyeProjectId"
+												value="3">其他
+											<input type="text" name="eyeProjectOther"
+												id="eyeProjectOtherId">
+										</tr>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="readingTimeId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											11.每次看书、作业的时长：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="readingTime" id="readingTimeId" value="0">1小时
+											<input type="radio" name="readingTime" id="readingTimeId"
+												value="1">1-2小时 <input type="radio"
+												name="readingTime" id="readingTimeId" value="2">2-3小时
+											<input type="radio" name="readingTime" id="readingTimeId"
+												value="3">3-4小时
+										</p>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="readingDistanceId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											12.看书距离：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="readingDistance" id="readingDistanceId"
+												value="0">10厘米 <input type="radio"
+												name="readingDistance" id="readingDistanceId" value="1">10-15厘米
+											<input type="radio" name="readingDistance"
+												id="readingDistanceId" value="2">15-20厘米 <input
+												type="radio" name="readingDistance" id="readingDistanceId"
+												value="3">20-30厘米 <input type="radio"
+												name="readingDistance" id="readingDistanceId" value="4">30厘米
+										</p>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="watchingTimeId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											13.单次看电视时长：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="watchingTime" id="watchingTimeId"
+												value="0">1小时 <input type="radio"
+												name="watchingTime" id="watchingTimeId" value="1">1-2小时
+											<input type="radio" name="watchingTime" id="watchingTimeId"
+												value="2">2-3小时 <input type="radio"
+												name="watchingTime" id="watchingTimeId" value="3">3-4小时
+										</p>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="watchingDistanceId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											14.看电视距离：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="watchingDistance" id="watchingDistanceId"
+												value="0">2米 <input type="radio"
+												name="watchingDistance" id="watchingDistanceId" value="1">2-3米
+											<input type="radio" name="watchingDistance"
+												id="watchingDistanceId" value="2">3-4米 <input
+												type="radio" name="watchingDistance" id="watchingDistanceId"
+												value="3">4米
+										</p>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="eyePositionId" class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<tr>
+											15.用眼姿势（有无）：
+											<span style="color: #53aaf3;">[多选题]</span>
+											<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="checkbox" name="eyePosition" id="eyePositionId"
+												value="0">歪头
+											<input type="checkbox" name="eyePosition" id="eyePositionId"
+												value="1">斜眼
+											<input type="checkbox" name="eyePosition" id="eyePositionId"
+												value="2">躺着看
+											<input type="checkbox" name="eyePosition" id="eyePositionId"
+												value="3">在车上看
+											<input type="checkbox" name="eyePosition" id="eyePositionId"
+												value="4">走路看书
+											<input type="checkbox" name="eyePosition" id="eyePositionId"
+												value="5">其他
+											<input type="text" name="eyePositionOther"
+												id="eyePositionOtherId">
+										</tr>
+									</div>
+								</div>
+								<hr />
+								<div class="question question_description"
+									id="question_q-29-QlzB" data-type="description"
+									data-id="q-29-QlzB" style="display: block;">
+									<div class="inner">
+										<div class="description_content">
+											<p style="color: #00a2d4;">
+												<strong>用眼环境</strong>
+											</p>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<label for="homeLightingEnvironmentId"
+										class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											16.家庭环境光线：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="homeLightingEnvironment"
+												id="homeLightingEnvironmentId" value="0">强光 <input
+												type="radio" name="homeLightingEnvironment"
+												id="homeLightingEnvironmentId" value="1">适宜 <input
+												type="radio" name="homeLightingEnvironment"
+												id="homeLightingEnvironmentId" value="2">偏暗 <input
+												type="radio" name="homeLightingEnvironment"
+												id="homeLightingEnvironmentId" value="3">暗 <input
+												type="radio" name="homeLightingEnvironment"
+												id="homeLightingEnvironmentId" value="4">光线闪烁
+										</p>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="classroomLightingEnvironmentId"
+										class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<p>
+											17.教室环境光线：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+												type="radio" name="classroomLightingEnvironment"
+												id="classroomLightingEnvironmentId" value="0">强光 <input
+												type="radio" name="classroomLightingEnvironment"
+												id="classroomLightingEnvironmentId" value="1">适宜 <input
+												type="radio" name="classroomLightingEnvironment"
+												id="classroomLightingEnvironmentId" value="2">偏暗 <input
+												type="radio" name="classroomLightingEnvironment"
+												id="classroomLightingEnvironmentId" value="3">暗 <input
+												type="radio" name="classroomLightingEnvironment"
+												id="classroomLightingEnvironmentId" value="4">光线闪烁
+										</p>
+									</div>
+								</div>
+								<hr />
+								<div class="question question_description"
+									id="question_q-30-yGgM" data-type="description"
+									data-id="q-30-yGgM" style="display: block;">
+									<div class="inner">
+										<div class="description_content">
+											<p style="color: #00a2d4;">
+												<strong>视力检查</strong>
+											</p>
+										</div>
+									</div>
+								</div>
+
+								<div style="margin: 0 16%;">
+									<div class="form-group">
+										<div class="col-sm-10">
+											<tr>
+												<label for="rDId" class=" control-label">18.裸眼远视力（5米）:</label>
+												<br/><br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 右眼&nbsp;
+												<input type="text" name="rD" id="rDId">&nbsp; &nbsp;
+												&nbsp; 左眼&nbsp;
+												<input type="text" name="lD" id="lDId">
+											</tr>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-10">
+											<tr>
+												<label for="rCvaId" class=" control-label">19.矫正远视力（5米）:</label>
+												<br/><br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 右眼&nbsp;
+												<input type="text" name="rCva" id="rCvaId">&nbsp;
+												&nbsp; &nbsp; 左眼&nbsp;
+												<input type="text" name="lCva" id="lCvaId">
+											</tr>
+										</div>
+									</div>
+								</div>
+								<div class="form-group" style="padding-right: 0px">
+									<p>
+										<label for="tutorId" class="col-sm-2 control-label">咨询导师</label>
+										<input type="text" name="tutor" id="tutorId">
+									</p>
+									<p>
+										<label for="gmtModifiedId" class="col-sm-2 control-label">时间</label>
+										<input type="text" name="gmtModified" id="gmtModifiedId">
+									</p>
+								</div>
 							</div>
 						</div>
 						<br /> <br /> <br />
@@ -477,7 +489,6 @@
 </div>
 
 <script type="text/javascript">
-
 	//json 格式的javascript对象
 	$(document).ready(
 			function() {
@@ -488,28 +499,42 @@
 				$(".box-footer").on("click", ".btn-cancel", doCancel).on("click", ".btn-save", doSaveOrUpdate);
 
 			});
-
+	//程序测试
+	function doTest(){
+	//	alert("4144444445");
+		$("#nameID").val("吴红霞");
+		$("#ageID").val("18");
+		$("#sexID").val("女");
+		$("#phoneID").val("15826523564");
+		$("#whitchEyeID").val("右");
+		$("#yearID").val(2012);
+		$("#monthID").val(4);
+		$("#rDId").val("3.2");
+		$("#lDId").val("3.2");
+		$("#rCvaId").val("3.2");
+		$("#lCvaId").val("3.2");
+		$("#tutorId").val("Tim");
+		
+	}
+	
+	//返回页面
 	function doCancel() {
 		$("#mainContentId").removeData("rowData");
 		$("#mainContentId").load("cusConsultation/doCusConsultationListUI");
 	}
-	
+	//保存或修改
 	function doSaveOrUpdate() {
 		var rowData = $("#mainContentId").data("rowData");
 		//1.获取表单数据
-		
 		var params = check();
-	//	console.log(params);
 		if (rowData)
 			params.id = rowData.id;
 		//2.发起异步请求
 		var insertUrl = "cusConsultation/doSaveObject";
 		var updateUrl = "cusConsultation/doUpdateObject";
 		var url = rowData ? updateUrl : insertUrl;
-	//	console.log(params);
 		$.post(url, params, function(result) {
 			if (result.status == 200) {
-			//	alert(result.message);
 				doCancel();
 			} else {
 				alert(result.msg);
@@ -520,15 +545,12 @@
 	function doLoadRoles() {
 		doInitFormData();//修改时
 	}
-	
+	//修改页面加载数据
 	function doInitFormData() {
 		$("#gmtCreateId").val(getNowFormatDate());
 		var data = $("#mainContentId").data("rowData");
-	//	console.log("一次测试");
 		if (!data)
 			return;
-		// $("#pwdDiv").remove();
-	//	console.log(data);
 		//初始化用户信息 
 		$("#nameID").val(data.name);
 		$("#ageID").val(data.age);
@@ -537,170 +559,203 @@
 		$("#whitchEyeID").val(data.eye);
 		$("#yearID").val(data.declineTimeYear);
 		$("#monthID").val(data.declineTimeMonth);
-	//	console.log(data.declineTimeMonth);
+		//	console.log(data.declineTimeMonth);
 		/**是否诊断*/
 		var diagnose = data.diagnose; // 1,2 把你拿到的值赋给youVal
 		$("input[name='diagnose']").each(function(index) {
-		    if ($("input[name='diagnose']").get(index).value == diagnose) {
-		        $("input[name='diagnose']").get(index).checked = true;
-		    }
+			if ($("input[name='diagnose']").get(index).value == diagnose) {
+				$("input[name='diagnose']").get(index).checked = true;
+			}
 		});
 		/**眼病*/
 		var oculopathy = data.oculopathy; // 1,2 把你拿到的值赋给youVal
 		$("input[name='oculopathy']").each(function(index) {
-		    if ($("input[name='oculopathy']").get(index).value == oculopathy) {
-		        $("input[name='oculopathy']").get(index).checked = true;
-		    }
+			if ($("input[name='oculopathy']").get(index).value == oculopathy) {
+				$("input[name='oculopathy']").get(index).checked = true;
+			}
 		});
 		$("#oculopathyOtherId").val(data.oculopathyOther);
-		
+
 		/**矫正方法*/
 		var correctionMethod = data.correctionMethod;
 		var ids = new Array();
-		if(correctionMethod!=null){
+		if (correctionMethod != null) {
 			ids = correctionMethod.split(",");
-		//	console.log(ids);
-			for(var i in ids){
-				$("input[name='correctionMethod']").each(function(index) {
-				    if ($("input[name='correctionMethod']").get(index).value == ids[i]) {
-				        $("input[name='correctionMethod']").get(index).checked = true;
-				    }
-				});
+			//	console.log(ids);
+			for ( var i in ids) {
+				$("input[name='correctionMethod']")
+						.each(
+								function(index) {
+									if ($("input[name='correctionMethod']")
+											.get(index).value == ids[i]) {
+										$("input[name='correctionMethod']")
+												.get(index).checked = true;
+									}
+								});
 			}
 		}
-		
-		
+
 		/**效果*/
 		var effect = data.effect; // 1,2 把你拿到的值赋给youVal
 		$("input[name='effect']").each(function(index) {
-		    if ($("input[name='effect']").get(index).value == effect) {
-		        $("input[name='effect']").get(index).checked = true;
-		    }
+			if ($("input[name='effect']").get(index).value == effect) {
+				$("input[name='effect']").get(index).checked = true;
+			}
 		});
-		
+
 		/**现视力情况*/
 		var visualAcuity = data.visualAcuity; // 1,2 把你拿到的值赋给youVal
-		$("input[name='visualAcuity']").each(function(index) {
-		    if ($("input[name='visualAcuity']").get(index).value == visualAcuity) {
-		        $("input[name='visualAcuity']").get(index).checked = true;
-		    }
-		});
-		
+		$("input[name='visualAcuity']")
+				.each(
+						function(index) {
+							if ($("input[name='visualAcuity']").get(index).value == visualAcuity) {
+								$("input[name='visualAcuity']").get(index).checked = true;
+							}
+						});
+
 		/**父视力情况*/
 		var fVisionCondition = data.fvisionCondition; // 1,2 把你拿到的值赋给youVal
-		$("input[name='fVisionCondition']").each(function(index) {
-		    if ($("input[name='fVisionCondition']").get(index).value == fVisionCondition) {
-		        $("input[name='fVisionCondition']").get(index).checked = true;
-		    }
-		});
+		$("input[name='fVisionCondition']")
+				.each(
+						function(index) {
+							if ($("input[name='fVisionCondition']").get(index).value == fVisionCondition) {
+								$("input[name='fVisionCondition']").get(index).checked = true;
+							}
+						});
 		$("#fVisionConditionOther").val(data.fother);
-		
+
 		/**母视力情况*/
 		var mVisionCondition = data.mvisionCondition; // 1,2 把你拿到的值赋给youVal
-		$("input[name='mVisionCondition']").each(function(index) {
-		    if ($("input[name='mVisionCondition']").get(index).value == mVisionCondition) {
-		        $("input[name='mVisionCondition']").get(index).checked = true;
-		    }
-		});
+		$("input[name='mVisionCondition']")
+				.each(
+						function(index) {
+							if ($("input[name='mVisionCondition']").get(index).value == mVisionCondition) {
+								$("input[name='mVisionCondition']").get(index).checked = true;
+							}
+						});
 		$("#mVisionConditionOther").val(data.mother);
 		/**睡眠时间*/
 		var sleepingTime = data.sleepingTime; // 1,2 把你拿到的值赋给youVal
-		$("input[name='sleepingTime']").each(function(index) {
-		    if ($("input[name='sleepingTime']").get(index).value == sleepingTime) {
-		        $("input[name='sleepingTime']").get(index).checked = true;
-		    }
-		});
-		
+		$("input[name='sleepingTime']")
+				.each(
+						function(index) {
+							if ($("input[name='sleepingTime']").get(index).value == sleepingTime) {
+								$("input[name='sleepingTime']").get(index).checked = true;
+							}
+						});
+
 		/**用眼项目*/
 		var eyeProject = data.eyeProject;
 		var eyeProjectIds = new Array();
-		if(eyeProject!=null){
+		if (eyeProject != null) {
 			eyeProjectIds = eyeProject.split(",");
-		//	console.log(ids);
-			for(var i in eyeProjectIds){
-				$("input[name='eyeProject']").each(function(index) {
-				    if ($("input[name='eyeProject']").get(index).value == eyeProjectIds[i]) {
-				        $("input[name='eyeProject']").get(index).checked = true;
-				    }
-				});
+			//	console.log(ids);
+			for ( var i in eyeProjectIds) {
+				$("input[name='eyeProject']")
+						.each(
+								function(index) {
+									if ($("input[name='eyeProject']")
+											.get(index).value == eyeProjectIds[i]) {
+										$("input[name='eyeProject']")
+												.get(index).checked = true;
+									}
+								});
 			}
 		}
-		
+
 		$("#eyeProjectOtherId").val(data.eyeProjectOther);
-		
+
 		/**每次看书、作业的时长readingTime*/
-		var readingTime = data.readingTime; 
-		$("input[name='readingTime']").each(function(index) {
-		    if ($("input[name='readingTime']").get(index).value == readingTime) {
-		        $("input[name='readingTime']").get(index).checked = true;
-		    }
-		});
-		
+		var readingTime = data.readingTime;
+		$("input[name='readingTime']")
+				.each(
+						function(index) {
+							if ($("input[name='readingTime']").get(index).value == readingTime) {
+								$("input[name='readingTime']").get(index).checked = true;
+							}
+						});
+
 		/**看书距离readingDistance*/
-		var readingDistance = data.readingDistance; 
-		$("input[name='readingDistance']").each(function(index) {
-		    if ($("input[name='readingDistance']").get(index).value == readingDistance) {
-		        $("input[name='readingDistance']").get(index).checked = true;
-		    }
-		});
-		
+		var readingDistance = data.readingDistance;
+		$("input[name='readingDistance']")
+				.each(
+						function(index) {
+							if ($("input[name='readingDistance']").get(index).value == readingDistance) {
+								$("input[name='readingDistance']").get(index).checked = true;
+							}
+						});
+
 		/**单次看电视时长watchingTime*/
-		var watchingTime = data.watchingTime; 
-		$("input[name='watchingTime']").each(function(index) {
-		    if ($("input[name='watchingTime']").get(index).value == watchingTime) {
-		        $("input[name='watchingTime']").get(index).checked = true;
-		    }
-		});
-		
+		var watchingTime = data.watchingTime;
+		$("input[name='watchingTime']")
+				.each(
+						function(index) {
+							if ($("input[name='watchingTime']").get(index).value == watchingTime) {
+								$("input[name='watchingTime']").get(index).checked = true;
+							}
+						});
+
 		/**看电视距离*/
-		var watchingDistance = data.watchingDistance; 
-		$("input[name='watchingDistance']").each(function(index) {
-		    if ($("input[name='watchingDistance']").get(index).value == watchingDistance) {
-		        $("input[name='watchingDistance']").get(index).checked = true;
-		    }
-		});
-		
+		var watchingDistance = data.watchingDistance;
+		$("input[name='watchingDistance']")
+				.each(
+						function(index) {
+							if ($("input[name='watchingDistance']").get(index).value == watchingDistance) {
+								$("input[name='watchingDistance']").get(index).checked = true;
+							}
+						});
+
 		//15.用眼姿势（有无）
 		var eyePosition = data.eyePosition;
 		var eyePositionIds = new Array();
-		if(eyePosition!=null){
+		if (eyePosition != null) {
 			eyePositionIds = eyePosition.split(",");
-		//	console.log(ids);
-			for(var i in eyePositionIds){
-				$("input[name='eyePosition']").each(function(index) {
-				    if ($("input[name='eyePosition']").get(index).value == eyePositionIds[i]) {
-				        $("input[name='eyePosition']").get(index).checked = true;
-				    }
-				});
+			//	console.log(ids);
+			for ( var i in eyePositionIds) {
+				$("input[name='eyePosition']")
+						.each(
+								function(index) {
+									if ($("input[name='eyePosition']").get(
+											index).value == eyePositionIds[i]) {
+										$("input[name='eyePosition']").get(
+												index).checked = true;
+									}
+								});
 			}
 		}
 		$("#eyePositionOtherId").val(data.eyePositionOther);
-		
+
 		/**家庭环境光线*/
-		var homeLightingEnvironment = data.homeLightingEnvironment; 
-		$("input[name='homeLightingEnvironment']").each(function(index) {
-		    if ($("input[name='homeLightingEnvironment']").get(index).value == homeLightingEnvironment) {
-		        $("input[name='homeLightingEnvironment']").get(index).checked = true;
-		    }
-		});
-		
+		var homeLightingEnvironment = data.homeLightingEnvironment;
+		$("input[name='homeLightingEnvironment']")
+				.each(
+						function(index) {
+							if ($("input[name='homeLightingEnvironment']").get(
+									index).value == homeLightingEnvironment) {
+								$("input[name='homeLightingEnvironment']").get(
+										index).checked = true;
+							}
+						});
+
 		/**教室环境光线*/
-		var classroomLightingEnvironment = data.classroomLightingEnvironment; 
-		$("input[name='classroomLightingEnvironment']").each(function(index) {
-		    if ($("input[name='classroomLightingEnvironment']").get(index).value == classroomLightingEnvironment) {
-		        $("input[name='classroomLightingEnvironment']").get(index).checked = true;
-		    }
-		});
-		
+		var classroomLightingEnvironment = data.classroomLightingEnvironment;
+		$("input[name='classroomLightingEnvironment']").each(
+				function(index) {
+					if ($("input[name='classroomLightingEnvironment']").get(
+							index).value == classroomLightingEnvironment) {
+						$("input[name='classroomLightingEnvironment']").get(
+								index).checked = true;
+					}
+				});
+
 		$("#rDId").val(data.rd);
 		$("#lDId").val(data.ld);
 		$("#rCvaId").val(data.rcva);
 		$("#lCvaId").val(data.lcva);
 		$("#tutorId").val(data.tutor);
-		
-		
+
 	}
-	
+
 	//获取系统当前时间
 	function getNowFormatDate() {
 		var date = new Date();
@@ -715,7 +770,7 @@
 		var currentdate = date.getFullYear() + "-" + month + "-" + strDate;
 		return currentdate;
 	}
-	
+
 	//var is_enable = true;
 	function checkField(value) {
 		if (value != null && value.length > 0) {
@@ -723,7 +778,7 @@
 		}
 		return false;
 	}
-	
+	//添加页面获取数据并返回服务器
 	function check() {
 
 		var params = {};
@@ -733,7 +788,6 @@
 			return;
 		}
 		params.name = name;
-		
 
 		var tel = $('#phoneID').val();
 		if (checkField(tel)) {
@@ -772,14 +826,14 @@
 			if (oculopathy == "4") {
 				var oculopathyOther = $('#oculopathyOtherId').val();
 				params.oculopathyOther = oculopathyOther;
-			} 
+			}
 			params.oculopathy = oculopathy;
-			
+
 			console.log("==================");
 			console.log(params.oculopathyOther);
 			console.log(params);
 		}
-		
+
 		/**矫正方法*/
 		var correctionMethod = new Array();
 		$("input[name='correctionMethod']:checked").each(function() {
@@ -801,7 +855,8 @@
 			params.visualAcuity = visualAcuity;
 		}
 		/**父视力情况*/
-		var fVisionCondition = $("input[name='fVisionCondition']:checked").val();
+		var fVisionCondition = $("input[name='fVisionCondition']:checked")
+				.val();
 		if (checkField(fVisionCondition)) {
 			if (fVisionCondition == "11") {
 				var fOther = $('#fVisionConditionOther').val();
@@ -810,7 +865,8 @@
 			params.fVisionCondition = fVisionCondition;
 		}
 		/**母视力情况*/
-		var mVisionCondition = $("input[name='mVisionCondition']:checked").val();
+		var mVisionCondition = $("input[name='mVisionCondition']:checked")
+				.val();
 		if (checkField(mVisionCondition)) {
 			if (mVisionCondition == "11") {
 				var mOther = $('#mVisionConditionOther').val();
@@ -824,54 +880,53 @@
 		if (checkField(sleepingTime)) {
 			params.sleepingTime = sleepingTime;
 		}
-		
-		 /**用眼项目*/
+
+		/**用眼项目*/
 		var eyeProject = new Array();
 		$("input[name='eyeProject']").each(function() {
 			if ($(this).prop("checked")) {
 				eyeProject.push($(this).val());
-				 if($(this).val()=="3"){
+				if ($(this).val() == "3") {
 					var eyeProjectOther = $("#eyeProjectOtherId").val();
 					params.eyeProjectOther = eyeProjectOther;
-				//	console.log(params.eyeProjectOther);
-				} 
+					//	console.log(params.eyeProjectOther);
+				}
 			}
 		});
 		params.eyeProject = eyeProject.toString();
-		
-		
+
 		/**每次看书、作业的时长*/
 		var readingTime = $("input[name='readingTime']:checked").val();
 		if (checkField(readingTime)) {
 			params.readingTime = readingTime;
 		}
-		
+
 		/**看书距离*/
 		var readingDistance = $("input[name='readingDistance']:checked").val();
 		if (checkField(readingDistance)) {
 			params.readingDistance = readingDistance;
 		}
-		
+
 		/**单次看电视时长*/
 		var watchingTime = $("input[name='watchingTime']:checked").val();
 		if (checkField(watchingTime)) {
 			params.watchingTime = watchingTime;
 		}
-		
+
 		/**看电视距离*/
-		var watchingDistance = $("input[name='watchingDistance']:checked").val();
+		var watchingDistance = $("input[name='watchingDistance']:checked")
+				.val();
 		if (checkField(watchingDistance)) {
 			params.watchingDistance = watchingDistance;
 		}
-		
- 
+
 		//多选
 		//15.用眼姿势（有无）： 
 		var eyePosition = new Array();
 		$("input[name='eyePosition']:checked").each(function() {
 			if ($(this).prop("checked")) {
 				eyePosition.push($(this).val());
-				if($(this).val()=="5"){
+				if ($(this).val() == "5") {
 					var eyePositionOther = $("#eyePositionOtherId").val();
 					params.eyePositionOther = eyePositionOther;
 				}
@@ -879,15 +934,16 @@
 		});
 		params.eyePosition = eyePosition.toString();
 
-		
 		/**家庭环境光线*/
-		var homeLightingEnvironment = $("input[name='homeLightingEnvironment']:checked").val();
+		var homeLightingEnvironment = $(
+				"input[name='homeLightingEnvironment']:checked").val();
 		if (checkField(homeLightingEnvironment)) {
 			params.homeLightingEnvironment = homeLightingEnvironment;
 		}
-		
+
 		/**教室环境光线*/
-		var classroomLightingEnvironment = $("input[name='classroomLightingEnvironment']:checked").val();
+		var classroomLightingEnvironment = $(
+				"input[name='classroomLightingEnvironment']:checked").val();
 		if (checkField(classroomLightingEnvironment)) {
 			params.classroomLightingEnvironment = classroomLightingEnvironment;
 		}
@@ -916,9 +972,9 @@
 		if (checkField(tutor)) {
 			params.tutor = tutor;
 		}
-	
+
 		return params;
-		
+
 	}
 </script>
 

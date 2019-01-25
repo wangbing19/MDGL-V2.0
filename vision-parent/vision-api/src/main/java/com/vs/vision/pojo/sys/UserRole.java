@@ -1,6 +1,8 @@
 package com.vs.vision.pojo.sys;
 
-public class UserRole {
+import java.io.Serializable;
+
+public class UserRole implements Serializable{
     private Integer id;
 
     private Integer roleId;

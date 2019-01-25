@@ -1,5 +1,7 @@
 package com.vs.vision.pojo.exp;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,6 +18,7 @@ import java.util.Date;
 @TableName("exp_symptoms_described")
 public class SymptomsDescribed {
     /**症状描述表序号*/
+	@TableId(type=IdType.AUTO)
     private Integer id;
     /**远程诊断表序号*/
     private Integer remoteDiagnoseId;

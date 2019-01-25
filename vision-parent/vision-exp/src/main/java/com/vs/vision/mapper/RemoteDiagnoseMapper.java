@@ -34,4 +34,18 @@ public interface RemoteDiagnoseMapper extends BaseMapper<RemoteDiagnose> {
 			@Param("customerName") String customerName);
 			//@Param("registerParentid")Integer registerParentid);
 
+	/**
+	 * 通过选择的id在修改页面获取远程诊断表对应id中的信息
+	 * @param id
+	 * @return
+	 */
+	ExpRemoteDiagnoseVo select(Integer id);
+
+	/**
+	 * 对应添加作用
+	 * @param entity:从浏览器获取的添加信息
+	 * @return
+	 */
+	Integer insertObject(RemoteDiagnose entity);
+
 }

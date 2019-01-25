@@ -118,11 +118,11 @@
 			var url = rowData ? updateUrl : insertUrl;
 			//3.异步提交数据
 			$.post(url, params, function(result) {
-				if (result.state == 1) {
-					alert(result.message);
+				if (result.status == 200) {
+					alert(result.msg);
 					doCancel();
 				} else {
-					alert(result.message);
+					alert(result.msg);
 				}
 			});
 		}
@@ -161,12 +161,12 @@
 			var url = "dept/doFindZTreeNodes.do";
 			//异步加载数据,并初始化数据
 			$.getJSON(url, function(result) {
-				if (result.state == 1) {
+				if (result.status == 200) {
 					//使用init函数需要先引入ztree对应的js文件
 					zTree = $.fn.zTree
 							.init($("#zTreeId"), setting, result.data);
 				} else {
-					alert(result.message);
+					alert(result.msg);
 				}
 			})
 		}

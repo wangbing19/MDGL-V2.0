@@ -2,10 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.vs.sys.mappers.DeptsMapper" >
 	
+	<select id="findZTreeNodes" resultType="com.vs.vision.vo.Node">
+		select id,name,parent_id parentId from sys_depts
+	</select>
+
 	<select id="findObjects" resultType="map">
 		select c.id,c.name,c.sort,c.note,c.parent_id parentId,
 		(select name from sys_depts p where c.parent_id=p.id) parentName
 		from sys_depts c
+	</select>
+
+	<insert id="insertObject"
+		parameterType="com.vs.vision.pojo.sys.Depts">
+		insert into sys_depts
+		(name,sort,note,parent_id,created_time,modified_time,created_user,modified_user)
+		values
+		(#{name},#{sort},#{note},#{parentId},now(),now(),#{createdUser},#{modifiedUser})
+	</insert>
+
+	<update id="updateObject"
+		parameterType="com.vs.vision.pojo.sys.Depts">
+		update sys_depts set
+		name=#{name},
+		sort=#{sort},
+		note=#{note},
+		parent_id=#{parentId},
+		modified_user=#{modifiedUser},
+		modified_time=now()
+		where id=#{id}
+	</update>
+
+	<delete id="deleteObject">
+		delete from sys_depts where id=#{id}
+	</delete>
+
+	<select id="getChildCount" resultType="int">
+		select count(*) from sys_depts where parent_id=#{id}
 	</select>
 	
 </mapper>

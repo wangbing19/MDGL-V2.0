@@ -135,9 +135,9 @@ function doLoadEditUI(){
 	var url="menu/doMenuEditUI.do";
 	 
 	 $.post(url,function(result){
-			if(result.state==0){
+			if(result.status==201){
 				console.log(result);
-				alert(result.message);
+				alert(result.msg);
 			}else{
 				$("#mainContentId").load(url,function(){
 					 $(".box-title").html(title); 
@@ -158,12 +158,12 @@ function doDeleteObject(){
 	var url="menu/doDeleteObject.do"
 	var params={"id":id};
 	$.post(url,params,function(result){
-		if(result.state==1){
-			alert(result.message);
+		if(result.status==200){
+			alert(result.msg);
 			//doGetObjects();
 			doDeleteTrElement();
 		}else{
-			alert(result.message);
+			alert(result.msg);
 		}
 	});
 }

@@ -16,13 +16,13 @@ public class CusConsultation {
     @TableId(type = IdType.AUTO)
     private int id; /**序号*/
     /**门店id*/
-    private int userId;
+    private Integer userId;
     /**上级门店id*/
-    private int userParentId;
+    private Integer userParentId;
     /**姓名*/
     private String name;
     /**年龄*/
-    private int age;
+    private Integer age;
     /**性别*/
     private String gender;
     /**电话*/
@@ -76,13 +76,13 @@ public class CusConsultation {
     /**教室环境光线*/
     private String classroomLightingEnvironment;
     /**裸眼远视力（5米）： 右眼*/
-    private double rD;
+    private Double rD;
     /**裸眼远视力（5米）： 左眼*/
-    private double lD;
+    private Double lD;
     /**矫正远视力（5米）: 右眼*/
-    private double rCva;
+    private Double rCva;
     /**矫正远视力（5米）: 左眼*/
-    private double lCva;
+    private Double lCva;
     /**训练导师*/
     private String tutor;
     /**建表时间*/

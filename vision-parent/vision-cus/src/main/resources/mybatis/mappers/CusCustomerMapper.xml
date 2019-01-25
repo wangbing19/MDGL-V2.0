@@ -48,6 +48,20 @@
 					 select="com.md.sys.dao.tra.TraInformationrecordDao.findByCustomerId">
 		</association> -->
 	</resultMap>
+	
+	<!-- 根据诊断表id查找客户姓名 -->
+	<select id="findNameByDiagnoseId" parameterType="int" resultType="String">
+		select name
+		from cus_customer
+        where diagnose_id=#{id}
+	</select>
+	
+	<!-- 根据诊断表id查找客户电话 -->
+	<select id="findTelByDiagnoseId" parameterType="int" resultType="String">
+		select tel
+		from cus_customer
+        where diagnose_id=#{id}
+	</select>
 
 
 </mapper>
