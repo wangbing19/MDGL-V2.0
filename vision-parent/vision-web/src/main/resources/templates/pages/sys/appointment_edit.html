@@ -16,20 +16,20 @@
           </div>
           
           <div class="form-group">
-            <label for="usernameId" class="col-sm-2 control-label">训练师</label>
+            <label for="usernameId" class="col-sm-2 control-label">训练师姓名</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="usernameId">
             </div>
           </div>
           
-          <div class="form-group" id="pwdDiv">
+          <div class="form-group" >
             <label for="genderId" class="col-sm-2 control-label">性别</label>
             <div class="col-sm-10">
               <input type="text" class="form-control"  id="genderId">
             </div>
           </div>
            
-          <div class="form-group" id="pwdDiv">
+          <div class="form-group" >
             <label for="telId" class="col-sm-2 control-label">电话</label>
             <div class="col-sm-10">
               <input type="text" class="form-control"  id="telId">
@@ -63,15 +63,10 @@
               <input type="text" class="form-control"  id="resumeId">
             </div>
           </div>
-			
+			<!-- 
 			<div class="form-group">
             <label for="rolesId" class="col-sm-2 control-label">设置训练时间段</label>
-            <div class="col-sm-10" id="rolesId">
-        
-          
-          
-          
-              
+            <div class="col-sm-10" id="rolesId"> -->    
             </div>
           </div>
         </div>
@@ -139,7 +134,7 @@
 	  var node=selectedNodes[0];
 	  //2.将id和name填写或绑定在具体对象上
 	  $("#deptId").val(node.name);
-	  console.log("node.id="+node.id)
+	//  console.log("node.id="+node.id)
 	  $("#deptId").data("deptId",node.id)
 	  //3.隐藏zTree对应的Div
 	  doHideTree();
@@ -149,16 +144,16 @@
 	  var url="dept/doFindZTreeNodes.do";
 	  $("#treeLayer").css("display","block");
 	  $.getJSON(url,function(result){
-		  if(result.state==1){
+		  if(result.status==200){
 			  zTree = $.fn.zTree.init($("#zTreeId"),setting,result.data);
 		  }else{
-			  alert(result.message);
+			  alert(result.msg);
 		  }
 	  });
  }
  function doCancel(){
 	$("#mainContentId").removeData("rowData");
-	$("#mainContentId").load("appointment/doAppointmentUI.do");
+	$("#mainContentId").load("appointment/doAppointmentUI");
  }
  function doSaveOrUpdate(){
 	 var rowData=$("#mainContentId").data("rowData");
@@ -166,25 +161,25 @@
 	 var params=doGetEditFormData();
 	 if(rowData)params.id=rowData.id;
 	 //2.发起异步请求
-	 var insertUrl="appointment/doinsertAppointment.do";
-	 var updateUrl="appointment/doupdateAppointment.do";
+	 var insertUrl="appointment/doinsertAppointment";//添加训练师
+	 var updateUrl="appointment/doupdateAppointment";//修改训练师
 	 var url=rowData?updateUrl:insertUrl;
 	 //console.log(params);
 	 $.post(url,params,function(result){
 		 
-		 if(result.state==1){
-			 alert(result.message);
+		 if(result.status==200){
+			 alert(result.msg);
 			 doCancel();
 		 }else{
-			alert(result.message);
+			alert(result.msg);
 		 }
 	 })
  }
  function doGetEditFormData(){
 	 //获取用户输入的数据
 	 var params={
-			 user_name:$("#dopetnameId").val(),
-			 trainername:$("#usernameId").val(),
+			 userName:$("#dopetnameId").val(),
+			 trainerName:$("#usernameId").val(),
 			 gender:$("#genderId").val(),
 			 tel:$("#telId").val(),
 			 post:$("#postId").val(),
@@ -206,26 +201,29 @@
  /* function doLoadRoles(){
 	 var url="role/doFindRoles.do"
 	 $.getJSON(url,function(result){
-		 if(result.state==1){
+		 if(result.status==1){
 		  doInitPageRoles(result.data);
 		  doInitFormData();//修改时
 		 }else{
-		  alert(result.message);
+		  alert(result.msg);
 		 }
 	 })
  } */
  function doInitFormData(){
      var data=$("#mainContentId").data("rowData");
-
      if(!data)return;
-     $("#pwdDiv").remove();
-	 console.log(data);
+   //  $("#pwdDiv").remove();
+	 //console.log(data);
 	 //初始化用户信息 
-	 $("#dopetnameId").val(data.user_name);
-	 $("#usernameId").val(data.trainername);
+	 $("#dopetnameId").val(data.userName);
+	 //console.log(data.userName);
+	 $("#usernameId").val(data.trainerName);
+	 
 	 //console.log("data.user.sysDept.idss="+data.user.sysDept.id);
-	 $("#genderId").data(data.gender);
+	 $("#genderId").val(data.gender);
+	 console.log(data.gender);
 	 $("#telId").val(data.tel);
+	 console.log(data.tel);
 	 $("#postId").val(data.post);
 	 $("#descriptionId").val(data.description);
 	 $("#resumeId").val(data.resume);
@@ -236,7 +234,9 @@
 	  .prop("checked",true);
 	 }
  }
-function doInitPageRoles(data){
+ 
+ 
+/* function doInitPageRoles(data){
 	 //1.获取角色要显示的位置对象
 	 var div=$("#rolesId");
 	 div.empty();
@@ -249,7 +249,7 @@ function doInitPageRoles(data){
 		 .replace("[name]",data[i].name);
 		 div.append(newInput)
 	 }
- }
+ } */
 </script>
     
     
