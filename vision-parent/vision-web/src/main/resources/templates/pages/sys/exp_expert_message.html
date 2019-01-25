@@ -34,7 +34,7 @@
 		//将数据封装到"message"中
 		var expert = $("#mainContentId").data("message");
 		var rowData = $("#mainContentId").data("rowData");
-
+		//debugger
 		//获取修改后的数据
 		var params = doGetEditFormData();
 
@@ -49,13 +49,13 @@
 		//var url = expert ? updateUrl : insertUrl
 
 		$.post(url, params, function(result) {
-
-			if (result.state == 1) {
-				alert(result.message);
+			//debugger
+			if (result.status == 200) {
+				alert(result.data);
 				//执行成功后调用这个方法将data添加的缓存清掉
 				doCancel();
 			} else {
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	}
@@ -71,7 +71,7 @@
 
 	//进入添加或修改页面的取消事件,点击确定也会调用这个方法将data中的缓存清掉
 	function doCancel() {
-		$("#mainContentId").removeData("rowData");//清除#mainContentId上的"rowData"中的数据
+		//$("#mainContentId").removeData("rowData");//清除#mainContentId上的"rowData"中的数据
 		$("#mainContentId").removeData("message");//清除#mainContentId上的"symptoms"中的数据
 		$("#mainContentId").load("exp/doExpert.do");//返回专家表页面
 	}
