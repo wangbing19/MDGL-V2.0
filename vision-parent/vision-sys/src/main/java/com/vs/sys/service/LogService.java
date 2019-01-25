@@ -25,5 +25,6 @@ public interface LogService {
 	 PageObject<Logs> findPageObjects(
 			 String username,
 			 Integer pageCurrent);
+	void insertObject(Logs log);
 
 }

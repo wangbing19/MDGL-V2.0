@@ -30,31 +30,31 @@ public class CusDiagnose {
     /**客户表id*/
     private Integer customerId;
     /**右眼球面镜（近视）*/
-    private double rDs;
+    private Double rDs;
     /**右眼柱面镜（散光）*/
-    private double rDc;
+    private Double rDc;
     /**右眼x轴*/
-    private double rX;
+    private Double rX;
     /**右眼屈光力（度数）*/
-    private double rD;
+    private Double rD;
     /**左眼球面镜（近视）*/
-    private double lDs;
+    private Double lDs;
     /**左眼柱面镜（散光）*/
-    private double lDc;
+    private Double lDc;
     /**左眼x轴*/
-    private double lX;
+    private Double lX;
     /**左眼屈光力（度数）*/
-    private double lD;
+    private Double lD;
     /**瞳距*/
-    private double pupilDistance;
+    private Double pupilDistance;
     /**右眼镜度数*/
-    private double rGlassesD;
+    private Double rGlassesD;
     /**右眼镜散光*/
-    private double rGlassesDc;
+    private Double rGlassesDc;
     /**左眼镜度数*/
-    private double lGlassesD;
+    private Double lGlassesD;
     /**左眼镜散光*/
-    private double lGlassesDc;
+    private Double lGlassesDc;
     /**眼位检查*/
     private String eyePositionExamination;
     /**同视视*/

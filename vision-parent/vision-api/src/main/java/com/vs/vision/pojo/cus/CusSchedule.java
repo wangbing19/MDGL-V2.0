@@ -15,29 +15,34 @@ public class CusSchedule {
 
     @TableId(type = IdType.AUTO)
     private int id; /**id*/
+    /**客户id*/
+    private Integer customerId;
+    /**客户姓名*/
+    private String name;
+    /**门店id*/
+    private Integer userId;
+    /**上级门店id*/
+    private Integer userParentId;
     /**课程名称*/
     private String courseTitle;
     /**课程价格*/
-    private int priceOfCourse;
+    private Double priceOfCourse;
     /**课程训练数*/
-    private int courseTraining;
-    /**课程数*/
-    private int numberOfCourse;
+    private Integer courseTraining;
+    /**课程项目数*/
+    private Integer numberOfCourse;
     /**总价格*/
-    private int totalPrice;
-    /**总训练数*/
-    private int sum;
-    /**训练项目*/
-    private String trainingSession;
-    /**服务时间*/
-    private String servicingTime;
-    /**消费时间*/
-    private Date consumptionTime;
+    private Double totalPrice;
+    /**诊断师*/
+    private String diagnostics;
     /**建表时间*/
     private Date gmtCreate;
     /**修改时间*/
     private Date gmtModified;
-    /**客户id*/
-    private int customerId;
+    /**创建用户*/
+    private String createdUser;
+    /**修改用户*/
+    private String modifiedUser;
+    
 
 }

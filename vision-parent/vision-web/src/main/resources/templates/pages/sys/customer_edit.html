@@ -2,6 +2,7 @@
 <div class="box box-info">
 	<div class="box-header with-border">
 		<h3 class="box-title">添加用户</h3>
+		<button type="button" onclick="doTest()" style="float: right;">测试</button>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -114,6 +115,16 @@
 						"click", ".btn-save", doSaveOrUpdate);
 
 			});
+	
+	function doTest(){
+		$("#birthdayId").val("2000/12/5");
+		$("#homeId").val("成都市武侯区草金路45号");
+		$("#schoolId").val("武侯区第二中学");
+		$("#guardianId").val("吴立农");
+		$("#lastGuardianId").val("李丽红");
+		$("#lastGuardianTelId").val("17824569825");
+		$("#remarkId").val("这是一个调皮的女孩");
+	}
 
 	function doCancel() {
 		$("#mainContentId").removeData("rowData");

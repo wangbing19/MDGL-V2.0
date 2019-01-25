@@ -1,8 +1,8 @@
 package com.vs.vision.contorller;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/") 
 @Controller
 public class PageController{//类加载(将类读到内存)-->Class
 	  
@@ -30,4 +30,5 @@ public class PageController{//类加载(将类读到内存)-->Class
 		  return "pages/Viwepager";
 	  }
 	  
+
 }

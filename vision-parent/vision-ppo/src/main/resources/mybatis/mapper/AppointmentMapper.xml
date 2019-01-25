@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 命名空间：映射文件所在目录.名称 -->
-<mapper namespace="com.vs.mapper.ppo.PpoAppointmentMapper">
+<mapper namespace="com.vs.ppo.mapper.PpoAppointmentMapper">
         <select id="findAppointmentList" resultType="PpoAppointment">
 
-            select * from ppo_appointment order  by update  desc  limit #{startIndex},#{pageSize}
+            select * from ppo_appointment order  by gmt_modified  desc  limit #{startIndex},#{pageSize}
         </select>
 </mapper>

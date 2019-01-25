@@ -13,7 +13,7 @@ server:
 
   #mybatis-plush配置
   mybatis-plus:
-    type-aliases-package: com.jt.order.pojo    #别名包
+    #type-aliases-package: com.jt.order.pojo    #别名包
     mapper-locations: classpath:/mybatis/mappers/*.xml
     #开启驼峰映射
     configuration:

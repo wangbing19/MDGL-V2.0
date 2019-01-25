@@ -3,6 +3,7 @@ package com.vs.vision.vo.sys;
 import java.util.Arrays;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vs.vision.pojo.sys.Logs;
 import com.vs.vision.pojo.sys.Roles;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -13,6 +14,15 @@ public class RestTemplateParmas {
 	private Integer pageCurrent;
 	private Integer valid;
 	private Integer id;
+	private Logs logs;
+
+	public Logs getLogs() {
+		return logs;
+	}
+
+	public void setLogs(Logs logs) {
+		this.logs = logs;
+	}
 
 	public Roles getRole() {
 		return role;
@@ -65,7 +75,7 @@ public class RestTemplateParmas {
 	@Override
 	public String toString() {
 		return "RestTemplateParmas [role=" + role + ", ids=" + Arrays.toString(ids) + ", name=" + name
-				+ ", pageCurrent=" + pageCurrent + ", valid=" + valid + ", id=" + id + "]";
+				+ ", pageCurrent=" + pageCurrent + ", valid=" + valid + ", id=" + id + ", logs=" + logs + "]";
 	}
 
 }
