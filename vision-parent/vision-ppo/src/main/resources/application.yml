@@ -7,14 +7,14 @@ spring:
       #引入druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/jtdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+      url: jdbc:mysql://176.198.114.212:3306/visiondb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
       username: root
-      password: 123456
+      password: root
 
 #mybatis-plush配置
 mybatis-plus:
-    type-aliases-package: com.jt.order.pojo    #别名包
-    mapper-locations: classpath:/mybatis/mappers/*.xml
+    type-aliases-package: com.vs.vision.pojo.ppo    #别名包
+    mapper-locations: classpath:/mybatis/mapper/*.xml
     #开启驼峰映射
     configuration:
       map-underscore-to-camel-case: true
