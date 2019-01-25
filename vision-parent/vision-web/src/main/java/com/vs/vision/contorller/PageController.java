@@ -25,4 +25,9 @@ public class PageController{//类加载(将类读到内存)-->Class
 		  return "pages/common/page";
 	  }
 	  
+	  @RequestMapping("doViwepager")
+	  public String doViwepager() {
+		  return "pages/Viwepager";
+	  }
+	  
 }
