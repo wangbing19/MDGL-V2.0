@@ -58,16 +58,15 @@
 	//判定修改/删除并返回页面
 	function doLoadEditUI(){
 		//1.判定点击的对象
-		var title;
-			var rowData=$(this).parents("tr").data("rowData");
-			var id=rowData.id;
-			 title="修改诊断表";
-		   doFindObjectById(id,title);
-	  // }
+		var title="修改诊断表";
+		var rowData=$(this).parents("tr").data("rowData");
+		var id=rowData.id;
+		var titleName=rowData.customerName+"诊断表";
+		doFindObjectById(id,title,titleName);
    }
 	
   
-   function doFindObjectById(id,title){
+   function doFindObjectById(id,title,titleName){
 	   //1.params绑定id
 	   var params={"id":id};
 	   //2.url
@@ -76,17 +75,18 @@
 	   $.getJSON(url,params,function(result){//JsonResult
 		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
-	          doLoadPage(title);
+	          doLoadPage(title,titleName);
 		   }else{
 			  alert(result.msg);
 		   }
 	   });
    }
    
-   function doLoadPage(title){
+   function doLoadPage(title,titleName){
 	   var url="cusDiagnose/doCusDiagnoseEditUI";
 	   $("#mainContentId").load(url,function(){
 		   $(".box-title").html(title);
+		   $(".getName").html(titleName);
 	   }) 
    }
 
@@ -139,11 +139,11 @@
 		var url="cusDiagnose/doDeleteObject"
 		//3.ajax request
 		$.post(url,params,function(result){
-			if(result.state==1){
+			if(result.status==200){
 				//alert(result.message);
 				doGetObjects();
 			}else{
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	   
@@ -151,7 +151,7 @@
    
    //获取返回的值
    function doCreateTds(row,i){
-	   console.log(row);
+	 //  console.log(row);
 	   var tds=
 	   "<td>"+(parseInt(i)+1)+"</td>"+
 	   "<td>"+row.customerName+"</td>"+

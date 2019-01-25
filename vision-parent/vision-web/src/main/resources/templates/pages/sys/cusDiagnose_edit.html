@@ -12,20 +12,17 @@
 			<!--	<div class="survey_background_wrap" style="height: 498px;"></div>-->
 			<div>
 				<!-- style="margin: 75px;" -->
-				<div>
+				<div class="box-header">
 					<!-- style="text-align: center" -->
-					<h1 style="display: block;">
-						<div>
-							<div>
-								<p>诊断表</p>
-							</div>
-						</div>
+					<h1 style="display: block;text-align: center;">
+						<div class="getName">诊断表</div>
 					</h1>
 					<div style="font-size: 100%;">
 						<div>
 							<div class="survey_prefix"
 								style="display: block; margin-top: 40px;">
 								<div class="inner">
+								<button type="button" onclick="doTest()" style="float: right;">测试</button>
 									<h2 class="prefix_content">
 										<p style="color: #00a2d4;">
 											<strong>验光</strong>
@@ -224,30 +221,56 @@
 
 			});
 
+	function doTest(){
+		$("#rDsId").val("3.2");
+		$("#rDcId").val("3.2");
+		$("#rXId").val("3.2");
+		$("#rDId").val("3.2");
+		$("#lDsId").val("3.2");
+		$("#lDcId").val("3.2");
+		$("#lXId").val("3.2");
+		$("#lDId").val("3.2");
+		$("#pupilDistanceId").val("20");
+		$("#rGlassesDId").val("200");
+		$("#rGlassesDcId").val("200");
+		$("#lGlassesDId").val("200");
+		$("#lGlassesDcId").val("200");
+		$("#eyePositionExaminationId").val("正常");
+		$("#synoptophoreId").val("正常");
+		$("#fusionvisionId").val("正常");
+		$("#stereopsisId").val("正常");
+		$("#ametropiaId").val("正常");
+		$("#amblyopiaDegreeId").val("正常");
+		$("#amblyopiaId").val("正常");
+		$("#amblyopiaPrognosisId").val("正常");
+		$("#strabismusId").val("正常");
+		$("#visionOtherId").val("正常");
+		$("#parentCooperationDuringTrainingId").val("无");
+		$("#diagnosticsId").val("汪兵")
+	}
+	
 	function doCancel() {
 		$("#mainContentId").removeData("rowData");
-		$("#mainContentId").load("cusDiagnose/doCusDiagnoseListUI.do");
+		$("#mainContentId").load("cusDiagnose/doCusDiagnoseListUI");
 	}
 	
 	function doSaveOrUpdate() {
 		var rowData = $("#mainContentId").data("rowData");
 		//1.获取表单数据
-		// var params=doGetEditFormData();
 		var params = check();
-	//	console.log(params);
 		if (rowData)
 			params.id = rowData.id;
 		//2.发起异步请求
-		var insertUrl = "cusDiagnose/doSaveObject.do";
-		var updateUrl = "cusDiagnose/doUpdateObject.do";
+		var insertUrl = "cusDiagnose/doSaveObject";
+		var updateUrl = "cusDiagnose/doUpdateObject";
 		var url = rowData ? updateUrl : insertUrl;
-	//	console.log(params);
+	
 		$.post(url, params, function(result) {
-			if (result.state == 1) {
-				alert(result.message);
+			if (result.status == 200) {
+				alert(result.msg);
 				doCancel();
 			} else {
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	}
@@ -260,25 +283,25 @@
 		$("#gmtCreateId").val(getNowFormatDate());
 		
 		var data = $("#mainContentId").data("rowData");
-		console.log("一次测试");
+		
 		if (!data)
 			return;
-		console.log(data);
+		
 		//初始化用户信息 
 		
-		$("#rDsId").val(data.rDs);
-		$("#rDcId").val(data.rDc);
-		$("#rXId").val(data.rX);
-		$("#rDId").val(data.rD);
-		$("#lDsId").val(data.lDs);
-		$("#lDcId").val(data.lDc);
-		$("#lXId").val(data.lX);
-		$("#lDId").val(data.lD);
+		$("#rDsId").val(data.rds);
+		$("#rDcId").val(data.rdc);
+		$("#rXId").val(data.rx);
+		$("#rDId").val(data.rd);
+		$("#lDsId").val(data.lds);
+		$("#lDcId").val(data.ldc);
+		$("#lXId").val(data.lx);
+		$("#lDId").val(data.ld);
 		$("#pupilDistanceId").val(data.pupilDistance);
-		$("#rGlassesDId").val(data.rGlassesD);
-		$("#rGlassesDcId").val(data.rGlassesDc);
-		$("#lGlassesDId").val(data.lGlassesD);
-		$("#lGlassesDcId").val(data.lGlassesDc);
+		$("#rGlassesDId").val(data.rglassesD);
+		$("#rGlassesDcId").val(data.rglassesDc);
+		$("#lGlassesDId").val(data.lglassesD);
+		$("#lGlassesDcId").val(data.lglassesDc);
 		$("#eyePositionExaminationId").val(data.eyePositionExamination);
 		$("#synoptophoreId").val(data.synoptophore);
 		$("#fusionvisionId").val(data.fusionvision);

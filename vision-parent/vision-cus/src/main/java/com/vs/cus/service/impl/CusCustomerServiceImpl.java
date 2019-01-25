@@ -121,6 +121,10 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 		entity.setState(1);
 		entity.setGmtCreate(new Date());
 		entity.setGmtModified(entity.getGmtCreate());
+		entity.setMoney(0.0);
+		entity.setBalance(0.0);
+		entity.setTotalTrainingTime(0);
+		entity.setTimesOfTraining(0);
 		//建立咨询表对象并赋值
 		CusConsultation consultation = new CusConsultation();
 		consultation.setId(entity.getConsultationId());

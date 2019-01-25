@@ -66,7 +66,7 @@ public class CusCustomerController {
 		try {
 			cusVo.setUser("admin");
 			Integer row = restTemplate.postForObject(provider_url+"/customer/updateStateById", cusVo, Integer.class);
-			if(row != 0 || row == null) {
+			if(row != 0 && row != null) {
 				return JsonResult.oK();
 			}
 		} catch (Exception e) {
@@ -107,7 +107,7 @@ public class CusCustomerController {
 			cusCustomer.setUserId(0);
 			cusCustomer.setUserParentId(0);
 			Integer row = restTemplate.postForObject(provider_url+"/customer/saveObject", cusCustomer, Integer.class);
-			if(row != 0 || row == null) {
+			if(row != 0 && row != null) {
 				return JsonResult.oK();
 			}
 		} catch (Exception e) {
@@ -123,7 +123,7 @@ public class CusCustomerController {
 	public JsonResult doDeleteObject(Integer id) {
 		try {
 			Integer row = restTemplate.postForObject(provider_url+"/customer/deleteObject", id, Integer.class);
-			if(row != 0 || row == null) {
+			if(row != 0 && row == null) {
 				return JsonResult.oK();
 			}
 		} catch (Exception e) {
@@ -140,7 +140,7 @@ public class CusCustomerController {
 		try {
 			cusCustomer.setModifiedUser("admin");
 			Integer row = restTemplate.postForObject(provider_url+"/customer/updateObject", cusCustomer, Integer.class);
-			if(row != 0 || row == null) {
+			if(row != 0 && row == null) {
 				return JsonResult.oK();
 			}
 		} catch (Exception e) {

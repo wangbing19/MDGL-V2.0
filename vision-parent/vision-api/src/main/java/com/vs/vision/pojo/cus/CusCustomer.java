@@ -58,9 +58,9 @@ public class CusCustomer {
     /**学校地址*/
     private String school;
     /**总金额*/
-    private double money;
+    private Double money;
     /**余额*/
-    private double balance;
+    private Double balance;
     /**总训练次数*/
     private Integer totalTrainingTime;
     /**已训练次数*/
