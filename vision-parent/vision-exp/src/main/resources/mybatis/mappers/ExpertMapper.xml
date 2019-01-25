@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vs.vision.mapper.ExpertMapper">
+
+	<!-- 与远程诊断表并用,通过专家表id查找专家姓名 -->
+	<select id="findId" resultType="com.vs.vision.pojo.exp.Expert">
+		select expert_name from
+		exp_expert where id=#{expertId}
+	</select>
+	
+	
+	<!-- 对应远程诊断修改页面中的点击选择专家弹出的专家姓名 -->
+	<select id="selectExpName" resultType="com.vs.vision.vo.Node">
+		select id,expert_name as name
+		from exp_expert
+	</select>
+
+	<!-- 添加专家信息 -->
+	<!-- <insert id="insertExp" parameterType="com.md.sys.entity.exp.Expert">
+		insert into exp_expert
+		(expert_name,expert_tel,expert_message,appointment_time)
+		values
+		(#{expertName},#{expertTel},#{expertMessage},#{appointmentTime})
+	</insert> -->
+
+	<!-- 通过获取专家表id删除对应的专家表数据 -->
+	<delete id="deleteExp">
+		delete from exp_expert
+		where id in
+		<foreach collection="ids" 
+				 open="(" 
+				 close=")" 
+				 separator=","
+				 item="item">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!--  通过获取修改信息并在专家表进行修改 -->
+	<!-- <update id="updateExp">
+		update exp_expert
+		<set>
+			<if test="expertName!=null and expertName!=''">
+				expert_name=#{expertName},
+			</if>
+			<if test="expertTel!=null and expertTel!=''">
+				expert_tel=#{expertTel},
+			</if>
+			<if test="expertMessage!=null and expertMessage!=''">
+				expert_message=#{expertMessage},
+			</if>
+			<if test="appointmentTime!=null and appointmentTime!=''">
+				appointment_time=#{appointmentTime}
+			</if>
+		</set>
+		where id=#{id}
+	</update> -->
+	
+	<!-- 通过sql元素定义sql语句中的共性 -->
+	<sql id="queryWhereId">
+		<where>
+			<if test="expertName!=null and expertName!=''">
+				expert_name like concat("%",#{expertName},"%")
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 基于条件进行分页查询 -->
+	<select id="limitExp" resultType="com.vs.vision.pojo.exp.Expert">
+		select * from exp_expert
+		<include refid="queryWhereId" />
+		order by id asc
+		limit #{startIndex},#{pageSize}
+		<!-- limit 子句为分页查询子句,第一个参数代表下标位置 -->
+	</select>
+	
+	<!-- 通过专家姓名查询专家表总条数-->
+	<select id="countExp" resultType="int">
+		select count(*) from exp_expert
+		<include refid="queryWhereId" />
+	</select>
+	
+	
+	<!-- 通过选择的id在修改页面获取专家表对应id中的信息 -->
+	<select id="selectExp" resultType="com.vs.vision.pojo.exp.Expert">
+		select * from exp_expert
+		where id=#{id}
+	</select>
+	
+	<!-- 通过从前端获取的专家表id和专家信息在数据进行修改 -->
+	<!-- <update id="updateMessage">
+		update exp_expert 
+		<set>
+			<if test="expertMessage!=null and expertMessage!=''">
+				expert_message=#{expertMessage}
+			</if>
+		</set>
+		where id=#{id}
+	</update> -->
+</mapper>

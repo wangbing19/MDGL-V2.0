@@ -36,7 +36,7 @@
 		<header class="main-header">
 			<!-- ============================================================================================ -->
 			<!-- logo文本设置 -->
-			<a href="index2.html" class="logo"> <span class="logo-mini">视力</span>
+			<a href="doIndexUI" class="logo"> <span class="logo-mini">视力</span>
 				<span class="logo-lg">视力矫正后台管理系统</span>
 			</a>
 			<!-- ============================================================================================ -->
@@ -158,6 +158,7 @@
 						</span> </a>
 						<ul class="treeview-menu">
 							<li><a id="load-traInformationrecord-id">训练记录</a></li>
+							<li><a id="load-cus-schedule-id">课程表</a></li>
 						</ul></li>
 					<!-- ************************************************** -->
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
@@ -297,21 +298,22 @@
 				doLoadUI("load-role-id", "role/doRoleListUI.do")
 				doLoadUI("load-user-id", "user/doUserListUI.do")
 				doLoadUI("load-config-id", "config/doConfigListUI.do")
-				doLoadUI("load-cus-customer-id", "customer/doCustomerListUI.do")
+				doLoadUI("load-cus-customer-id", "customer/doCustomerListUI")
 				doLoadUI("load-appointment-id",
 						"appointment/doAppointmentUI")
 				doLoadUI("load-cus-consultation-id",
 						"cusConsultation/doCusConsultationListUI")
 				doLoadUI("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do")
-				doLoadUI("load-cus-diagnose-id","cusDiagnose/doCusDiagnoseListUI.do")
+				doLoadUI("load-cus-diagnose-id","cusDiagnose/doCusDiagnoseListUI")
 				doLoadUI("load-traInformationrecord-id","traInformationrecord/doTraInformationrecordUI.do")
 				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI.do")
 				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList.do")
+				doLoadUI("load-cus-schedule-id","schedule/doScheduleListUI")
 			});
 			function doLoadUI(id, url) {
 				$("#" + id).click(function() {
 					 $.post(url,function(result){
-							if(result.state==0){
+							if(result.status==200){
 								$("#mainContentId").load("doNullUI.do",function(){
 								});
 							}else{

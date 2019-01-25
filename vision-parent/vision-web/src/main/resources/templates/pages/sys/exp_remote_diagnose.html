@@ -7,7 +7,7 @@
 				<div class="box-tools">
 					<div class="input-group input-group-sm" style="width: 350px;">
 						<input type="text" name="table_search" id="searchNameId"
-							class="form-control pull-right" placeholder="用户名">
+							class="form-control pull-right" placeholder="客户名">
 
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default btn-search">
@@ -58,7 +58,7 @@
 	//作业，补充JS,发异步请求获取数据，呈现在页面上
 	$(function(){
 	 //分页页面加载完成，异步加载日志列表数据//pageId对应上方的id名字
-	     $("#pageId").load("doPageUI.do",function(){
+	     $("#pageId").load("doPageUI",function(){
     	 doGetObjects();
      });
 	 
@@ -144,6 +144,7 @@
 	   }else if($(this).hasClass("btn-update")){
 		   title="修改用户";
 		   var id=doGetCheckedId();//获取选中行的id
+		   //debugger
 		   //console.log("id="+id)
 		   if(!id){
 			  alert("请先选择");
@@ -161,14 +162,14 @@
 	   var url="dia/doSelect.do";//通过id查询对应的数据
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
-			  console.log("aaa="+result.date);
+		   if(result.status==200){
+			  console.log("aaa="+result.data);
 			  $("#mainContentId").data("rowData",result.data); //#mainContentId在starter页面
 			  //debugger
 	/********* 进入user_edit页面***************/		  
 	          doLoadPage(title);//方法在下面
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
@@ -215,12 +216,12 @@
 		//3.执行异步删除操作
 		$.post(url,params,function(result){
 		//console.log("删除="+result.toString)
-		  if(result.state==1){
+		  if(result.status==200){
 			  //alert(result.message);
 			  doChangePageCode();
 			  doGetObjects();
 		  }else{
-			  alert(result.message);
+			  alert(result.msg);
 		  }
 		  
 		})
@@ -289,18 +290,21 @@
 	   //$("#mainContentId").removeData("rowData")
 	   var rowData=$(this).parents("tr").data("rowData");
 	   var id=rowData.id;//点击症状描述按钮可以获取id(已测试)
-	   $("#mainContentId").data("rowData",rowData);
+	   $("#mainContentId").data("Described",rowData);
 	   //debugger
 	   
 	   //获取当前行id在症状描述表中的数据
-	   dosymtoms(id)
 	   
-	   //进入症状描述页面的地址
-	   var url="dia/doSymptoms.do";
-	   //点击后异步刷新进入症状描述页面
-	   $("#mainContentId").load(url,function(){
+	   dosymtoms(id)
+           
+	   
+   }
+   
+   function diaurl(url){
+	 //点击后异步刷新进入症状描述页面
+ 	$("#mainContentId").load(url,function(){
 		   
-	   })
+	  })
    }
    
    //获取当前行id在症状描述表中的数据
@@ -308,13 +312,19 @@
 	   var params={"id":id}
 	   //debugger
 	   var url="sym/doSelectSym.do";
+	                 
+
 	   $.getJSON(url,params,function(result){
 		   //debugger
-		   if(result.state==1){
+		   if(result.status==200){
 			   //alert(result.message);
 			   console.log("symptoms="+result.data);
 			   $("#mainContentId").data("symptoms",result.data); //#mainContentId在starter页面
 			   console.log("symptoms="+result.data);
+			   //进入症状描述页面的地址
+			   var url="dia/doSymptoms.do";
+			   
+			   diaurl(url)
 		       //debugger
 		   }else{
 			  // $("#mainContentId").data("symptoms",result.data);
@@ -337,22 +347,26 @@
 	   //$("#mainContentId").removeData("rowData")
 	   var rowData=$(this).parents("tr").data("rowData");
 	   var id=rowData.id;//点击专家回复按钮可以获取id(已测试)
-	   $("#mainContentId").data("rowData",rowData);
+	   $("#mainContentId").data("Reply",rowData);
 	   //debugger
 	   
 	   //获取当前行id在专家回复表中的数据
 	   doexpert(id)
 	   
-	   //进入专家回复页面的地址
-	   var url="dia/doExpertReply.do";
-	   //点击后异步刷新进入症状描述页面
-	    $.post(url,function(result){
-			if(result.state==0){
-				console.log(result);
-				alert(result.message);
-			}else{
-				$("#mainContentId").load(url);
-			}
+	   
+	   
+	   
+   }
+   
+   function dorepurl(url){
+	 //点击后异步刷新进入症状描述页面
+	  $.post(url,function(result){
+		if(result.status==201){
+			console.log(result);
+			alert(result.message);
+		}else{
+			$("#mainContentId").load(url);
+		}
 		})
    }
    
@@ -363,11 +377,15 @@
 	   var url="rep/doSelectRep.do";
 	   $.getJSON(url,params,function(result){
 		   //debugger
-		   if(result.state==1){
+		   if(result.status==200){
 			   //alert(result.message);
 			   console.log("expert="+result.data);
 			   $("#mainContentId").data("expert",result.data); //#mainContentId在starter页面
 			   console.log("expert="+result.data);
+			   //进入专家回复页面的地址
+			   var url="dia/doExpertReply.do";
+			   
+			   dorepurl(url)
 		       //debugger
 		   }else{
 			   //$("#mainContentId").data("expert",result.data);
@@ -400,13 +418,13 @@
        //debugger
 	   $.post(url,params,function(result){
 		   //debugger
-    	   if(result.state==1){
-    		   alert(result.message);
+    	   if(result.status==200){
+    		   alert(result.msg);
     		   //doGetObjects();//重新查询刷新
     		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
     		   doEditRow(btn,rowData.valid);
     	   }else{
-    		   alert(result.message);
+    		   alert(result.msg);
     	   }
        })    
    }    
@@ -468,17 +486,19 @@
    //处理服务端响应的数据
    function doHandleResponseResult(result){//JsonResult
 	   console.log(result);
-	   if(result.state==1){//正常数据
+	   if(result.status==200){//正常数据
 		  //设置table对象中tbody部分的内容
 		  doSetTableBodyRows(result.data.records); 
 	      //设置pageId位置对应的分页数据
+	      //debugger
 	      doSetPagination(result.data);//pageObject
 	   }else{//异常数据
-		  alert(result.message) 
+		  alert(result.msg) 
 	   }
    }
    //设置table对象中tbody部分的内容
    function doSetTableBodyRows(records){
+	   //debugger
 	   console.log("records="+records);
 	   //1.获取tbody对象并清空数据
 	   var tBody=$("#tbodyId");

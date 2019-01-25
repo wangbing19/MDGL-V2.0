@@ -1,8 +1,9 @@
 package com.vs.vision.pojo.sys;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Menus {
+public class Menus implements Serializable{
     private Integer id;
 
     private String name;
@@ -122,4 +123,13 @@ public class Menus {
     public void setModifiedUser(String modifiedUser) {
         this.modifiedUser = modifiedUser;
     }
+
+	@Override
+	public String toString() {
+		return "Menus [id=" + id + ", name=" + name + ", url=" + url + ", type=" + type + ", sort=" + sort + ", note="
+				+ note + ", parentId=" + parentId + ", permission=" + permission + ", createdTime=" + createdTime
+				+ ", modifiedTime=" + modifiedTime + ", createdUser=" + createdUser + ", modifiedUser=" + modifiedUser
+				+ "]";
+	}
+    
 }

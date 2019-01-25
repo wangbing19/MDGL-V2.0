@@ -46,7 +46,7 @@
 </div>
 <script type="text/javascript">
    $(document).ready(function(){
-	   $("#pageId").load("doPageUI.do",function(){
+	   $("#pageId").load("doPageUI",function(){
 		   $("#mainContentId").removeData("rowData");
 		   doGetObjects();
 	   });
@@ -58,41 +58,35 @@
 	//判定修改/删除并返回页面
 	function doLoadEditUI(){
 		//1.判定点击的对象
-		var title;
-	//	if($(this).hasClass("btn-add")){
-	//		title="添加诊断表";
-	//		doLoadPage(title);
-	//	}else if($(this).hasClass("btn-update")){
-			var rowData=$(this).parents("tr").data("rowData");
-			var id=rowData.id;
-			 title="修改诊断表";
-		//	console.log("id="+id)
-		   //基于id进行查询并加载编辑页面
-		   doFindObjectById(id,title);
-	  // }
+		var title="修改诊断表";
+		var rowData=$(this).parents("tr").data("rowData");
+		var id=rowData.id;
+		var titleName=rowData.customerName+"诊断表";
+		doFindObjectById(id,title,titleName);
    }
 	
   
-   function doFindObjectById(id,title){
+   function doFindObjectById(id,title,titleName){
 	   //1.params绑定id
 	   var params={"id":id};
 	   //2.url
-	   var url="cusDiagnose/doFindObjectById.do";
+	   var url="cusDiagnose/doFindObjectById";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
+		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
-	          doLoadPage(title);
+	          doLoadPage(title,titleName);
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
    
-   function doLoadPage(title){
-	   var url="cusDiagnose/doCusDiagnoseEditUI.do";
+   function doLoadPage(title,titleName){
+	   var url="cusDiagnose/doCusDiagnoseEditUI";
 	   $("#mainContentId").load(url,function(){
 		   $(".box-title").html(title);
+		   $(".getName").html(titleName);
 	   }) 
    }
 
@@ -103,26 +97,21 @@
    }
    //页面加载完成异步加载当前页数据
    function doGetObjects(){
-	   //debugger
-	   var url="cusDiagnose/doFindPageObjects.do";
+	   var url="cusDiagnose/doFindPageObjects";
 	   var pageCurrent=$("#pageId").data("pageCurrent");
 	   if(!pageCurrent)pageCurrent=1;
 	   var params={"pageCurrent":pageCurrent}
-	//   params.name=$("#searchNameId").val().trim();
-	//   console.log(params);
 	   $.getJSON(url,params,function(result){
-		//   console.log(result);
-		   //debugger
 		   doHandleResponseResult(result);
 	   });
    }
    
    function doHandleResponseResult(result){
-	   if(result.state==1){
+	   if(result.status==200){
 		  doSetTableBodyRows(result.data.records);
 		  doSetPagination(result.data);
 		}else{
-		  alert(result.message);
+		  alert(result.msg);
 	   }
    }
    //通过服务端返回的数据初始化页面
@@ -147,14 +136,14 @@
 		var id=rowData.id;
 		var params={"id":id};
 		//2.url
-		var url="cusDiagnose/doDeleteObject.do"
+		var url="cusDiagnose/doDeleteObject"
 		//3.ajax request
 		$.post(url,params,function(result){
-			if(result.state==1){
+			if(result.status==200){
 				//alert(result.message);
 				doGetObjects();
 			}else{
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	   
@@ -167,8 +156,8 @@
 	   "<td>"+(parseInt(i)+1)+"</td>"+
 	   "<td>"+row.customerName+"</td>"+
        "<td>"+row.customerTel+"</td>"+
-       "<td>"+"L:"+row.lDs+"<br/>"+"R:"+row.rDs+"</td>"+
-       "<td>"+"L:"+row.lDc+"<br/>"+"R:"+row.rDc+"</td>"+
+       "<td>"+"L:"+row.lds+"<br/>"+"R:"+row.rds+"</td>"+
+       "<td>"+"L:"+row.ldc+"<br/>"+"R:"+row.rdc+"</td>"+
        "<td>"+row.diagnostics+"</td>"+
        "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
        "<td><button type='button' class='btn-delete'>"+"删除"+"</button>"+

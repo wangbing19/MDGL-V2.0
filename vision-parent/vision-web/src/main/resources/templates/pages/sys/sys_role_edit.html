@@ -110,11 +110,11 @@
     	var url=data?updateUrl:insertUrl;
     	//3.ajax request
     	$.post(url,params,function(result){
-    		if(result.state==1){
-    		   alert(result.message);
+    		if(result.status==200){
+    		   alert(result.msg);
     		   doCancel();
     		}else{
-    		   alert(result.message);
+    		   alert(result.msg);
     		}
     	})
     }
@@ -141,14 +141,14 @@
     	$.getJSON(url,function(result){
     		console.log('doFindZtreeMenuNodes=');
     		console.log(result);
-    	 if(result.state==1){
+    	 if(result.status==200){
     		zTree=$.fn.zTree.init(
     		$("#menuTree"),setting,result.data);
     		//修改时添加如下代码(注意先后顺序)
     		var rowData=$("#mainContentId").data("data");
     	    if(rowData)doInitEditFormData(rowData);
     	 }else{
-    		alert(result.message);
+    		alert(result.msg);
     	 }
     });
 }

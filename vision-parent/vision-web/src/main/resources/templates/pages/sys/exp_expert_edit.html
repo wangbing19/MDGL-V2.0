@@ -73,13 +73,13 @@
 		var url = rowData ? updateUrl : insertUrl;
 		console.log(params);
 		$.post(url, params, function(result) {
-
-			if (result.state == 1) {
-				alert(result.message);
+			//debugger
+			if (result.status == 200) {
+				alert(result.data);
 				//执行成功后调用这个方法将data添加的缓存清掉
 				doCancel();
 			} else {
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	}

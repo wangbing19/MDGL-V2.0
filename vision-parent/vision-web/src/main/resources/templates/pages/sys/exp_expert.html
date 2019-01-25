@@ -47,7 +47,7 @@
 	//作业，补充JS,发异步请求获取数据，呈现在页面上
 	$(function(){
 	 //分页页面加载完成，异步加载日志列表数据//pageId对应上方的id名字
-	     $("#pageId").load("doPageUI.do",function(){
+	     $("#pageId").load("doPageUI",function(){
     	 doGetObjects();
      });
 	 
@@ -126,7 +126,7 @@
 	   var title;
 	   if($(this).hasClass("btn-add")){
 		   //debugger
-		   $("#mainContentId").removeData("rowData")
+		   //$("#mainContentId").removeData("rowData")
 		   title="添加";
 		   doLoadPage(title);//方法在下面
 	   }else if($(this).hasClass("btn-update")){
@@ -149,14 +149,14 @@
 	   var url="exp/doSelectExp.do";//通过id查询对应的数据
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
-			  console.log("aaa="+result.date);
+		   if(result.status==200){
+			  console.log("aaa="+result.data);
 			  $("#mainContentId").data("rowData",result.data); //#mainContentId在starter页面
 			  //debugger
 	/********* 进入user_edit页面***************/		  
 	          doLoadPage(title);//方法在下面
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
@@ -169,9 +169,9 @@
    function doLoadPage(title){
 	   var url="exp/doExpertIU.do"
 		   $.post(url,function(result){
-				if(result.state==0){
+				if(result.status==201){
 					console.log(result);
-					alert(result.message);
+					alert(result.msg);
 				}else{
 					$("#mainContentId").load(url,function(){
 						 $(".box-title").html(title); 
@@ -207,12 +207,12 @@
 		//3.执行异步删除操作
 		$.post(url,params,function(result){
 		//console.log("删除="+result.toString)
-		  if(result.state==1){
-			  alert(result.message);
+		  if(result.status==200){
+			  alert(result.data);
 			  doChangePageCode();
 			  doGetObjects();
 		  }else{
-			  alert(result.message);
+			  alert(result.msg);
 		  }
 		  
 		})
@@ -287,26 +287,38 @@
 	   //获取当前行id在专家信息表中的数据
 	   doexpert(id)
 	   
+	  
+	   //debugger
 	   //进入专家信息页面的地址
-	   var url="exp/doExpertMessage.do";
+	   
 	   //点击后异步刷新进入专家信息页面
-	   $("#mainContentId").load(url,function(){
+	   /* $("#mainContentId").load(url,function(){
 		   
-	   })
+	   }) */
+   }
+   
+   function dourl(url){
+	   //debugger
+ 	$("#mainContentId").load(url,function(){
+		   
+	  })
    }
    
    //获取当前行id在专家信息表中的数据
    function doexpert(id){
-	   var params={id:id}
 	   //debugger
+	   var params={id:id}
 	   var url="exp/doSelectExp.do";
 	   $.getJSON(url,params,function(result){
-		   //debugger
-		   if(result.state==1){
+		   
+		   if(result.status==200){
+			   //debugger
 			   //alert(result.message);
 			   console.log("message="+result.data);
 			   $("#mainContentId").data("message",result.data); //#mainContentId在starter页面
 			   console.log("message="+result.data);
+			   var url="exp/doExpertMessage.do";
+			   dourl(url)
 		       //debugger
 		   }else{
 			   //$("#mainContentId").data("expert",result.data);
@@ -361,13 +373,13 @@
    //处理服务端响应的数据
    function doHandleResponseResult(result){//JsonResult
 	   console.log(result);
-	   if(result.state==1){//正常数据
+	   if(result.status==200){//正常数据
 		  //设置table对象中tbody部分的内容
 		  doSetTableBodyRows(result.data.records); 
 	      //设置pageId位置对应的分页数据
 	      doSetPagination(result.data);//pageObject
 	   }else{//异常数据
-		  alert(result.message) 
+		  alert(result.msg) 
 	   }
    }
    //设置table对象中tbody部分的内容

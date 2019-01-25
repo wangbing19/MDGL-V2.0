@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vs.pre.mapper.DiagnosisResultMapper" >
+ 	<!-- 更新显示状态 -->
+ 	<update id="updateDisType">
+ 		update pre_diagnosis_result set dis_type=#{disType} where id=#{id}
+ 	</update>
+ 	
+ 	<!--查询要显示的节点信息 -->
+	<select id="findZtreeMenuNodes"
+		resultType="com.vs.vision.vo.Node">
+		select id,symptom_name as name,parent_id
+		from pre_diagnosis_result
+	</select>
+	
+	<!-- 修改症状表中的数据 -->
+	<update id="updateObject"
+		parameterType="com.vs.vision.vo.DiagnosisDate">
+		update pre_diagnosis_result set
+		parent_id=#{parentId},dis_type=#{disType},symptom_name=#{symptomName},gmt_modified=now()
+		where id=#{id}
+	</update>
+	
+	<!-- 根据症状id修改是否显示症状描述 -->
+	<update id="updateDisTypeById">
+	update pre_diagnosis_result set dis_type=#{disType} where id=#{id}
+	</update>
+	
+	<!-- 插入数据到症状表中 -->
+
+	<insert id="insertObject">
+		<selectKey order="AFTER" resultType="int" keyProperty="id">
+			select last_insert_id()
+		</selectKey>
+		insert into pre_diagnosis_result
+		values(null,#{parentId},#{disType},#{symptomName},now(),now())
+	</insert>
+	
+	
+</mapper>

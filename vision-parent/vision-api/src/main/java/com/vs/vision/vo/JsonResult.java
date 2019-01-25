@@ -154,5 +154,10 @@ public class JsonResult implements Serializable {
         }
     }
 
+	@Override
+	public String toString() {
+		return "JsonResult [status=" + status + ", msg=" + msg + ", data=" + data + "]";
+	}
+
 
 }
