@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vs.vision.pojo.sys.Roles;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class RestTemplateParmas {
 	private Roles role;
 	private Integer[] ids;
