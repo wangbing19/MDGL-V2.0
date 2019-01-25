@@ -8,6 +8,13 @@
 		select expert_name from
 		exp_expert where id=#{expertId}
 	</select>
+	
+	
+	<!-- 对应远程诊断修改页面中的点击选择专家弹出的专家姓名 -->
+	<select id="selectExpName" resultType="com.vs.vision.vo.Node">
+		select id,expert_name as name
+		from exp_expert
+	</select>
 
 	<!-- 添加专家信息 -->
 	<!-- <insert id="insertExp" parameterType="com.md.sys.entity.exp.Expert">
@@ -18,7 +25,7 @@
 	</insert> -->
 
 	<!-- 通过获取专家表id删除对应的专家表数据 -->
-	<!-- <delete id="deleteExp">
+	<delete id="deleteExp">
 		delete from exp_expert
 		where id in
 		<foreach collection="ids" 
@@ -28,7 +35,7 @@
 				 item="item">
 			#{item}
 		</foreach>
-	</delete> -->
+	</delete>
 	
 	<!--  通过获取修改信息并在专家表进行修改 -->
 	<!-- <update id="updateExp">
@@ -51,40 +58,35 @@
 	</update> -->
 	
 	<!-- 通过sql元素定义sql语句中的共性 -->
-	<!-- <sql id="queryWhereId">
+	<sql id="queryWhereId">
 		<where>
 			<if test="expertName!=null and expertName!=''">
 				expert_name like concat("%",#{expertName},"%")
 			</if>
 		</where>
-	</sql> -->
+	</sql>
 	
 	<!-- 基于条件进行分页查询 -->
-	<!-- <select id="limitExp" resultType="com.md.sys.entity.exp.Expert">
+	<select id="limitExp" resultType="com.vs.vision.pojo.exp.Expert">
 		select * from exp_expert
 		<include refid="queryWhereId" />
 		order by id asc
 		limit #{startIndex},#{pageSize}
-		limit 子句为分页查询子句,第一个参数代表下标位置
-	</select> -->
+		<!-- limit 子句为分页查询子句,第一个参数代表下标位置 -->
+	</select>
 	
 	<!-- 通过专家姓名查询专家表总条数-->
-	<!-- <select id="countExp" resultType="int">
+	<select id="countExp" resultType="int">
 		select count(*) from exp_expert
 		<include refid="queryWhereId" />
-	</select> -->
+	</select>
 	
-	<!-- 对应远程诊断修改页面中的点击选择专家弹出的专家姓名 -->
-	<!-- <select id="selectExpName" resultType="com.md.common.vo.Node">
-		select id,expert_name as name
-		from exp_expert
-	</select> -->
 	
 	<!-- 通过选择的id在修改页面获取专家表对应id中的信息 -->
-	<!-- <select id="selectExp" resultType="com.md.sys.entity.exp.Expert">
+	<select id="selectExp" resultType="com.vs.vision.pojo.exp.Expert">
 		select * from exp_expert
 		where id=#{id}
-	</select> -->
+	</select>
 	
 	<!-- 通过从前端获取的专家表id和专家信息在数据进行修改 -->
 	<!-- <update id="updateMessage">

@@ -39,7 +39,7 @@
 				<label for="expertId" class="col-sm-2 control-label">选择专家</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control load-sys-dept"
-						readonly="readonly" id="expertId" placeholder="上级部门">
+						readonly="readonly" id="expertId" placeholder="专家姓名">
 				</div>
 			</div>
 
@@ -145,11 +145,11 @@
 	  var url="exp/doFindZTreeNodes.do";
 	  $("#treeLayer").css("display","block");
 	  $.getJSON(url,function(result){
-		  if(result.state==1){
+		  if(result.status==200){
 			  console.log("result.data="+result.data)
 			  zTree = $.fn.zTree.init($("#zTreeId"),setting,result.data);
 		  }else{
-			  alert(result.message);
+			  alert(result.msg);
 		  }
 	  });
  }
@@ -175,12 +175,12 @@
 	 console.log(params);
 	 $.post(url,params,function(result){
 		 
-		 if(result.state==1){
-			 alert(result.message);
+		 if(result.status==200){
+			 alert(result.data);
 			//执行成功后调用这个方法将data添加的缓存清掉
 			 doCancel();
 		 }else{
-			alert(result.message);
+			alert(result.msg);
 		 }
 	 })
  }

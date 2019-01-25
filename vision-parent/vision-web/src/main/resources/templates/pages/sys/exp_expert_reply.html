@@ -49,7 +49,7 @@ $(function(){
  function doSaveOrUpdate(){
 	 //将数据封装到"symptoms"中
 	 var expert=$("#mainContentId").data("expert");
-	 var rowData=$("#mainContentId").data("rowData");
+	 var rowData=$("#mainContentId").data("Reply");
 	 
 	 //获取修改后的数据
 	 var params=doGetEditFormData();
@@ -65,12 +65,12 @@ $(function(){
 	 
    $.post(url,params,function(result){
 				 
-	if(result.state==1){
-		alert(result.message);
+	if(result.status==200){
+		alert(result.data);
 		//执行成功后调用这个方法将data添加的缓存清掉
 		doCancel();
 	}else{
-		alert(result.message);
+		alert(result.msg);
 	}
 	})
  }
@@ -91,7 +91,7 @@ $(function(){
  
  //进入添加或修改页面的取消事件,点击确定也会调用这个方法将data中的缓存清掉
  function doCancel(){
-	$("#mainContentId").removeData("rowData");//清除#mainContentId上的"rowData"中的数据
+	$("#mainContentId").removeData("Reply");//清除#mainContentId上的"rowData"中的数据
 	$("#mainContentId").removeData("expert");//清除#mainContentId上的"symptoms"中的数据
 	$("#mainContentId").load("dia/doRemoteDiagnose.do");//返回远程诊断页面
  }
