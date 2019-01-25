@@ -1,6 +1,8 @@
 package com.vs.vision.pojo.sys;
 
-public class sRoleMenus {
+import java.io.Serializable;
+
+public class sRoleMenus implements Serializable{
     private Integer id;
 
     private Integer roleId;

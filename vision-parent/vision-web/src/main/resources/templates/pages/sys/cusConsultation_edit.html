@@ -1,7 +1,7 @@
 <!-- Horizontal Form -->
 <div class="box box-info">
 	<div class="box-header with-border">
-		<h3 class="box-title">添加用户</h3>
+		<h3 class="box-title">添加用户咨询表</h3>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -491,7 +491,7 @@
 
 	function doCancel() {
 		$("#mainContentId").removeData("rowData");
-		$("#mainContentId").load("cusConsultation/doCusConsultationListUI.do");
+		$("#mainContentId").load("cusConsultation/doCusConsultationListUI");
 	}
 	
 	function doSaveOrUpdate() {
@@ -503,16 +503,16 @@
 		if (rowData)
 			params.id = rowData.id;
 		//2.发起异步请求
-		var insertUrl = "cusConsultation/doSaveObject.do";
-		var updateUrl = "cusConsultation/doUpdateObject.do";
+		var insertUrl = "cusConsultation/doSaveObject";
+		var updateUrl = "cusConsultation/doUpdateObject";
 		var url = rowData ? updateUrl : insertUrl;
 	//	console.log(params);
 		$.post(url, params, function(result) {
-			if (result.state == 1) {
+			if (result.status == 200) {
 			//	alert(result.message);
 				doCancel();
 			} else {
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	}
@@ -536,7 +536,8 @@
 		$("#phoneID").val(data.tel);
 		$("#whitchEyeID").val(data.eye);
 		$("#yearID").val(data.declineTimeYear);
-		$("#declineTimeMonth").val(data.monthID);
+		$("#monthID").val(data.declineTimeMonth);
+	//	console.log(data.declineTimeMonth);
 		/**是否诊断*/
 		var diagnose = data.diagnose; // 1,2 把你拿到的值赋给youVal
 		$("input[name='diagnose']").each(function(index) {
@@ -586,23 +587,22 @@
 		});
 		
 		/**父视力情况*/
-		var fVisionCondition = data.fVisionCondition; // 1,2 把你拿到的值赋给youVal
+		var fVisionCondition = data.fvisionCondition; // 1,2 把你拿到的值赋给youVal
 		$("input[name='fVisionCondition']").each(function(index) {
 		    if ($("input[name='fVisionCondition']").get(index).value == fVisionCondition) {
 		        $("input[name='fVisionCondition']").get(index).checked = true;
 		    }
 		});
-		$("#fVisionConditionOther").val(data.fOther);
+		$("#fVisionConditionOther").val(data.fother);
 		
 		/**母视力情况*/
-		var mVisionCondition = data.mVisionCondition; // 1,2 把你拿到的值赋给youVal
+		var mVisionCondition = data.mvisionCondition; // 1,2 把你拿到的值赋给youVal
 		$("input[name='mVisionCondition']").each(function(index) {
 		    if ($("input[name='mVisionCondition']").get(index).value == mVisionCondition) {
 		        $("input[name='mVisionCondition']").get(index).checked = true;
 		    }
 		});
-		$("#mVisionConditionOther").val(data.mOther);
-		
+		$("#mVisionConditionOther").val(data.mother);
 		/**睡眠时间*/
 		var sleepingTime = data.sleepingTime; // 1,2 把你拿到的值赋给youVal
 		$("input[name='sleepingTime']").each(function(index) {
@@ -692,10 +692,10 @@
 		    }
 		});
 		
-		$("#rDId").val(data.rD);
-		$("#lDId").val(data.lD);
-		$("#rCvaId").val(data.rCva);
-		$("#lCvaId").val(data.lCva);
+		$("#rDId").val(data.rd);
+		$("#lDId").val(data.ld);
+		$("#rCvaId").val(data.rcva);
+		$("#lCvaId").val(data.lcva);
 		$("#tutorId").val(data.tutor);
 		
 		
@@ -774,6 +774,10 @@
 				params.oculopathyOther = oculopathyOther;
 			} 
 			params.oculopathy = oculopathy;
+			
+			console.log("==================");
+			console.log(params.oculopathyOther);
+			console.log(params);
 		}
 		
 		/**矫正方法*/

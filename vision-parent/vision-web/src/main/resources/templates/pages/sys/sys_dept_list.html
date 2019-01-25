@@ -98,9 +98,9 @@ function doLoadEditUI(){
 	}
 	var url="dept/doDeptEditUI.do";
 	$.post(url,function(result){
-		if(result.state==0){
+		if(result.status==201){
 			console.log(result);
-			alert(result.message);
+			alert(result.msg);
 		}else{
 			$("#mainContentId").load(url,function(){
 				$(".box-title").html(title);
@@ -131,11 +131,11 @@ function doDeleteObject(){
 	var params={"id":id};
 	//3.post
 	$.post(url,params,function(result){
-		if(result.state==1){
-			alert(result.message);
+		if(result.status==200){
+			alert(result.msg);
 			doGetObjects();
 		}else{
-			alert(result.message);
+			alert(result.msg);
 		}
 	})
 }

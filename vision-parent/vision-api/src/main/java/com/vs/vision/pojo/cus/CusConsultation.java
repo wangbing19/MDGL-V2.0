@@ -15,6 +15,10 @@ public class CusConsultation {
 
     @TableId(type = IdType.AUTO)
     private int id; /**序号*/
+    /**门店id*/
+    private int userId;
+    /**上级门店id*/
+    private int userParentId;
     /**姓名*/
     private String name;
     /**年龄*/

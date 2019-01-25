@@ -96,13 +96,16 @@
 				 //================================控制症状描述的显示与隐藏(修改时)==============================//
 				 $("#display_control").css("display", "none");					 
 				 var dis_control = $("#mainContentId").data("disType");//获取实现放入域中的数据：是否显示诊断描述
+				 console.log(dis_control);
 				 if(dis_control){
 					$("#display_control").css("display", "block");  //如果不需要显示，则隐藏诊断描述标签
 				 }
 				 
-				 if($("#mainContentId").data("insertDisControl")) $("#display_control").css("display", "none");	
+				 if($("#mainContentId").data("insertDisControl")) $("#display_control").css("display","none");	
 				 
 				 var data=$("#mainContentId").data("rowData"); //从div中获取绑定的对象
+				 console.log("123");
+				 console.log(data);				 
 				 if(data) doInitEditFormData(data);//通过查找到的数据初始化表单
 
 			})
@@ -114,13 +117,13 @@
 		$("#menuLayer").css("display", "block");
 		var url = "diagnosis/doFindZtreeMenuNodes.do";
 		$.getJSON(url, function(result) {
-			if (result.state == 1) {
+			if (result.status == 200) {
 				//使用init函数需要先引入ztree对应的js文件
 				//console.log(result.data);
 				zTree = $.fn.zTree.init($("#menuTree"), setting, result.data);
 
 			} else {
-				alert(result.message);
+				alert(result.msg);
 			}
 		})
 	}	
@@ -168,11 +171,11 @@
 		}
 			
 		$.post(url, params, function(result) {
-			if (result.state == 1) {
-				alert(result.message);
+			if (result.status == 200) {
+				alert(result.data);
 				//doCancel();
 			} else {
-				alert(result.message);
+				alert(result.msg);
 			}
 		})	
 		
@@ -181,20 +184,21 @@
 			if(!rowData) parentId=null;
 			else p_id = rowData.parentId;
 		}
-		console.log("p_id:"+p_id)
+		//console.log("p_id:"+p_id)
 		var param1={"id":p_id};
 		var find_url = "diagnosis/doFindObject.do";
 		
 		 $.post(find_url,param1,function(result){
-			if(result.state==1){
+			if(result.status==200){
+				//debugger;
 				var is_dis=result.data.disType;
 				if(is_dis==1){
 					var updateDis_url = "diagnosis/doUpdateDisType.do";
 					var param2={"disType":0,
 							    "id":p_id};
 					$.post(updateDis_url,param2,function(result){
-						if(result.state==1){
-						//	alert("修改好了");
+						if(result.status==200){
+							
 						}
 					})
 				}	
@@ -223,13 +227,20 @@
 	/***********************获取到的数据初始化表单******************************/
 	function doInitEditFormData(data){	
 		//console.log(data);
-		$("#nameId").val(data.symptom_name);
-		$("#parentDesc").val(data.parentName);	
+		$("#nameId").val(data.symptomName);
+		var urlp = "diagnosis/doFindParentNameById.do";
+		var paramsp={"id":data.id}
+		$.post(urlp,paramsp,function(result){
+			if(result.status==200){
+				$("#parentDesc").val(result.data);
+			}
+		})
+		//$("#parentDesc").val(data.parentName);	
 			
 		url="diagnosis/doFindDescObject.do";
 		var params={"diagnosisId":data.id}
 		$.post(url,params,function(result){  //异步刷新获取症状描述的信息
-			if(result.state==1){
+			if(result.status==200){
 				var Desc = result.data;
 				console.log(Desc);
 				if(Desc) $("#descId").val(result.data.diagnosisDesc);

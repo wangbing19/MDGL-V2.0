@@ -1,8 +1,9 @@
 package com.vs.vision.pojo.sys;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Users {
+public class Users implements Serializable{
     private Integer id;
 
     private String username;
@@ -182,4 +183,15 @@ public class Users {
     public void setModifiedUser(String modifiedUser) {
         this.modifiedUser = modifiedUser;
     }
+
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
+				+ ", parentId=" + parentId + ", salt=" + salt + ", address=" + address + ", email=" + email
+				+ ", mobile=" + mobile + ", valid=" + valid + ", customerLimit=" + customerLimit + ", customerNum="
+				+ customerNum + ", deptLimit=" + deptLimit + ", deptNum=" + deptNum + ", createdTime=" + createdTime
+				+ ", modifiedTime=" + modifiedTime + ", createdUser=" + createdUser + ", modifiedUser=" + modifiedUser
+				+ "]";
+	}
+    
 }
