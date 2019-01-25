@@ -46,7 +46,27 @@
 		<include refid="queryWhereId" />
 	</select>
 
+	<!-- 通过选择的id在修改页面获取远程诊断表对应id中的信息 -->
+	<select id="select" resultMap="expDiagnoseMap">
+		select * from exp_remote_diagnose
+		where id=#{id}
+	</select>
 
+	<!-- 对应前端远程诊断模块中的添加作用,将从浏览器获取的数据对应保存到数据库 -->
+	<insert id="insertObject"
+		parameterType="com.vs.vision.pojo.exp.RemoteDiagnose">
+		<!-- 通过selectKey获取一个值 order表示在insert语句之后执行, keyProperty表示将selectKey的结果 
+			赋予参数对象的id属性 -->
+		<!-- <selectKey order="AFTER" resultType="int" keyProperty="id">
+			select last_insert_id()
+		</selectKey> -->
+		insert into exp_remote_diagnose
+		(dept_site,dept_name,customer_name,customer_tel,expert_id,valid,time_number,
+		send_name,send_tel,gmt_create,gmt_modified,register_parentid,register_user,modified_user)
+		values
+		(#{deptSite},#{deptName},#{customerName},#{customerTel},#{expertId},#{valid},
+		#{timeNumber},#{sendName},#{sendTel},now(),now(),#{registerParentid},#{registerUser},#{modifiedUser})
+	</insert>
 
 
 	<!-- 删除一条:获取选中的id并删除id对应的数据 -->

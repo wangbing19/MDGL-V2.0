@@ -1,5 +1,7 @@
 package com.vs.vision.pojo.exp;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -9,6 +11,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class ExpRemoteDiagnoseVo {
     /**远程门店诊断表序号*/
+	@TableId(type=IdType.AUTO)
     private Integer id;
 
     /**门店地址*/

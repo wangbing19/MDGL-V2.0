@@ -143,10 +143,10 @@
 	  var url="user/doFindZTreeNodes.do";
 	  $("#treeLayer").css("display","block");
 	  $.getJSON(url,function(result){
-		  if(result.state==1){
+		  if(result.status==200){
 			  zTree = $.fn.zTree.init($("#zTreeId"),setting,result.data);
 		  }else{
-			  alert(result.message);
+			  alert(result.msg);
 		  }
 	  });
  }
@@ -166,11 +166,11 @@
 	 console.log(params);
 	 $.post(url,params,function(result){
 		 
-		 if(result.state==1){
-			 alert(result.message);
+		 if(result.status==200){
+			 alert(result.msg);
 			 doCancel();
 		 }else{
-			alert(result.message);
+			alert(result.msg);
 		 }
 	 })
  }
@@ -201,11 +201,11 @@
  function doLoadRoles(){
 	 var url="role/doFindRoles.do"
 	 $.getJSON(url,function(result){
-		 if(result.state==1){
+		 if(result.status==200){
 		  doInitPageRoles(result.data);
 		  doInitFormData();//修改时
 		 }else{
-		  alert(result.message);
+		  alert(result.msg);
 		 }
 	 })
  }
