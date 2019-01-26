@@ -280,6 +280,7 @@
 		<!-- 局部刷新 -->
 		<script type="text/javascript">
 			$(function() {//页面加载完成执行
+				inits();
 				doLoadUI("load-exp-remote", "dia/doRemoteDiagnose.do")
 				doLoadUI("load-exp-expert", "exp/doExpert.do")
 				doLoadUI("load-log-id", "log/doLogListUI.do")
@@ -299,10 +300,10 @@
 				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList")
 				doLoadUI("load-cus-schedule-id","cusSchedule/doScheduleListUI")
 			});
+			
 			function doLoadUI(id, url) {
 				$("#" + id).click(function() {
 					$.post(url, function(result) {
-						console.log(result);
 						if (result.status == 201) {
 							$("#mainContentId").load("doNullUI.do", function() {
 							});
@@ -312,6 +313,32 @@
 					})
 				});
 			}
+			function inits(){
+				init("load-exp-remote", "dia/doRemoteDiagnose.do");
+				init("load-exp-expert", "exp/doExpert.do");
+				init("load-log-id", "log/doLogListUI.do");
+				init("load-menu-id", "menu/doMenuListUI.do");
+				init("load-dept-id", "dept/doDeptListUI.do");
+				init("load-role-id", "role/doRoleListUI.do");
+				init("load-user-id", "user/doUserListUI.do");
+				init("load-config-id", "config/doConfigListUI.do");
+				init("load-cus-customer-id", "customer/doCustomerListUI");
+				init("load-appointment-id", "appointment/doAppointmentUI.do");
+				init("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI");
+				init("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do");
+				init("load-cus-diagnose-id", "cusDiagnose/doCusDiagnoseListUI");
+				init("load-traInformationrecord-id", "traInformationrecord/doTraInformationrecordUI.do");
+				init("load-res_symptom_type-id", "ResProjectConfig/doResProjectConfigUI.do");
+				init("load-res_project_config-id", "resSymptomType/doResSymptomTypeList.do");
+			}
+			
+			function init(id, url){
+				$.post(url, function(result) {
+					if (result.status == 201) {
+						$("#"+id).remove();
+					} 
+				})
+			} 
 		</script>
 		<!-- ============================================================================================ -->
 </body>
