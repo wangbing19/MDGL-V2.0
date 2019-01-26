@@ -2,10 +2,12 @@ package com.vs.cus.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.vs.cus.mapper.CusCustomerMapper;
 import com.vs.cus.mapper.CusResScheduleMapper;
 import com.vs.cus.mapper.CusScheduleMapper;
 import com.vs.cus.service.CusScheduleService;
 import com.vs.vision.exception.ServiceException;
+import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.CusResSchedule;
 import com.vs.vision.pojo.cus.CusSchedule;
 import com.vs.vision.pojo.cus.vo.CusVo;
@@ -25,6 +27,9 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 	private CusScheduleMapper cusScheduleMapper;
 	@Autowired
 	private CusResScheduleMapper cusResScheduleMapper;
+	@Autowired
+	private CusCustomerMapper cusCustomerMapper;
+	
 
 	/**基于用户/电话及当前页码值条件查询课程信息*/
 	@Override
@@ -117,6 +122,7 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 		cusSchedule.setGmtCreate(new Date());
 		cusSchedule.setGmtModified(cusSchedule.getGmtCreate());
 		int rows = cusScheduleMapper.insert(cusSchedule);
+		
 		for (Integer resSymptomId : cusSchedule.getSymptomTypes()) {
 
 			CusResSchedule cusResSchedule = new CusResSchedule();
@@ -145,7 +151,7 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 		
 		//删除课程表与资源配置表(训练项目表)的关系表
 		deleteCusResSchedule(cusSchedule.getId());
-		
+		CusCustomer cusCustomer = new CusCustomer();
 		for (Integer resSymptomId : cusSchedule.getSymptomTypes()) {
 
 			CusResSchedule cusResSchedule = new CusResSchedule();
