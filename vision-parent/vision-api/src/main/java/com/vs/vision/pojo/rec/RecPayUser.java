@@ -3,6 +3,7 @@ package com.vs.vision.pojo.rec;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -25,7 +26,7 @@ public class RecPayUser {
 	/**客户账户金额*/
 	private Double money;
 	/**客户充值金额*/
-	private Double RechargeAmount;
+	private Double rechargeAmount;
 	/**赠送金额*/
 	private Double presentedAmount;
 	/**充值的次数*/
@@ -34,4 +35,6 @@ public class RecPayUser {
 	private Date lastPayTime;
 	private Date gmtCreate;
 	private Date gmtModified;
+	@TableField(exist=false)
+	private String title;
 }

@@ -1,0 +1,109 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">新增充值类型</h3>
+	</div>
+	<form class="form-horizontal">
+		<div class="box-body">
+
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">用户姓名</label>
+				<div class="col-sm-10" style="width: 300px;">
+					<input type="text" class="form-control" id="pay_amount"
+						readonly="readonly">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">用户余额</label>
+				<div class="col-sm-10" style="width: 300px;">
+					<input type="text" class="form-control" id="pay_amount"
+						readonly="readonly">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">活动名称</label>
+				<div class="col-sm-10" style="width: 300px;">
+					<select class="form-control" name="orgName" id="select_orgName">
+						<option>--请选择--</option>
+
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">充值金额(元)</label>
+				<div class="col-sm-10" style="width: 300px;">
+					<input type="text" class="form-control" id="pay_amount"
+						onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="格式：输入金额">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">赠送金额(元)</label>
+				<div class="col-sm-10" style="width: 300px;">
+					<input type="text" class="form-control" id="presented_amount"
+						readonly="readonly">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">充值次数</label>
+				<div class="col-sm-10" style="width: 300px;">
+					<input type="text" class="form-control" id="activity_start_time"
+						readonly="readonly">
+				</div>
+			</div>
+		</div>
+
+		<div class="box-footer">
+			<button type="button" class="btn btn-default btn-cancel">返回</button>
+			<button type="button" class="btn btn-info pull-right btn-save">支付</button>
+		</div>
+
+	</form>
+
+</div>
+
+
+
+<script type="text/javascript">
+
+$(function(){	
+	doGetObjects();
+	 $(".box-footer").on("click", ".btn-cancel", doCancel)
+								.on("click", ".btn-save", doPay) 	
+})
+
+
+//******************************************初始化诊断处方表************************/
+function doGetObjects(){
+	//创建table对象
+	
+	var url = "activity/doFindPageObjects";
+	$.getJSON(url,function(result){
+		
+    	if(result.status==200){
+    		alert("123");
+    		 for (var i = 0; i < result.data.length; i++) 
+    		$("#select_orgName").append("<option >" + result.data[i].title + "</option>");
+    	}
+    	
+    }) 	
+}
+function doCancel(){
+	$("#mainContentId").load("activity/doLoadActivityUI.do");
+}
+function doPay(){
+	
+}
+</script>
+
+
+
+
+
+
+
+

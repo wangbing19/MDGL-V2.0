@@ -7,7 +7,7 @@
 				<div class="box-tools">
 					<div class="input-group input-group-sm" style="width: 350px;">
 						<input type="text" name="table_search" id="searchNameId"
-							class="form-control pull-right" placeholder="用户名">
+							class="form-control pull-right" placeholder="填入无效或者有效">
 
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default btn-search">
@@ -65,7 +65,9 @@
 		var rowData=null;
 		if ($(this).hasClass("btn-add")) {
 			title = "添加充值类型";
-			$("#mainContentId").remove("activity_row_data");
+			
+			$("#mainContentId").removeData("activity_row_data");
+			
 		} else if ($(this).hasClass("btn-update")) {
 			rowData = $(this).parents("tr").data("rowData");
 			$("#mainContentId").data("activity_row_data",rowData);
