@@ -209,6 +209,7 @@ function doInitPageRoles(data){
 	 var div=$("#rolesId");
 	 div.empty();
 	 //2.迭代数据，将数据追加到div
+	 console.log(data);
 	 var input="<input type='checkbox' name='roleId' value='[id]'>[name]"
 	 for(var i in data){
 		 //记住每次replace时都会产生一个新的字符串对象
