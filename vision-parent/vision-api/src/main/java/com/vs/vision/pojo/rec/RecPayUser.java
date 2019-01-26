@@ -14,6 +14,10 @@ import lombok.experimental.Accessors;
 public class RecPayUser {
 	@TableId(type=IdType.AUTO)
 	private Long id;
+	private Long userId;
+	private Long parentId;
+	/**客户姓名*/
+	private String name;
 	/**客户id*/
 	private Integer customerId;
 	/**活动类型表id*/

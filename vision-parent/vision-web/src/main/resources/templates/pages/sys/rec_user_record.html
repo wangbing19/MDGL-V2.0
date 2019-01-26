@@ -25,12 +25,13 @@
 					<thead>
 						<tr>
 							<th></th>
-							<th>活动名称</th>
+							<th>客户姓名</th>
 							<th>充值金额</th>
+							<th>选择的充值类型</th>
+							<th>客户账户余额</th>
+							<th>客户充值金额</th>
 							<th>赠送金额</th>
-							<th>活动起始时间</th>
-							<th>活动终止时间</th>
-							<th>活动状态</th>
+							<th>上次充值时间</th>
 							<th>创建时间</th>
 						</tr>
 					</thead>
@@ -104,7 +105,7 @@
 	}
 	//页面加载完成异步加载当前页数据
 	function doGetObjects(params) {
-		var url = "activity/doFindPageObjects";
+		var url = "recUser/doFindPageObjects";
 		$.getJSON(url, params, function(result) {
 			doHandleResponseResult(result);
 		});

@@ -14,6 +14,8 @@ import lombok.experimental.Accessors;
 public class RecActivityPush {
 	@TableId(type=IdType.AUTO)
 	private Long id;
+	private Long userId;
+	private Long parentId;
 	/**标题*/
 	private String title;
 	/**充值金额*/

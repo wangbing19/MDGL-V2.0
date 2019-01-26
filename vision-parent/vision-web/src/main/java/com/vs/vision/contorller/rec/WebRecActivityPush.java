@@ -14,7 +14,7 @@ import com.vs.vision.pojo.rec.RecActivityPush;
 import com.vs.vision.vo.JsonResult;
 
 @Controller
-@RequestMapping("activity")
+@RequestMapping("/activity")
 public class WebRecActivityPush {
 	@Autowired
 	private RestTemplate restTemplate;
@@ -50,4 +50,51 @@ public class WebRecActivityPush {
 		String deleteMessage = restTemplate.postForObject(url,map,String.class);
 		return JsonResult.oK(deleteMessage);		
 	}
+	
+	@RequestMapping("/doInsertRecActivityObject.do")
+	@ResponseBody
+	public JsonResult doInsertRecActivityObject(RecActivityPush recActivityPush) {
+		System.out.println("前台请求新增充值类型："+recActivityPush);
+		String url = local_url+"activity/insertRecActivityObject";
+		String insertMessage = restTemplate.postForObject(url,recActivityPush,String.class);
+		return JsonResult.oK(insertMessage);
+	}
+	
+	@RequestMapping("/doUpdateRecActivityObject.do")
+	@ResponseBody
+	public JsonResult doUpdateRecActivityObject(RecActivityPush recActivityPush) {
+		String url = local_url+"activity/updateRecActivityObject";
+		String updateMessage = restTemplate.postForObject(url,recActivityPush,String.class);
+		return JsonResult.oK(updateMessage);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

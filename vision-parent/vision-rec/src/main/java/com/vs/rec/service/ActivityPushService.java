@@ -10,4 +10,9 @@ public interface ActivityPushService {
 
 	String deleteObjectById(Integer id);
 
+	String insertRecActivityObject(RecActivityPush recActivityPush);
+
+	String updateRecActivityObject(RecActivityPush recActivityPush);
+
+
 }
