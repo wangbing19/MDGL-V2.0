@@ -44,8 +44,9 @@ public class ResSymptomTypeContorller {
 	 */
 	@RequestMapping("/dofindObjects")
 	@ResponseBody
-	public JsonResult dofindObjects() {
+	public JsonResult dofindObjects(Integer page) {
 		try {
+			System.out.println(page);
 			int userId=0;
 			List<ResSymptomType> result =	restTemplate.postForObject(provider_url+"/symptomType/findAll", userId, List.class);
 			return JsonResult.oK(result);
@@ -69,6 +70,17 @@ public class ResSymptomTypeContorller {
 			e.printStackTrace();
 		}
 		return JsonResult.build(201, "查询数据错误");
+	}
+	
+	@RequestMapping("/doResSymptomTypeEdit")
+	public String  doResSymptomTypeEdit(ResSymptomType pesSymptomType) {
+		
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
 
