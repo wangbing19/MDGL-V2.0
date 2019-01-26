@@ -22,7 +22,8 @@ public class UserController {
 	public JsonResult doFindPageObjects(@RequestBody RestTemplateParmas RestTemplateParmas) {
 		String username = RestTemplateParmas.getName();
 		Integer pageCurrent = RestTemplateParmas.getPageCurrent();
-		return new JsonResult(userService.findPageObjects(username, pageCurrent));
+		Users user = RestTemplateParmas.getUser();
+		return new JsonResult(userService.findPageObjects(username, pageCurrent,user));
 	}
 
 	@RequestMapping("doSearchPageObjects")
@@ -38,7 +39,8 @@ public class UserController {
 	public JsonResult doValidById(@RequestBody RestTemplateParmas RestTemplateParmas) {
 		Integer id = RestTemplateParmas.getId();
 		Integer valid = RestTemplateParmas.getValid();
-		userService.doValidById(id, valid);
+		String username = RestTemplateParmas.getName();
+		userService.doValidById(id, valid,username);
 		return JsonResult.oK();
 	}
 
@@ -50,8 +52,10 @@ public class UserController {
 
 	@RequestMapping("doSaveObject")
 	@ResponseBody
-	public JsonResult doSaveObject(@RequestBody Users Users) {
-		userService.doSaveObject(Users);
+	public JsonResult doSaveObject(@RequestBody RestTemplateParmas RestTemplateParmas) {
+		Users user = RestTemplateParmas.getUser();
+		Users entity = RestTemplateParmas.getUserentity();
+		userService.doSaveObject(user, entity);
 		return JsonResult.oK();
 	}
 
