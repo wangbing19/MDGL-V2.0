@@ -30,5 +30,8 @@ public class PageController{//类加载(将类读到内存)-->Class
 		  return "pages/Viwepager";
 	  }
 	  
-
+	  @RequestMapping("skipzhifu")
+	  public String skipzifu() {
+		  return "pages/zhifu";
+	  }
 }
