@@ -124,63 +124,54 @@ right: 20px;
 				<a href="#" class="sidebar-toggle" data-toggle="push-menu"
 					role="button"> <span class="sr-only">Toggle navigation</span>
 				</a>
-				 <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-         
-          
-        
-         
-          
-          <!-- User Account Menu -->
-          <li class="dropdown user user-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img src="dist/img/user7-128x128.jpg" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">CGB</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
-              <li class="user-header">
-                <img src="dist/img/user7-128x128.jpg" class="img-circle" alt="User Image">
+				<!-- Navbar Right Menu -->
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
 
-                <p>
-                  CGB1809 视力矫正后台管理系统
-                  <small>2018-12-23</small>
-                </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                 
-                  </div>
-                  <div class="col-xs-4 text-center">
-                  
-                  </div>
-                  <div class="col-xs-4 text-center">
-                   
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                
-                <div class="pull-right">
-                  <a href="user/doLogout.do" class="btn btn-default btn-sign-out">退出</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
-        </ul>
-      </div>
+
+
+
+
+						<!-- User Account Menu -->
+						<li class="dropdown user user-menu">
+							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> <!-- The user image in the navbar-->
+								<img src="dist/img/user7-128x128.jpg" class="user-image"
+								alt="User Image"> <!-- hidden-xs hides the username on small devices so only the image appears. -->
+								<span class="hidden-xs">CGB</span>
+						</a>
+							<ul class="dropdown-menu">
+								<!-- The user image in the menu -->
+								<li class="user-header"><img
+									src="dist/img/user7-128x128.jpg" class="img-circle"
+									alt="User Image">
+
+									<p>
+										CGB1809 视力矫正后台管理系统 <small>2018-12-23</small>
+									</p></li>
+								<!-- Menu Body -->
+								<li class="user-body">
+									<div class="row">
+										<div class="col-xs-4 text-center"></div>
+										<div class="col-xs-4 text-center"></div>
+										<div class="col-xs-4 text-center"></div>
+									</div> <!-- /.row -->
+								</li>
+								<!-- Menu Footer-->
+								<li class="user-footer">
+
+									<div class="pull-right">
+										<a href="user/doLogout.do"
+											class="btn btn-default btn-sign-out">退出</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<!-- Control Sidebar Toggle Button -->
+						<li><a href="#" data-toggle="control-sidebar"><i
+								class="fa fa-gears"></i></a></li>
+					</ul>
+				</div>
 			</nav>
 		</header>
 		<!-- ============================================================================================ -->
@@ -208,7 +199,7 @@ right: 20px;
 				<!-- ============================================================================================ -->
 				<!-- 菜单管理 -->
 				<ul class="sidebar-menu" data-widget="tree">
-					
+
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
 							<span>系统权限管理</span> <span class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
@@ -293,8 +284,7 @@ right: 20px;
 						<ul class="treeview-menu">
 							<li><a id="load-exp-remote">远程诊断</a></li>
 							<li><a id="load-exp-expert">专家列表</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<!-- ************************************************** -->
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
 							<span>远程处方下载</span> <span class="pull-right-container"> <i
@@ -317,7 +307,7 @@ right: 20px;
 				<h1>
 					<small>Optional description</small>
 				</h1>
-				
+
 			</section>
 			<!-- ============================================================================================ -->
 
@@ -375,10 +365,14 @@ right: 20px;
 		<!-- 局部刷新 -->
 		<script type="text/javascript">
 			$(function() {//页面加载完成执行
+
 				var url = "doViwepager"
 				doViwepager(url)
 				doLoadUI("load-exp-remote","dia/doRemoteDiagnose.do")
 		    	doLoadUI("load-exp-expert","exp/doExpert.do")
+				inits();
+				doLoadUI("load-exp-remote", "dia/doRemoteDiagnose.do")
+				doLoadUI("load-exp-expert", "exp/doExpert.do")
 				doLoadUI("load-log-id", "log/doLogListUI.do")
 				doLoadUI("load-menu-id", "menu/doMenuListUI.do")
 				doLoadUI("load-dept-id", "dept/doDeptListUI.do")
@@ -386,27 +380,27 @@ right: 20px;
 				doLoadUI("load-user-id", "user/doUserListUI.do")
 				doLoadUI("load-config-id", "config/doConfigListUI.do")
 				doLoadUI("load-cus-customer-id", "customer/doCustomerListUI")
-				doLoadUI("load-appointment-id",
-						"appointment/doAppointmentUI")
-				doLoadUI("load-cus-consultation-id",
-						"cusConsultation/doCusConsultationListUI")
+				doLoadUI("load-appointment-id", "appointment/doAppointmentUI")
+				doLoadUI("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI")
 				doLoadUI("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do")
+
 				doLoadUI("load-cus-diagnose-id","cusDiagnose/doCusDiagnoseListUI")
 				doLoadUI("load-traInformationrecord-id","traInformationrecord/doTraInformationrecordUI.do")
-				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI.do")
-				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList.do")
+				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI")
+				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList")
 				doLoadUI("load-cus-schedule-id","cusSchedule/doScheduleListUI")
 			});
+			
 			function doLoadUI(id, url) {
 				$("#" + id).click(function() {
-					 $.post(url,function(result){
-							if(result.status==200){
-								$("#mainContentId").load("doNullUI.do",function(){
-								});
-							}else{
-								$("#mainContentId").load(url);
-							}
-						})
+					$.post(url, function(result) {
+						if (result.status == 201) {
+							$("#mainContentId").load("doNullUI.do", function() {
+							});
+						} else {
+							$("#mainContentId").load(url);
+						}
+					})
 				});
 			}
 			
@@ -415,6 +409,32 @@ right: 20px;
 					
 				}) 
 			}
+			function inits(){
+				init("load-exp-remote", "dia/doRemoteDiagnose.do");
+				init("load-exp-expert", "exp/doExpert.do");
+				init("load-log-id", "log/doLogListUI.do");
+				init("load-menu-id", "menu/doMenuListUI.do");
+				init("load-dept-id", "dept/doDeptListUI.do");
+				init("load-role-id", "role/doRoleListUI.do");
+				init("load-user-id", "user/doUserListUI.do");
+				init("load-config-id", "config/doConfigListUI.do");
+				init("load-cus-customer-id", "customer/doCustomerListUI");
+				init("load-appointment-id", "appointment/doAppointmentUI.do");
+				init("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI");
+				init("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do");
+				init("load-cus-diagnose-id", "cusDiagnose/doCusDiagnoseListUI");
+				init("load-traInformationrecord-id", "traInformationrecord/doTraInformationrecordUI.do");
+				init("load-res_symptom_type-id", "ResProjectConfig/doResProjectConfigUI.do");
+				init("load-res_project_config-id", "resSymptomType/doResSymptomTypeList.do");
+			}
+			
+			function init(id, url){
+				$.post(url, function(result) {
+					if (result.status == 201) {
+						$("#"+id).remove();
+					} 
+				})
+			} 
 		</script>
 		<!-- ============================================================================================ -->
 </body>

@@ -43,7 +43,7 @@ public class DetpController {
 	@ResponseBody
 	public JsonResult doSaveObject(@RequestBody Depts entity){
 		sysDeptService.saveObject(entity);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class DetpController {
 	@ResponseBody
 	public JsonResult doUpdateObject(@RequestBody Depts entity){
 		sysDeptService.updateObject(entity);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 	
 	/**
@@ -65,6 +65,6 @@ public class DetpController {
 	@ResponseBody
 	public JsonResult doDeleteObject(@RequestBody Integer id){
 		sysDeptService.deleteObject(id);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 }

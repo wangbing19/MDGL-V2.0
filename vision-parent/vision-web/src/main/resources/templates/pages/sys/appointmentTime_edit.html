@@ -1,46 +1,46 @@
 <div>
-	<h2>训练师时间配置</h2>
+	<h2 class="box-titleTime">训练师时间配置</h2>
 	<p>配置时间格式如：2018/12/21 8：30：00</p>
 	<div style="margin: 20px 0;"></div>
 
-	<table>
+	<table >
 
 		<tr value=1>
-			<td><label for="meeting">第一组开始时间：</label><input id="one"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
-			<td><label for="meeting">第一组结束时间：</label><input id="two"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
+			<td><label for="meeting1">第一组开始时间：</label><input id="meeting1" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting2">第一组结束时间：</label><input id="meeting2" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
 
 
 		<tr>
-			<td><label for="meeting">第二组开始时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
-			<td><label for="meeting">第二组结束时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
+			<td><label for="meeting3">第二组开始时间：</label><input id="meeting3" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting4">第二组结束时间：</label><input id="meeting4" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
 
 		<tr>
-			<td><label for="meeting">第三组开始时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
-			<td><label for="meeting">第三组结束时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
-		</tr>
-
-
-		<tr>
-			<td><label for="meeting">第四组开始时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
-			<td><label for="meeting">第四组结束时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
+			<td><label for="meeting5">第三组开始时间：</label><input id="meeting5" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting6">第三组结束时间：</label><input id="meeting6" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
 
 
 		<tr>
-			<td><label for="meeting">第五组开始时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
-			<td><label for="meeting">第五组结束时间：</label><input id="meeting"
-				type="datetime-local" value="2014-01-13" name="dateTime"/></td>
+			<td><label for="meeting7">第四组开始时间：</label><input id="meeting7" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting8">第四组结束时间：</label><input id="meeting8" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+		</tr>
+
+
+		<tr>
+			<td><label for="meeting9">第五组开始时间：</label><input id="meeting9" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting10">第五组结束时间：</label><input id="meeting10" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
 	</table>
 
@@ -56,12 +56,11 @@
 </div>
 
 <script>
-	$(function() {	
+	$(function() {
 		InitAllInputData();
-		 $(".box-footer")
-	 .on("click",".btn-cancel",doCancel)
-	 .on("click",".btn-save",saveTime);
-		
+		$(".box-footer").on("click", ".btn-cancel", doCancel).on("click",
+				".btn-save", saveTime);
+
 		/* 
 		$(".btn-save").click(function() {
 			var date_time = document.getElementsByName("dateTime");
@@ -73,28 +72,27 @@
 			$("#mainContentId").data("timeAll", timeAll);
 			doSaveOrUpdate();
 		}) */
-		
-		
-		
+
 	})
-	
-	function saveTime(){
+
+	function saveTime() {
 		var date_time = document.getElementsByName("dateTime");
 		var timeAll = new Array();
 		for (var i = 0; i < date_time.length; i++) {
 			if (date_time[i].value != "")
 				timeAll[i] = date_time[i].value;
-		}	
+		}
 		$("#mainContentId").data("timeAll", timeAll);
 		doSaveOrUpdate();
 	}
-	
-	function doSaveOrUpdate(){
+
+	function doSaveOrUpdate() {
 		var id = $("#mainContentId").data("appointmentTimeId");
 		//console.log("123");
 		//console.log(id);
 		var timeAll = $("#mainContentId").data("timeAll");
-		if (!timeAll) return;
+		if (!timeAll)
+			return;
 		var SaveUrl = "appointment/dosaveAppointmentTime";
 		for (var i = 0; i < timeAll.length; i += 2) {
 			var startTime = timeAll[i];
@@ -107,50 +105,43 @@
 			$.post(SaveUrl, params1, function(result) {
 				if (result.status == 200) {
 					alert(result.msg);
-				//	doCancel();
+					//	doCancel();
 				} else {
 					alert(result.msg);
 				}
 			})
 		}
-		
+
 	}
-	
-	function InitAllInputData(){
-		var data = $("#mainContentId").data("rowData1");
-		console.log(data);
-		 console.log("8888");
+
+	function InitAllInputData() {
+		var data = $("#mainContentId").data("rowDataTime");
 		var allTime = new Array();
 		var k = 0;
+		
 		for (var i = 0; i < data.length; i++) {
-			allTime[k] = data[i].starttime;
+			allTime[k] = data[i].startTime;
 			k++;
-			allTime[k] = data[i].endtime;
+			allTime[k] = data[i].endTime;
 			k++;
 		}
-		console.log(allTime);
-		//console.log("111111");
-		//console.log(data);
+		//console.log(allTime);
+		
 		if (!data)
 			return;
-		// var date_time = document.getElementsByName("dateTime");
-		//  console.log(date_time);
-		/*for(var i=0;i<date_time.length;i++){
-		 date_time[i].value(data[i]);
-		}  */
-		var a = $("#meeting");
+		//var a = document.getElementByClassName("meeting");
+		var a =  $("input");
+		//debugger;
 		for (var i = 0; i < a.length; i++) {
-			// if(new Date(data[i]).toLocaleString()==Invalid Date)return;
-			//console.log(allTime[i]);
-			a[i].value = new Date(allTime[i]).toLocaleString();
+			a[i].value = allTime[i];
 		}
-		
+
 	}
-	
-	 function doCancel(){
-			$("#mainContentId").removeData("timeAll");
-			$("#mainContentId").load("appointment/doAppointmentUI");
-		 }
+
+	function doCancel() {
+		$("#mainContentId").removeData("timeAll");
+		$("#mainContentId").load("appointment/doAppointmentUI");
+	}
 </script>
 
 

@@ -43,4 +43,16 @@ public class CusScheduleController {
 		return null;
 	}
 	
+//	/**基于id查询课程信息*/
+//	@RequestMapping("/findObjectById")
+//	@ResponseBody
+//	public JsonResult findObjectById(@RequestBody Integer id) {
+//		try {
+//			return cusScheduleService.findObjectById(id);
+//		} catch (Exception e) {
+//			System.out.println("基于id查询课程信息=============错误=================");
+//		}
+//		return null;
+//	}
+	
 }
