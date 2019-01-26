@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.pojo.res.ResSymptomType;
 import com.vs.vision.vo.JsonResult;
 
@@ -45,7 +47,7 @@ public class ResSymptomTypeContorller {
 	public JsonResult dofindObjects() {
 		try {
 			int userId=0;
-			List<ResSymptomType> result =	restTemplate.postForObject(provider_url+"/findAll", userId, List.class);
+			List<ResSymptomType> result =	restTemplate.postForObject(provider_url+"/symptomType/findAll", userId, List.class);
 			return JsonResult.oK(result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,7 +55,21 @@ public class ResSymptomTypeContorller {
 		return JsonResult.build(201, "查询失败");
 	}
 	
-	/**查询*/
+	/**课程表查询咨询表所有信息*/
+	@RequestMapping("/doFindSymptomType")
+	@ResponseBody
+	public JsonResult doFindSymptomType(){
+		try {
+			Integer userId = 0;
+			List<ResSymptomType> list = restTemplate.postForObject(provider_url+"/symptomType/findSymptomType", userId, List.class);
+			if(list.size()!=0) {
+				return JsonResult.oK(list);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "查询数据错误");
+	}
 }
 
 

@@ -2,8 +2,9 @@ package com.vs.vision.pojo.res;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.vs.vision.pojo.ppo.PpoAppointment;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -14,6 +15,7 @@ import lombok.experimental.Accessors;
 @TableName("res_symptom_type")
 public class ResSymptomType {
 	/**症状类型实体类,封装实体数据*/
+	@TableId(type=IdType.AUTO)
 	private Integer id;
 	private Integer userId;
 	/**服务名称*/

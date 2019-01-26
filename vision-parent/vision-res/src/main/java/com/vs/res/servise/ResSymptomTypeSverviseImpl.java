@@ -22,4 +22,13 @@ public class ResSymptomTypeSverviseImpl implements ResSymptomTypeSvervise{
 		return listresult;
 	}
 
+	/**课程表查询咨询表所有信息*/
+	@Override
+	public List<ResSymptomType> findSymptomType(Integer userId) {
+		QueryWrapper<ResSymptomType> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("user_id", userId);
+		List<ResSymptomType> list = resSymptomTypeMapper.selectList(queryWrapper);
+		return list;
+	}
+
 }
