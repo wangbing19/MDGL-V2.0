@@ -1,6 +1,11 @@
 package com.vs.vision.controller.sys;
 
+import javax.annotation.PreDestroy;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +20,16 @@ import com.vs.vision.vo.sys.RestTemplateParmas;
 
 @Controller
 @RequestMapping("/role")
+@PropertySource("classpath:/url.properties")
 public class SysRoleController {
 
-	private static final String sys_url = "http://localhost:8029/role";
+	@Value("${sys_role_url}")
+	private String sys_url;
 
 	@Autowired
 	private RestTemplate restTemplate;
-
+	
+	@RequiresPermissions("sys:role:view")
 	@RequestMapping("doRoleListUI.do")
 	public String doRoleListUI() {
 		return "pages/sys/sys_role_list";

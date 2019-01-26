@@ -26,6 +26,12 @@ public class CusScheduleController {
 		return "/pages/sys/cusSchedule_list";
 	}
 	
+	/**转向课程修改页面*/
+	@RequestMapping("/doscheduleEditUI")
+	public String doscheduleEditUI() {
+		return "/pages/sys/cusSchedule_edit";
+	}
+	
 	/**基于用户/电话及当前页码值条件查询课程信息*/
 	@RequestMapping("/doFindPageObjects")
 	@ResponseBody
@@ -58,6 +64,25 @@ public class CusScheduleController {
 		}
 		return JsonResult.build(201, "该数据可能已经被删除");
 	}
+	
+//	/**基于id查询课程信息*/
+//	@RequestMapping("/doFindObjectById")
+//	@ResponseBody
+//	public JsonResult doFindObjectById(Integer id) {
+//		try {
+//			CusSchedule cusSchedule = restTemplate.postForObject(provider_url+"/schedule/findObjectById", id, CusSchedule.class);
+//			if(cusSchedule != null) {
+//				return JsonResult.oK(cusSchedule);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return JsonResult.build(201, "修改查询数据错误");
+//	}
+	
+	
+	
+	
 	
 	
 }

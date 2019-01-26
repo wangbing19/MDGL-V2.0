@@ -24,14 +24,14 @@ public class MenuController {
     @ResponseBody
     public JsonResult doUpdateObject(@RequestBody Menus entity){
     	menuService.updateObject(entity);
-    	return new JsonResult().oK();
+    	return JsonResult.oK();
     }
     
     @RequestMapping("doSaveObject")
     @ResponseBody
     public JsonResult doSaveObject(@RequestBody Menus entity){
     	menuService.saveObject(entity);
-    	return new JsonResult().oK();
+    	return JsonResult.oK();
     }
     
 	@RequestMapping("doFindZtreeMenuNodes")
@@ -45,7 +45,7 @@ public class MenuController {
 	@ResponseBody
 	public JsonResult doDeleteObject(@RequestBody Integer id){
 		menuService.deleteObject(id);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 	@RequestMapping("doFindObjects")

@@ -104,7 +104,7 @@
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
 		   if(result.status==200){
-			  $("#mainContentId").data("rowData1",result.data); 
+			  $("#mainContentId").data("rowDataTime",result.data); 
 			//alert(43);
 			  doTimePage(id,title);
 		   }else{
@@ -116,7 +116,7 @@
    function doTimePage(title){
 	   var url="appointment/doappointmentTimeUI";
 	   $("#mainContentId").load(url,function(){
-		   $(".box-title").html(title);
+		   $(".box-titleTime").html(title);
 	   }) 
    }
    function doDeleteObjects(){

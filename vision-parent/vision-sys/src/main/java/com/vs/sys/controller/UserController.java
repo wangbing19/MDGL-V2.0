@@ -39,7 +39,7 @@ public class UserController {
 		Integer id = RestTemplateParmas.getId();
 		Integer valid = RestTemplateParmas.getValid();
 		userService.doValidById(id, valid);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 	@RequestMapping("doFindZTreeNodes")
@@ -52,7 +52,7 @@ public class UserController {
 	@ResponseBody
 	public JsonResult doSaveObject(@RequestBody Users Users) {
 		userService.doSaveObject(Users);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 	@RequestMapping("doFindObjectById")
@@ -66,7 +66,7 @@ public class UserController {
 	@ResponseBody
 	public JsonResult doUpdateObject(@RequestBody Users Users) {
 		userService.doUpdateObject(Users);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 }

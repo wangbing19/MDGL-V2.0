@@ -27,7 +27,11 @@ public class PpoAppointmentTimeController {
 		
 		return "/pages/sys/appointmentTime_edit";
 	}
-	
+	/**
+	 * 保存训练师训练时间
+	 * @param ppoAppTime
+	 * @return
+	 */
 	@RequestMapping("/dosaveAppointmentTime")
 	@ResponseBody
 	public JsonResult doinsertAppointmentTime(PpoAppTime ppoAppTime) {
@@ -46,7 +50,7 @@ public class PpoAppointmentTimeController {
 		}
 		return JsonResult.build(201, "保存失败");
 	}
-	
+	//查询训练师时间
 	@RequestMapping("/dofindappointmentTime")
 	@ResponseBody
 	public JsonResult dofindappointmentTime(PpoAppTime ppoAppTime) {

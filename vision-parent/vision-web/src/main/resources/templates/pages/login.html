@@ -91,11 +91,12 @@
 	  var url="user/doLogin.do";
 	  console.log("params",params);
 	  $.post(url,params,function(result){
-		  if(result.state==1){
+		  console.log(result);
+		  if(result.status==200){
 			//跳转到indexUI对应的页面
 			location.href="doIndexUI.do?t="+Math.random();
 		  }else{
-			$(".login-box-msg").html(result.message); 
+			alert(result.msg); 
 		  }
 		  return false;//防止刷新时重复提交
 	  });

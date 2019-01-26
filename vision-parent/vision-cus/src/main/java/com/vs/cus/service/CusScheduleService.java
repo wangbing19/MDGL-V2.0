@@ -11,4 +11,6 @@ public interface CusScheduleService {
 	PageObject<CusSchedule> findPageObjects(CusVo cusVo);
 	/**基于id删除课程信息*/
 	Integer deleteObject(Integer id);
+	/**基于id查询课程信息*/
+//	JsonResult findObjectById(Integer id);
 }

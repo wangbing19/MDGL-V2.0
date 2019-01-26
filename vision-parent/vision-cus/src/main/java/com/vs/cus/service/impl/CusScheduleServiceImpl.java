@@ -68,4 +68,11 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 		return rows;
 	}
 
+//	/**基于id查询课程信息*/
+//	@Override
+//	public JsonResult findObjectById(Integer id) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
 }

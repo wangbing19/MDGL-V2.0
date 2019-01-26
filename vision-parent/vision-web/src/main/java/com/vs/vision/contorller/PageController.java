@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageController {// 类加载(将类读到内存)-->Class
 	
-	@RequestMapping("/doIndexUI")
+	@RequestMapping("/doIndexUI.do")
 	public String doIndexUI() {
 		return "pages/starter";
 	}
@@ -16,13 +16,18 @@ public class PageController {// 类加载(将类读到内存)-->Class
 		return "pages/login";
 	}
 
-	@RequestMapping("/doNullUI")
+	@RequestMapping("/doNullUI.do")
 	public String doNullUI() {
 		return "pages/starter2";
 	}
 
 	@RequestMapping("/doPageUI")
 	public String doPageUI() {
+		return "pages/common/page";
+	}
+
+	@RequestMapping("/doPageUI.do")
+	public String doPageUIdo() {
 		return "pages/common/page";
 	}
 

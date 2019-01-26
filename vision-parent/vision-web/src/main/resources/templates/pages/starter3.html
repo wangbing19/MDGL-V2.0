@@ -36,7 +36,7 @@
 		<header class="main-header">
 			<!-- ============================================================================================ -->
 			<!-- logo文本设置 -->
-			<a href="doIndexUI" class="logo"> <span class="logo-mini">视力</span>
+			<a href="index2.html" class="logo"> <span class="logo-mini">视力</span>
 				<span class="logo-lg">视力矫正后台管理系统</span>
 			</a>
 			<!-- ============================================================================================ -->
@@ -126,7 +126,7 @@
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a id="load-dept-id">组织管理</a></li>
+							<li id="load-dept-id-li"><a id="load-dept-id">组织管理</a></li>
 							<li><a id="load-menu-id">菜单管理</a></li>
 							<li><a id="load-role-id">角色管理</a></li>
 							<li><a id="load-user-id">用户管理</a></li>
@@ -149,7 +149,6 @@
 						</span> </a>
 						<ul class="treeview-menu">
 							<li><a id="load-traInformationrecord-id">训练记录</a></li>
-							<li><a id="load-cus-schedule-id">课程表</a></li>
 						</ul></li>
 					<!-- ************************************************** -->
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
@@ -186,7 +185,7 @@
 						</span> </a>
 						<ul class="treeview-menu">
 							<li><a id="load-dept-id">充值记录</a></li>
-							<li><a id="load-activity-id">充值类型</a></li>
+							<li><a id="load-dept-id">充值类型</a></li>
 						</ul></li>
 					<!-- ************************************************** -->
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
@@ -280,6 +279,7 @@
 		<!-- 局部刷新 -->
 		<script type="text/javascript">
 			$(function() {//页面加载完成执行
+				init("load-dept-id-li","dept/doDeptListUI.do")
 				doLoadUI("load-exp-remote", "dia/doRemoteDiagnose.do")
 				doLoadUI("load-exp-expert", "exp/doExpert.do")
 				doLoadUI("load-log-id", "log/doLogListUI.do")
@@ -289,24 +289,23 @@
 				doLoadUI("load-user-id", "user/doUserListUI.do")
 				doLoadUI("load-config-id", "config/doConfigListUI.do")
 				doLoadUI("load-cus-customer-id", "customer/doCustomerListUI")
-				doLoadUI("load-appointment-id", "appointment/doAppointmentUI")
-				doLoadUI("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI")
+				doLoadUI("load-appointment-id",
+						"appointment/doAppointmentUI.do")
+				doLoadUI("load-cus-consultation-id",
+						"cusConsultation/doCusConsultationListUI")
 				doLoadUI("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do")
-
-				doLoadUI("load-cus-diagnose-id","cusDiagnose/doCusDiagnoseListUI")
-				doLoadUI("load-traInformationrecord-id","traInformationrecord/doTraInformationrecordUI.do")
-
-				doLoadUI("load-activity-id","activity/doLoadActivityUI.do")
-
-				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI")
-				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList")
-
-				doLoadUI("load-cus-schedule-id","cusSchedule/doScheduleListUI")
+				doLoadUI("load-cus-diagnose-id",
+						"cusDiagnose/doCusDiagnoseListUI")
+				doLoadUI("load-traInformationrecord-id",
+						"traInformationrecord/doTraInformationrecordUI.do")
+				doLoadUI("load-res_symptom_type-id",
+						"ResProjectConfig/doResProjectConfigUI.do")
+				doLoadUI("load-res_project_config-id",
+						"resSymptomType/doResSymptomTypeList.do")
 			});
 			function doLoadUI(id, url) {
 				$("#" + id).click(function() {
 					$.post(url, function(result) {
-						console.log(result);
 						if (result.status == 201) {
 							$("#mainContentId").load("doNullUI.do", function() {
 							});
@@ -316,6 +315,15 @@
 					})
 				});
 			}
+			function init(id, url){
+				$.post(url, function(result) {
+					if (result.status == 201) {
+						$("#"+id).remove();
+						);
+					} 
+				})
+			}
+			
 		</script>
 		<!-- ============================================================================================ -->
 </body>

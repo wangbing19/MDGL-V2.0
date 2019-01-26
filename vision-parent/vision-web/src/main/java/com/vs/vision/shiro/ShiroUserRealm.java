@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.catalina.mbeans.UserMBean;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -24,8 +23,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.vs.vision.mapper.MenusMapper;
@@ -40,8 +37,7 @@ import com.vs.vision.utils.ShiroUtils;
  * 
  * @author ta
  */
-@Service
-@Scope("singleton")
+
 public class ShiroUserRealm extends AuthorizingRealm {
 
 	@Autowired
@@ -52,6 +48,8 @@ public class ShiroUserRealm extends AuthorizingRealm {
 	private RoleMenusMapper roleMenusMapper;
 	@Autowired
 	private MenusMapper menusMapper;
+
+	private Map<String, AuthorizationInfo> authorizationCache = new ConcurrentHashMap<>();
 
 	/**
 	 * 设置凭证(密码)匹配器
@@ -81,18 +79,17 @@ public class ShiroUserRealm extends AuthorizingRealm {
 		// 3.封装用户信息并返回
 		ByteSource credentialsSalt = ByteSource.Util.bytes(user.getSalt());
 
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), credentialsSalt, getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), credentialsSalt,
+				getName());
 		return info;// 返回给认证管理器
 	}
-
-	private Map<String, AuthorizationInfo> authorizationCache = new ConcurrentHashMap<>();
 
 	/** 负责授权信息的获取和封装 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// 1.获取登录用户信息
 		Users user = (Users) principals.getPrimaryPrincipal();
-	//	AuthorizationInfo aInfo ;
+		// AuthorizationInfo aInfo ;
 
 		// 2.基于登录用户id获取对应的角色id
 		List<Integer> roleIds = userRoleMapper.findRoleIdsByUserId(user.getId());

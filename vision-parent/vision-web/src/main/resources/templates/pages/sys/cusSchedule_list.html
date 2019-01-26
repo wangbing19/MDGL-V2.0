@@ -61,13 +61,13 @@
 		//1.判定点击的对象
 		var title;
 		if($(this).hasClass("btn-add")){
-			title="添加咨询表";
+			title="添加课程表";
 			doLoadPage(title);
 		}else if($(this).hasClass("btn-update")){
 			var rowData=$(this).parents("tr").data("rowData");
 			var id=rowData.id;
-			 title="修改咨询表";
-			var titleName=rowData.name+"基本信息咨询表";
+			 title="修改课程表";
+			var titleName=rowData.name+"基";
 		   //基于id进行查询并加载编辑页面
 		   doFindObjectById(id,title,titleName);
 	   }
