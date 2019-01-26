@@ -1,6 +1,7 @@
 package com.vs.vision.pojo.cus;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -13,6 +14,10 @@ import java.util.Date;
 @TableName("cus_schedule")
 public class CusSchedule {
 
+	/**课程表训练项目id*/
+	@TableField(exist=false)	//mybatis入库操作时,忽略该字段
+	private Integer[] symptomTypes;
+	
     @TableId(type = IdType.AUTO)
     private int id; /**id*/
     /**客户id*/

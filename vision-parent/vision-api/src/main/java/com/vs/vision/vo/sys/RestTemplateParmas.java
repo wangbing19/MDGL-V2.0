@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vs.vision.pojo.sys.Logs;
 import com.vs.vision.pojo.sys.Roles;
+import com.vs.vision.pojo.sys.Users;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class RestTemplateParmas {
@@ -15,6 +16,24 @@ public class RestTemplateParmas {
 	private Integer valid;
 	private Integer id;
 	private Logs logs;
+	private Users user;
+	private Users userentity;
+
+	public Users getUserentity() {
+		return userentity;
+	}
+
+	public void setUserentity(Users userentity) {
+		this.userentity = userentity;
+	}
+
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
 
 	public Logs getLogs() {
 		return logs;
@@ -75,7 +94,8 @@ public class RestTemplateParmas {
 	@Override
 	public String toString() {
 		return "RestTemplateParmas [role=" + role + ", ids=" + Arrays.toString(ids) + ", name=" + name
-				+ ", pageCurrent=" + pageCurrent + ", valid=" + valid + ", id=" + id + ", logs=" + logs + "]";
+				+ ", pageCurrent=" + pageCurrent + ", valid=" + valid + ", id=" + id + ", logs=" + logs + ", user="
+				+ user + ", userentity=" + userentity + "]";
 	}
 
 }

@@ -63,6 +63,8 @@
 	   .on("click",".btn-cf",doPrescription)
 	   .on("click",".btn-doConsultationUpdate",doConsultationUpdate)
 	   .on("click",".btn-doDiagnoseInsert",doDiagnoseInsert)
+	   .on("click",".btn-addSchedule",doScheduleInsert)
+	   .on("click",".btn-addBalance",doBalanceInsert)
 	   .on("click",".btn-doDiagnoseUpdate",doDiagnoseUpdate);
 	 //  .on("click",".btn-doDiagnoseUpdate",doDiagnoseUpdate);
    });
@@ -130,19 +132,7 @@
        })    
    }    
    
-   /**方法有问题
-   function doEditRow(obj,valid){
-	   //1.修改按钮上的内容
-	   $(obj).html(valid?"启用":"禁用");
-	   //2.修改tr中第7个td中的内容(查询API文档)
-	   var tr=$(obj).parents("tr");
-	   tr.find("td:eq(7)").text(valid?"禁用":"启用");
-	   //3.获取当前行tr对象，然后重新绑定新的值
-	   var rowData=tr.data("rowData")
-	   rowData.valid=valid?0:1;
-	   tr.data("rowData",rowData);
-   }
-   */
+
    //处理查询按钮事件
    function doQueryObjects(){
 	   $("#pageId").data("pageCurrent",1);
@@ -211,10 +201,10 @@
 	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
 	   "<td>"+row.name+"</td>"+
 	     "<td>"+row.tel+"</td>"+
-	     "<td>"+row.balance+"</td>"+
+	  //   "<td>"+row.balance+"</td>"+
+	     "<td><button type='button' class='btn btn-default btn-addBalance' style='border:none;' >"+row.balance+"</button></td>"+
 	     "<td>"+row.totalTrainingTime+"/"+row.timesOfTraining+"</td>"+
-	   /*   "<td>"+row.rechargeCount+"</td>"+ */
-	     "<td>"+row.scheduleCount+"</td>"+ 
+	     "<td><button type='button' class='btn btn-default btn-addSchedule' style='border:none;' >"+row.scheduleCount+"</button></td>"+
 	     "<td>"+(row.state?"启用":"禁用")+"</td>"+
 	     "<td><button type='button' class='btn-doConsultationUpdate'>"+"咨询表"+"</button>"+
 	     "<button type='button' class='btn-doDiagnoseUpdate'>"+"诊断表"+"</button></td>"+
@@ -223,8 +213,7 @@
 	     "<td>"+new Date(row.lastTrain).toLocaleString()+"</td>"+
 	     "<td>"+new Date(row.gmtCreate).toLocaleString()+"</td>"+
 	     "<td><button type='button' class='btn btn-default btn-cf'>"+"处方"+"</button></td>"+
-	     "<td><button type='button' class='btn btn-default btn-doDiagnoseInsert'>"+"添加诊断表"+"</button></td>"+
-	 //    "<td><button type='button' class='btn btn-default btn-all'>"+"查看"+"</button></td>"+
+	  //   "<td><button type='button' class='btn btn-default btn-doDiagnoseInsert'>"+"添加诊断表"+"</button></td>"+
 	     "<td><button type='button' class='btn btn-default btn-delete'>"+"删除"+"</button></td>"+
 	     "<td><button type='button' class='btn btn-default btn-valid'>"+(row.state?"禁用":"启用")+"</button></td>"; 
        return tds;
@@ -295,6 +284,63 @@
 		   }
 	   });
    }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   //获取部分信息,添加课程表信息
+   function doScheduleInsert(){
+	   var getcustomerData=$(this).parents("tr").data("rowData");
+	   $("#mainContentId").data("getcustomerName",getcustomerData.name);
+	   $("#mainContentId").data("getcustomerId",getcustomerData.id);
+	 
+	   var url="cusSchedule/doscheduleEditUI";
+	   $("#mainContentId").load(url,function(){
+		   $(".box-title").html("添加课程表");
+	   })
+   }
+   //获取部分信息,添加客户账户金额
+   function doBalanceInsert(){
+	   var getcustomerData=$(this).parents("tr").data("rowData");
+	   $("#mainContentId").data("getRecUser",getcustomerData);
+	 
+	   var url="recUser/doGetRecUser";
+	   $("#mainContentId").load(url,function(){
+	   })
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    //添加诊断表信息
    function getData(rowData){
 	   var customerId=rowData.id;
@@ -327,18 +373,11 @@
 		   } else {
 			  alert(result.msg);
 		   }
-	   });
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
+	   }); 
    }
+   
+ //添加课程表信息
+   
    
 </script>
 

@@ -9,15 +9,15 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)    //开启链式结构
-@TableName("cus_schedule")
-public class CusResShhedule {
+@TableName("cus_res_shhedule")
+public class CusResSchedule {
 
 	@TableId(type = IdType.AUTO)
 	/**id*/
 	private int id;
 	/**课程表id*/
-	private Integer cus_schedule_id;
+	private Integer cusScheduleId;
 	/**资源配置表id*/
-	private Integer res_symptom_id;
+	private Integer resSymptomId;
 	
 }
