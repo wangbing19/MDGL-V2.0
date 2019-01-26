@@ -1,6 +1,9 @@
 package com.vs.vision.controller.sys;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +17,10 @@ import com.vs.vision.vo.sys.RestTemplateParmas;
 
 @Controller
 @RequestMapping("/log")
+@PropertySource("classpath:/url.properties")
 public class SysLogController {
-	private static final String sys_url = "http://localhost:8029/log";
+	@Value("${sys_log_url}")
+	private String sys_url;
     @Autowired
     private RestTemplate restTemplate;
     
@@ -24,6 +29,7 @@ public class SysLogController {
 	 * 
 	 * @return
 	 */
+    @RequiresPermissions("sys:log:view")
 	@RequestMapping("doLogListUI.do")
 	public String doLogListUI() {
 		return "pages/sys/sys_log_list";
