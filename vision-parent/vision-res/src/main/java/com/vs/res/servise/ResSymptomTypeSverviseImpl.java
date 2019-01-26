@@ -26,7 +26,7 @@ public class ResSymptomTypeSverviseImpl implements ResSymptomTypeSvervise{
 	@Override
 	public List<ResSymptomType> findSymptomType(Integer userId) {
 		QueryWrapper<ResSymptomType> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("user_id", userId);
+		queryWrapper.eq("user_id", userId).eq("choose_type", 1).eq("service_state", 1);
 		List<ResSymptomType> list = resSymptomTypeMapper.selectList(queryWrapper);
 		return list;
 	}
