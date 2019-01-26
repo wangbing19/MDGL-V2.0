@@ -1,12 +1,16 @@
 package com.vs.cus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.vs.cus.mapper.CusCustomerMapper;
 import com.vs.cus.mapper.CusDiagnoseMapper;
 import com.vs.cus.service.CusDiagnoseService;
 import com.vs.vision.exception.ServiceException;
+import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.CusDiagnose;
 import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.vo.PageObject;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ public class CusDiagnoseServiceImpl implements CusDiagnoseService {
 
 	@Autowired
 	private CusDiagnoseMapper cusDiagnoseMapper;
+	@Autowired
+	private CusCustomerMapper cusCustomerMapper;
 
 	/**诊断表页面加载,查询*/
 	@Override
@@ -58,5 +64,46 @@ public class CusDiagnoseServiceImpl implements CusDiagnoseService {
 		//执行查找
 		CusDiagnose cusDiagnose = cusDiagnoseMapper.selectById(id);
 		return cusDiagnose;
+	}
+
+	/**基于客户id查询诊断表相关信息*/
+	@Override
+	public CusDiagnose findByCustomerId(Integer customerId) {
+		if(customerId==null||customerId<=0)
+			throw new ServiceException("customerId错误");
+		QueryWrapper<CusDiagnose> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("customer_id", customerId);
+		CusDiagnose cusDiagnose = cusDiagnoseMapper.selectOne(queryWrapper);
+		return cusDiagnose;
+	}
+
+	/**基于客户id创建客户诊断表*/
+	@Override
+	public Integer saveObject(CusDiagnose cusDiagnose) {
+		cusDiagnose.setGmtCreate(new Date());
+		cusDiagnose.setGmtModified(cusDiagnose.getGmtCreate());
+		//保存数据
+		int rows = cusDiagnoseMapper.insert(cusDiagnose);
+		//添加客户表信息
+		CusCustomer cusCustomer = new CusCustomer();
+		cusCustomer.setId(cusDiagnose.getCustomerId());
+		cusCustomer.setDiagnoseId(cusDiagnose.getId());
+		cusCustomer.setGmtCreate(new Date());
+		cusCustomerMapper.updateById(cusCustomer);
+		return rows;
+	}
+
+	/**基于诊断表id删除数据*/
+	@Override
+	public Integer deleteObject(Integer id) {
+		//验证数据
+		if(id==null||id<=0)
+			throw new ServiceException("请选择一条数据");
+		//执行删除
+		int rows = cusDiagnoseMapper.deleteById(id);
+		//判断数据有无
+		if(rows==0)
+			throw new ServiceException("数据可能已删除");
+		return rows;
 	}
 }

@@ -1,9 +1,13 @@
 package com.vs.pre.service;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.vs.pre.mapper.DiagnosisUserMapper;
 import com.vs.vision.pojo.pre.DiagnosisUser;
 
@@ -36,6 +40,20 @@ public class DiagnosisUserServiceImpl implements DiagnosisUserService{
 	public String updateUserDiagbosisObject(Integer userId, Integer diagnosisId) {
 		diagnosisUserMapper.updateUserDiagbosisObject(userId,diagnosisId);
 		return "用户症状关系表更新成功";
+	}
+	@Override
+	public void downLoadUpdate() {
+		Calendar calendar = Calendar.getInstance();   //cre + 30 < dang
+		calendar.add(Calendar.MINUTE,-1);
+		Date agoDate = calendar.getTime();
+		DiagnosisUser diagnosisUser = new DiagnosisUser();
+		diagnosisUser.setDiagnosisId(0);
+		diagnosisUser.setGmtModified(new Date());
+		UpdateWrapper<DiagnosisUser> updateWrapper = new UpdateWrapper<>();
+		updateWrapper.lt("gmt_modified", agoDate);
+		updateWrapper.ge("diagnosis_id",1);
+		diagnosisUserMapper.update(diagnosisUser, updateWrapper);
+		
 	}
 	
 }

@@ -12,4 +12,6 @@ public interface DiagnosisUserService {
 
 	String updateUserDiagbosisObject(Integer userId, Integer diagnosisId);
 
+	void downLoadUpdate();
+
 }

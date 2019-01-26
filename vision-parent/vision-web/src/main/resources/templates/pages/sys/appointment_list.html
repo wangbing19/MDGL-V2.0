@@ -51,7 +51,7 @@
 </div>
 <script type="text/javascript">
    $(document).ready(function(){
-	   $("#pageId").load("doPageUI.do",function(){
+	   $("#pageId").load("doPageUI",function(){
 		   doGetObjects();
 	   });
 	   $(".input-group-btn")
@@ -69,6 +69,7 @@
 	   var title;
 	   if($(this).hasClass("btn-time_set")){
 		   title="添加训练师预约时间";
+		   
 		   $("#mainContentId").removeData("rowData1");
 		   var id=doGetCheckedId();
 		   if(!id){
@@ -99,32 +100,32 @@
 	 //1.params
 	   var params={"appointmentId":id};
 	   //2.url
-	   var url="appointment/findappointmentTime.do";
+	   var url="appointment/dofindappointmentTime";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
-			  $("#mainContentId").data("rowData1",result.data); 
+		   if(result.status==200){
+			  $("#mainContentId").data("rowDataTime",result.data); 
 			//alert(43);
 			  doTimePage(id,title);
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
 		
    function doTimePage(title){
-	   var url="appointment/doappointmentTimeUI.do";
+	   var url="appointment/doappointmentTimeUI";
 	   $("#mainContentId").load(url,function(){
-		   $(".box-title").html(title);
+		   $(".box-titleTime").html(title);
 	   }) 
    }
    function doDeleteObjects(){
 	   var id=doGetCheckedId();
 	   var params={"id":id};
 	   //console.log("删除id="+id);
-	   var url="appointment/dodeleteAppointment.do";
+	   var url="appointment/dodeleteAppointment";
 	   $.getJSON(url,params,function(result){//JsonResult 
-			  alert(result.message);
+		   alert(result.msg);
 	   }); 
    }
    function doLoadEditUI(){
@@ -136,7 +137,7 @@
 	   }else if($(this).hasClass("btn-update")){
 		   title="修改训练师";
 		   var id=doGetCheckedId();
-		   console.log("id="+id)
+		 //  console.log("id="+id)
 		   if(!id){
 			  alert("请先选择");
 			  return;
@@ -150,14 +151,14 @@
 	   //1.params
 	   var params={"id":id};
 	   //2.url
-	   var url="appointment/findAppointmentById.do";
+	   var url="appointment/findAppointmentById";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
-		   if(result.state==1){
+		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
 	          doLoadPage(title);
 		   }else{
-			  alert(result.message);
+			  alert(result.msg);
 		   }
 	   });
    }
@@ -165,9 +166,9 @@
    function doGetCheckedId(){
 	 return $("tbody input[name='radioId']:checked").val();
    }
-   
+   //添加训练师
    function doLoadPage(title){
-	   var url="appointment/saveObjectUI.do"
+	   var url="appointment/saveObjectUI"
 	   $("#mainContentId").load(url,function(){
 		   $(".box-title").html(title);
 	   }) 
@@ -184,13 +185,13 @@
 	   //ajax request
        var btn=$(this);//获取点击的button对象
 	   $.post(url,params,function(result){
-    	   if(result.state==1){
-    		   alert(result.message);
+    	   if(result.status==200){
+    		   alert(result.msg);
     		   //doGetObjects();//重新查询刷新
     		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
     		   doEditRow(btn,rowData.valid);
     	   }else{
-    		   alert(result.message);
+    		   alert(result.msg);
     	   }
        })    
    } 
@@ -213,25 +214,25 @@
    }
    //页面加载完成异步加载当前页数据
    function doGetObjects(){
-	   var url="appointment/doFindPageObjects.do";
+	   var url="appointment/doFindPageObjects";
 	   var pageCurrent=$("#pageId").data("pageCurrent");
 	   if(!pageCurrent)pageCurrent=1;
 	   var params={"pageCurrent":pageCurrent}
 	   //获取查询参数username的值(此步骤在查询时使用)
 	   params.username=$("#searchNameId").val().trim();
-	   console.log(params);
+	   //console.log(params);
 	   //发送异步请求
 	   $.getJSON(url,params,function(result){
-		   console.log(result);
+		  // console.log(result);
 		   doHandleResponseResult(result);
 	   });
    }
    function doHandleResponseResult(result){
-	   if(result.state==1){
+	   if(result.status==200){
 		  doSetTableBodyRows(result.data.records);
 		  doSetPagination(result.data);
 		}else{
-		  alert(result.message);
+		  alert(result.msg);
 	   }
    }
    //通过服务端返回的数据初始化页面
@@ -249,20 +250,25 @@
 	  }
    }
    function doCreateTds(row){
-	   console.log(row);
+	//   console.log(row);
 	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
-	     "<td>"+row.trainername+"</td>"+
+	     "<td>"+row.trainerName+"</td>"+
 	     "<td>"+row.gender+"</td>"+
 	     "<td>"+row.tel+"</td>"+
 	     "<td>"+row.post+"</td>"+
 	     "<td>"+row.description+"</td>"+
 	     "<td>"+row.resume+"</td>"+
 	     "<td>"+(row.valid?"启用":"禁用")+"</td>"+
-	     "<td>"+new Date(row.gmt_create).toLocaleString()+"</td>"+
-	     "<td>"+new Date(row.gmt_modified).toLocaleString()+"</td>"+
+	     "<td>"+new Date(row.gmtCreate).toLocaleString()+"</td>"+
+	     "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
 	     "<td><button type='button' class='btn btn-default btn-valid'>"+(row.valid?"禁用":"启用")+"</button></td>"; 
        return tds;
    }
+   
+   function doCancel(){
+		$("#mainContentId").removeData("rowData");
+		$("#mainContentId").load("appointment/doAppointmentUI");
+	 }
 </script>
 
 

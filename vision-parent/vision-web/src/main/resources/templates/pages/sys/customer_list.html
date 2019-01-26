@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<!-- /.box-header -->
-			<div class="box-body table-responsive no-padding">
+			<div class="box-body table-responsive no-padding" >
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -29,7 +29,7 @@
 							<th>账户余额</th>
 							<th>训练数</th>
 							<!-- <th>充值记录</th> -->
-							<!-- <th>课程记录</th> -->
+							<th>课程记录</th>
 							<th>状态</th>
 							<th>咨询/诊断表</th>
 							<th>主监护人</th>
@@ -57,7 +57,6 @@
 	   $(".input-group-btn")
 	   .on("click",".btn-search",doQueryObjects)
 	   .on("click",".btn-update",doLoadEditUI);
-	   
 	   $("tbody").on("click",".btn-valid",doValidById)
 	   .on("click",".btn-all",userProfile)
 	   .on("click",".btn-delete",doDeleteObject)
@@ -215,7 +214,7 @@
 	     "<td>"+row.balance+"</td>"+
 	     "<td>"+row.totalTrainingTime+"/"+row.timesOfTraining+"</td>"+
 	   /*   "<td>"+row.rechargeCount+"</td>"+ */
-	     /* "<td>"+row.scheduleCount+"</td>"+ */
+	     "<td>"+row.scheduleCount+"</td>"+ 
 	     "<td>"+(row.state?"启用":"禁用")+"</td>"+
 	     "<td><button type='button' class='btn-doConsultationUpdate'>"+"咨询表"+"</button>"+
 	     "<button type='button' class='btn-doDiagnoseUpdate'>"+"诊断表"+"</button></td>"+
@@ -261,6 +260,7 @@
 	   var id=rowData.id;
 	   var params={"id":id};
 	   var url="customer/doFindObjectById";
+	   var titleName=rowData.name+"基本信息咨询表";
 	   $.post(url,params,function(result){
 		   if(result.status==200){
 			   var params={"id":result.data.consultationId};
@@ -271,6 +271,7 @@
 					  var url="cusConsultation/doCusConsultationEditUI";
 					  $("#mainContentId").load(url,function(){
 						  $(".box-title").html("查看/修改 咨询表");
+						  $(".getName").html(titleName);
 					  }) 
 				   }else{
 					  alert(result.msg);
@@ -281,35 +282,62 @@
 		   }
 	   })
    }
-   
+   //获取部分信息,添加诊断表信息
    function doDiagnoseInsert(){
 	   var rowData=$(this).parents("tr").data("rowData");
-	   var id=rowData.id;
-	   $("#mainContentId").data("customerId",id); 
-	   var url="cusDiagnose/doCusDiagnoseEditUI.do";
-	   $("#mainContentId").load(url,function(){
-			  $(".box-title").html("新建咨询表");
-		  })
+	   var id=rowData.diagnoseId;
+	   var params={"id":id};
+	   $.getJSON("cusDiagnose/doFindObjectById",params,function(result){//JsonResult
+		   if(result.status!=200){
+			   getData(rowData);
+		   } else {
+			  alert("已有数据,无法添加");
+		   }
+	   });
    }
-   
+   //添加诊断表信息
+   function getData(rowData){
+	   var customerId=rowData.id;
+	   var titleName=rowData.name+"诊断表";
+	   $("#mainContentId").data("customerId",customerId); 
+	   var url="cusDiagnose/doCusDiagnoseEditUI";
+	   $("#mainContentId").load(url,function(){
+			  $(".box-title").html("新建诊断表");
+			  $(".getName").html(titleName);
+		  });
+   }
+   //转向查看诊断表,如果没有诊断表,转向诊断表添加
    function doDiagnoseUpdate(){
 	   var rowData=$(this).parents("tr").data("rowData");
 	   var customerId=rowData.id;
-	   console.log(customerId);
 	   var params={"customerId":customerId};
-	   console.log(params);
-	   var url="cusDiagnose/doFindObjectByCustomerId.do";
+	   var url="cusDiagnose/doFindObjectByCustomerId";
+	   var titleName=rowData.name+"诊断表";
 	   $.getJSON(url,params,function(result){//JsonResult
 		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
-			  var url="cusDiagnose/doCusDiagnoseEditUI.do";
+			  var url="cusDiagnose/doCusDiagnoseEditUI";
 			   $("#mainContentId").load(url,function(){
 				   $(".box-title").html("查看/修改 诊断表");
-			   }) 
-		   }else{
+				   $(".getName").html(titleName);
+			   });
+		   } else if(result.status==203){
+			   alert("无数据,需要添加数据");
+			   getData(rowData);
+		   } else {
 			  alert(result.msg);
 		   }
 	   });
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
    }
    
 </script>

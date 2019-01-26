@@ -43,7 +43,7 @@ public class CusDiagnoseController {
 		return JsonResult.build(201, "查询无数据");
 	}
 	
-	/**基于咨询表id,查询相关id所有信息*/
+	/**基于诊断表id,查询相关id所有信息*/
 	@RequestMapping("/doFindObjectById")
 	@ResponseBody
 	public JsonResult doFindObjectById(Integer id) {
@@ -55,9 +55,64 @@ public class CusDiagnoseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return JsonResult.build(201, "修改查询数据失败");
+		return JsonResult.build(201, "修改查询数据错误");
 	}
 	
-	/**修改页面跳转*/
+	/**诊断表修改页面跳转*/
+	@RequestMapping("/doCusDiagnoseEditUI")
+	public String doCusDiagnoseEditUI() {
+		return "pages/sys/cusDiagnose_edit";
+	}
+	
+	/**基于客户id查询诊断表相关信息*/
+	@RequestMapping("/doFindObjectByCustomerId")
+	@ResponseBody
+	public JsonResult doFindObjectByCustomerId(Integer customerId) {
+		try {
+			CusDiagnose cusDiagnose = restTemplate.postForObject(provider_url+"/cusDiagnose/findByCustomerId", customerId, CusDiagnose.class);
+			if(cusDiagnose != null) {
+				return JsonResult.oK(cusDiagnose);
+			} else if(cusDiagnose == null){
+				return JsonResult.build(203, "无数据,需新增数据");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "修改查询数据错误");
+	}
+	
+	/**基于客户id创建客户诊断表*/
+	@RequestMapping("/doSaveObject")
+	@ResponseBody
+	public JsonResult doSaveObject(CusDiagnose cusDiagnose) {
+		try {
+			cusDiagnose.setCreatedUser("admin");
+			cusDiagnose.setModifiedUser(cusDiagnose.getCreatedUser());
+			cusDiagnose.setUserId(0);
+			cusDiagnose.setUserParentId(0);
+			Integer row = restTemplate.postForObject(provider_url+"/cusDiagnose/saveObject", cusDiagnose, Integer.class);
+			if(row != 0 && row != null) {
+				return JsonResult.oK();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "新增诊断表错误");
+	}
+	
+	/**基于诊断表id删除数据*/
+	@RequestMapping("/doDeleteObject")
+	@ResponseBody
+	public JsonResult doDeleteObject(Integer id) {
+		try {
+			Integer row = restTemplate.postForObject(provider_url+"/cusDiagnose/deleteObject", id, Integer.class);
+			if(row != 0 && row != null) {
+				return JsonResult.oK();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "数据可能已删除,请刷新");
+	}
 	
 }

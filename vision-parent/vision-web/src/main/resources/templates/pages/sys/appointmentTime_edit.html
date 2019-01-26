@@ -1,153 +1,167 @@
 <div>
-	<h2>训练师时间配置</h2>
-	<p>配置时间格式如：2018-12-21 8：30：00</p>
+	<h2 class="box-titleTime">训练师时间配置</h2>
+	<p>配置时间格式如：2018/12/21 8：30：00</p>
 	<div style="margin: 20px 0;"></div>
-	<table>
+
+	<table >
+
 		<tr value=1>
-			<td>第一时间段:</td>
-			<td>Start Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
-			<td>End Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
+			<td><label for="meeting1">第一组开始时间：</label><input id="meeting1" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting2">第一组结束时间：</label><input id="meeting2" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+		</tr>
+
+
+		<tr>
+			<td><label for="meeting3">第二组开始时间：</label><input id="meeting3" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting4">第二组结束时间：</label><input id="meeting4" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
 
 		<tr>
-			<td>第二时间段:</td>
-			<td>Start Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
-			<td>End Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
+			<td><label for="meeting5">第三组开始时间：</label><input id="meeting5" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting6">第三组结束时间：</label><input id="meeting6" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
 
+
 		<tr>
-			<td>第三时间段:</td>
-			<td>Start Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
-			<td>End Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
+			<td><label for="meeting7">第四组开始时间：</label><input id="meeting7" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting8">第四组结束时间：</label><input id="meeting8" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
+
+
 		<tr>
-			<td>第四时间段:</td>
-			<td>Start Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
-			<td>End Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
-		</tr>
-		<tr>
-			<td>第五时间段:</td>
-			<td>Start Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
-			<td>End Date:</td>
-			<td><input name="dateTime" class="easyui-datebox"
-				data-options="sharedCalendar:'#cc'"></td>
+			<td><label for="meeting9">第五组开始时间：</label><input id="meeting9" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
+			<td><label for="meeting10">第五组结束时间：</label><input id="meeting10" calss="meeting"
+				type="datetime-local" name="dateTime" /></td>
 		</tr>
 	</table>
-	<div id="cc" class="easyui-calendar"></div>
+
+	<!-- 
+	<div id="cc" class="easyui-calendar"></div> -->
 	<!-- /.box-body -->
+
 	<div class="box-footer">
 		<button type="button" class="btn btn-default btn-cancel">Cancel</button>
 		<button type="button" class="btn btn-info pull-right btn-save">Save</button>
 	</div>
 	<!-- /.box-footer -->
 </div>
+
 <script>
 	$(function() {
-		//doAppointmentTimeOne();
 		InitAllInputData();
+		$(".box-footer").on("click", ".btn-cancel", doCancel).on("click",
+				".btn-save", saveTime);
+
+		/* 
 		$(".btn-save").click(function() {
 			var date_time = document.getElementsByName("dateTime");
-			//console.log(date_time);
 			var timeAll = new Array();
 			for (var i = 0; i < date_time.length; i++) {
 				if (date_time[i].value != "")
-					//console.log(date_time[i].value);
-					timeAll[i] = date_time[i].value
-			}
+					timeAll[i] = date_time[i].value;
+			}	
 			$("#mainContentId").data("timeAll", timeAll);
 			doSaveOrUpdate();
-		})
-
-		$(".btn-cancel").click(function() {
-			//debugger
-			$("#mainContentId").removeData("rowData");
-			$("#mainContentId").load("appointment/doAppointmentUI.do");
-		})
+		}) */
 
 	})
-	function InitAllInputData() {
-		var data = $("#mainContentId").data("rowData1");
-		//console.log(data);
-		// console.log("8888");
-		var allTime = new Array();
-		var k = 0;
-		for (var i = 0; i < data.length; i++) {
-			allTime[k] = data[i].starttime;
-			k++;
-			allTime[k] = data[i].endtime;
-			k++;
+
+	function saveTime() {
+		var date_time = document.getElementsByName("dateTime");
+		var timeAll = new Array();
+		for (var i = 0; i < date_time.length; i++) {
+			if (date_time[i].value != "")
+				timeAll[i] = date_time[i].value;
 		}
-		console.log(allTime);
-		//console.log("111111");
-		//console.log(data);
-		if (!data)
-			return;
-		// var date_time = document.getElementsByName("dateTime");
-		//  console.log(date_time);
-		/*for(var i=0;i<date_time.length;i++){
-		 date_time[i].value(data[i]);
-		}  */
-		var a = $(".easyui-datebox");
-		for (var i = 0; i < a.length; i++) {
-			// if(new Date(data[i]).toLocaleString()==Invalid Date)return;
-			//console.log(allTime[i]);
-			a[i].value = new Date(allTime[i]).toLocaleString();
-		}
+		$("#mainContentId").data("timeAll", timeAll);
+		doSaveOrUpdate();
 	}
+
 	function doSaveOrUpdate() {
-		var rowData = $("#mainContentId").data("rowData");
-		//var params = doGetEditFormData();
-		var timeAll = $("#mainContentId").data("timeAll");
 		var id = $("#mainContentId").data("appointmentTimeId");
+		//console.log("123");
+		//console.log(id);
+		var timeAll = $("#mainContentId").data("timeAll");
 		if (!timeAll)
 			return;
-		//var params=appointmentTimeId.id;
-		//console.log("333333333333"+id)
-		var SaveUrl = "appointment/dosaveAppointmentTime.do";
-
-		//为添加时执行循环
+		var SaveUrl = "appointment/dosaveAppointmentTime";
 		for (var i = 0; i < timeAll.length; i += 2) {
 			var startTime = timeAll[i];
 			var endTime = timeAll[i + 1];
-			//	console.log("4444444444444"+startTime+endTime);
 			var params1 = {
-				"sTime" : startTime,
-				"eTime" : endTime,
+				"startTime" : startTime,
+				"endTime" : endTime,
 				"appointmentId" : id
 			}
 			$.post(SaveUrl, params1, function(result) {
-
-				if (result.state == 1) {
-					alert(result.message);
-					doCancel();
+				if (result.status == 200) {
+					alert(result.msg);
+					//	doCancel();
 				} else {
-					alert(result.message);
+					alert(result.msg);
 				}
 			})
 		}
+
 	}
-	function doAppointmentTimeOne() {
-		var data = $("#mainContentId").data("rowData1");
+
+	function InitAllInputData() {
+		var data = $("#mainContentId").data("rowDataTime");
+		var allTime = new Array();
+		var k = 0;
+		
+		for (var i = 0; i < data.length; i++) {
+			allTime[k] = data[i].startTime;
+			k++;
+			allTime[k] = data[i].endTime;
+			k++;
+		}
+		//console.log(allTime);
+		
 		if (!data)
 			return;
-		console.log(data);
+		//var a = document.getElementByClassName("meeting");
+		var a =  $("input");
+		//debugger;
+		for (var i = 0; i < a.length; i++) {
+			a[i].value = allTime[i];
+		}
+
+	}
+
+	function doCancel() {
+		$("#mainContentId").removeData("timeAll");
+		$("#mainContentId").load("appointment/doAppointmentUI");
 	}
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

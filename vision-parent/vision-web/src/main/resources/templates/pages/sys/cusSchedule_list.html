@@ -1,0 +1,235 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">课程表管理</h3>
+
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 350px;">
+						<input type="text" name="table_search" id="searchNameId"
+							class="form-control pull-right" placeholder="用户名">
+
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default btn-search">
+                                <i class="fa fa-search"></i>
+							</button>
+							<button type="button" class="btn btn-default btn-add">添加</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th></th>
+							<th>姓名</th>
+							<th>课程名称</th>
+							<th>课程价格</th>
+							<th>课程训练数</th>
+							<th>课程项目数</th>
+							<th>总价格</th>
+							<th>诊断师</th>
+							<th>时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyId"></tbody>
+				</table>
+			</div>
+			<div id="pageId" class="box-footer clearfix">
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</div>
+<script type="text/javascript">
+   $(document).ready(function(){
+	   $("#pageId").load("doPageUI",function(){
+		   $("#mainContentId").removeData("rowData");
+		   doGetObjects();
+	   });
+	   $(".input-group-btn")
+	   .on("click",".btn-search",doQueryObjects)
+	   .on("click",".btn-add",doLoadEditUI);
+	   $("tbody").on("click",".btn-delete",doDeleteObject).on("click",".btn-update",doLoadEditUI).on("click",".btn-insert",doSaveCustomer);
+   });
+	//判定修改/删除并返回页面
+	function doLoadEditUI(){
+		//1.判定点击的对象
+		var title;
+		if($(this).hasClass("btn-add")){
+			title="添加课程表";
+			doLoadPage(title);
+		}else if($(this).hasClass("btn-update")){
+			var rowData=$(this).parents("tr").data("rowData");
+			var id=rowData.id;
+			 title="修改课程表";
+			var titleName=rowData.name+"基";
+		   //基于id进行查询并加载编辑页面
+		   doFindObjectById(id,title,titleName);
+	   }
+   }
+	
+  
+   function doFindObjectById(id,title,titleName){
+	   //1.params绑定id
+	   var params={"id":id};
+	   //2.url
+	   var url="cusSchedule/doFindObjectById";
+	   //3.ajax request
+	   $.getJSON(url,params,function(result){//JsonResult
+		   if(result.status==200){
+			  $("#mainContentId").data("rowData",result.data); 
+	          doLoadPage(title,titleName);
+		   }else{
+			  alert(result.msg);
+		   }
+	   });
+   }
+   
+   function doLoadPage(title,titleName){
+	   var url="cusSchedule/doscheduleEditUI";
+	   $("#mainContentId").load(url,function(){
+		   $(".box-title").html(title);
+		   $(".getName").html(titleName);
+	   }) 
+   }
+
+   //处理查询按钮事件
+   function doQueryObjects(){
+	   $("#pageId").data("pageCurrent",1);
+	   doGetObjects();
+   }
+   //页面加载完成异步加载当前页数据
+   function doGetObjects(){
+	   //debugger
+	   var url="cusSchedule/doFindPageObjects";
+	   var pageCurrent=$("#pageId").data("pageCurrent");
+	   if(!pageCurrent)pageCurrent=1;
+	   var params={"pageCurrent":pageCurrent}
+	   params.name=$("#searchNameId").val().trim();
+	   $.getJSON(url,params,function(result){
+		   doHandleResponseResult(result);
+	   });
+   }
+   
+   function doHandleResponseResult(result){
+	   if(result.status==200){
+		  doSetTableBodyRows(result.data.records);
+		  doSetPagination(result.data);
+		}else{
+		  alert(result.msg);
+	   }
+   }
+   //通过服务端返回的数据初始化页面
+   function doSetTableBodyRows(data){
+	  //1.获取tbody对象，并清空内容
+	  var tBody=$("#tbodyId");
+	  tBody.empty();
+	  //2.迭代data内容将数据追加到tbody中
+	//  console.log(data);
+	  for(var i in data){
+		  var tr=$("<tr></tr>");
+		  tr.data("rowData",data[i]);
+		  var tds=doCreateTds(data[i],i);
+		  tr.append(tds);
+		  tBody.append(tr);
+	  }
+   }
+   
+	function doDeleteObject(){
+		if(!confirm("确认删除吗"))return;
+		//1.params
+		var rowData=$(this).parents("tr").data("rowData");
+		var id=rowData.id;
+		var params={"id":id};
+		//2.url
+		var url="cusSchedule/doDeleteObject"
+		//3.ajax request
+		$.post(url,params,function(result){
+			if(result.status==200){
+			//	alert(result.message);
+				doGetObjects();
+			}else{
+				alert(result.msg);
+			}
+		})
+	   
+	}
+   
+   //获取返回的值
+   function doCreateTds(row,i){
+	  // console.log(row);
+	   var tds=
+	   "<td>"+(parseInt(i)+1)+"</td>"+
+	   "<td>"+row.name+"</td>"+
+       "<td>"+row.courseTitle+"</td>"+
+       "<td>"+row.priceOfCourse+"</td>"+
+       "<td>"+row.courseTraining+"</td>"+
+       "<td>"+row.numberOfCourse+"</td>"+
+       "<td>"+row.totalPrice+"</td>"+
+       "<td>"+row.diagnostics+"</td>"+
+       "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
+       "<td><button type='button' class='btn-delete'>"+"删除"+"</button>"+
+       "<button type='button' class='btn-update'>"+"修改"+"</button></td>";
+       return tds;
+   }
+   
+   /**获取信息转向SaveCustomer*/
+   function doSaveCustomer(){
+		var rowData=$(this).parents("tr").data("rowData");
+		var id=rowData.id;
+		var params={"id":id};
+	//	console.log(params)
+		
+		var consultationId={"consultationId":id}
+		$.getJSON("customer/doFindConsultationByConsultationId",consultationId,function(result){//JsonResult
+		//	console.log("111111");
+		//	console.log(result);
+			if(result.data==0){
+				
+				//2.url
+				var url="cusSchedule/doFindObjectById";
+				//3.ajax request
+				$.getJSON(url,params,function(result){//JsonResult
+				if(result.status==200){
+					var customerData = {
+							"consultationId":result.data.id,
+							"name":result.data.name,
+							"age":result.data.age,
+							"gender":result.data.gender,
+							"tel":result.data.tel
+							
+					}
+					$("#mainContentId").data("customerData",customerData);
+					
+				//	console.log($("#mainContentId").data("customerData"));
+					var title = "添加用户";
+					console.log(customerData);
+					$("#mainContentId").load("customer/doCustomerEditUI",function(){
+						$(".box-title").html(title);
+					   });
+					}else{
+						alert(result.msg);
+					}
+				   });
+				
+				}else{
+					alert("已有数据,无法添加");
+				}
+			   });
+		
+		
+		
+		
+		
+		
+   }
+</script>
+
+
+
+

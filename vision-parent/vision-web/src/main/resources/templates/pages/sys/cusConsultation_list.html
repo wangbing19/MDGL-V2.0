@@ -66,14 +66,14 @@
 			var rowData=$(this).parents("tr").data("rowData");
 			var id=rowData.id;
 			 title="修改咨询表";
-		//	console.log("id="+id)
+			var titleName=rowData.name+"基本信息咨询表";
 		   //基于id进行查询并加载编辑页面
-		   doFindObjectById(id,title);
+		   doFindObjectById(id,title,titleName);
 	   }
    }
 	
   
-   function doFindObjectById(id,title){
+   function doFindObjectById(id,title,titleName){
 	   //1.params绑定id
 	   var params={"id":id};
 	   //2.url
@@ -82,17 +82,18 @@
 	   $.getJSON(url,params,function(result){//JsonResult
 		   if(result.status==200){
 			  $("#mainContentId").data("rowData",result.data); 
-	          doLoadPage(title);
+	          doLoadPage(title,titleName);
 		   }else{
 			  alert(result.msg);
 		   }
 	   });
    }
    
-   function doLoadPage(title){
+   function doLoadPage(title,titleName){
 	   var url="cusConsultation/doCusConsultationEditUI";
 	   $("#mainContentId").load(url,function(){
 		   $(".box-title").html(title);
+		   $(".getName").html(titleName);
 	   }) 
    }
 
