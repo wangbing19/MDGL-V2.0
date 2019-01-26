@@ -3,9 +3,10 @@ package com.vs.vision.contorller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
 public class PageController {// 类加载(将类读到内存)-->Class
-	
+
 	@RequestMapping("/doIndexUI.do")
 	public String doIndexUI() {
 		return "pages/starter";
@@ -29,6 +30,16 @@ public class PageController {// 类加载(将类读到内存)-->Class
 	@RequestMapping("/doPageUI.do")
 	public String doPageUIdo() {
 		return "pages/common/page";
+	}
+
+	@RequestMapping("doViwepager")
+	public String doViwepager() {
+		return "pages/Viwepager";
+	}
+
+	@RequestMapping("skipzhifu")
+	public String skipzifu() {
+		return "pages/zhifu";
 	}
 
 }
