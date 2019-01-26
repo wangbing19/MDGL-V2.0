@@ -88,7 +88,7 @@
 			}
 
 		   function doLoadHtmlData(){
-				$.post("resSymptomType/dofindObjects.do",function(result){
+				$.post("resSymptomType/dofindObjects",function(result){
 					if(result.state==1){
 						doSetTableBodyRows(result.data);
 					}
