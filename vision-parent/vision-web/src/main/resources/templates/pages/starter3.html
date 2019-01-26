@@ -126,7 +126,7 @@
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a id="load-dept-id">组织管理</a></li>
+							<li id="load-dept-id-li"><a id="load-dept-id">组织管理</a></li>
 							<li><a id="load-menu-id">菜单管理</a></li>
 							<li><a id="load-role-id">角色管理</a></li>
 							<li><a id="load-user-id">用户管理</a></li>
@@ -279,6 +279,7 @@
 		<!-- 局部刷新 -->
 		<script type="text/javascript">
 			$(function() {//页面加载完成执行
+				init("load-dept-id-li","dept/doDeptListUI.do")
 				doLoadUI("load-exp-remote", "dia/doRemoteDiagnose.do")
 				doLoadUI("load-exp-expert", "exp/doExpert.do")
 				doLoadUI("load-log-id", "log/doLogListUI.do")
@@ -305,7 +306,6 @@
 			function doLoadUI(id, url) {
 				$("#" + id).click(function() {
 					$.post(url, function(result) {
-						console.log(result);
 						if (result.status == 201) {
 							$("#mainContentId").load("doNullUI.do", function() {
 							});
@@ -315,6 +315,15 @@
 					})
 				});
 			}
+			function init(id, url){
+				$.post(url, function(result) {
+					if (result.status == 201) {
+						$("#"+id).remove();
+						);
+					} 
+				})
+			}
+			
 		</script>
 		<!-- ============================================================================================ -->
 </body>

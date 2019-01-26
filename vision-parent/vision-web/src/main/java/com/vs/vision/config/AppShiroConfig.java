@@ -1,8 +1,6 @@
 package com.vs.vision.config;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
-
 
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -11,51 +9,55 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import com.vs.vision.filter.MyFormAuthenticationFilter;
+import com.vs.vision.shiro.ShiroUserRealm;
 
 /**
  * 此类为shiro配置类对象
  * 
  * @author ta
  */
-//@Configuration
+@Configuration
 public class AppShiroConfig {
 
-	@Bean("securityManager")
-	public SecurityManager newDefaultWebSecurityManager(AuthorizingRealm userRealm) {
-		DefaultWebSecurityManager sManager = new DefaultWebSecurityManager();
-		// 此时必须保证realm对象已经存在了
-		sManager.setRealm(userRealm);
-		return sManager;
-	}
-
-	@Bean("shiroFilterFactory")
+	@Bean("shiroFilter")
 	public ShiroFilterFactoryBean newShiroFilterFactoryBean(SecurityManager securityManager) {// shiro 包
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 		bean.setSecurityManager(securityManager);
 		// 当此用户是一个非认证用户,需要先登陆进行认证
 		bean.setLoginUrl("/doLoginUI");
+		bean.setSuccessUrl("/doIndexUI");
 		LinkedHashMap<String, String> fcMap = new LinkedHashMap<>();
-		fcMap.put("/bower_components/**", "anon");// anon表示允许匿名访问
+		fcMap.put("/bower_components/**","anon");// anon表示允许匿名访问
 		fcMap.put("/build/**", "anon");
 		fcMap.put("/dist/**", "anon");
 		fcMap.put("/plugins/**", "anon");
 		fcMap.put("/user/doLogin.do", "anon");
-		fcMap.put("/user/doLogout.do", "anon");// logout给的
+		fcMap.put("/user/doLogout.do", "logout");// logout给的
 		fcMap.put("/**", "authc");// 必须授权才能访问
 		bean.setFilterChainDefinitionMap(fcMap);
 		
-		Map map = new LinkedHashMap();
-		map.put("authc", new MyFormAuthenticationFilter());
-		bean.setFilters(map);
 		return bean;
 	}
 
-	// ===========================
+	@Bean("securityManager")
+	public SecurityManager newDefaultWebSecurityManager(@Qualifier("userRealm") AuthorizingRealm userRealm) {
+		DefaultWebSecurityManager sManager = new DefaultWebSecurityManager();
+		// 此时必须保证realm对象已经存在了
+		sManager.setRealm(userRealm);
+		return sManager;
+	}
+	
+	@Bean("userRealm")
+	public ShiroUserRealm userRealm() {
+		ShiroUserRealm userRealm = new ShiroUserRealm();
+		return userRealm;
+	}
+	
 	/**
 	 * 负责shiro中相关bean对象(代理对象 )的声明周期管理
 	 * 
@@ -74,7 +76,9 @@ public class AppShiroConfig {
 	@DependsOn(value = "lifecycleBeanPostProcessor")
 	@Bean
 	public DefaultAdvisorAutoProxyCreator newDefaultAdvisorAutoProxyCreator() {
-		return new DefaultAdvisorAutoProxyCreator();
+		DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
+		creator.setProxyTargetClass(true);
+		return creator;
 	}
 
 	/**

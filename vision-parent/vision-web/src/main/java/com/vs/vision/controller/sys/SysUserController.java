@@ -4,8 +4,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,14 +21,14 @@ import com.vs.vision.vo.sys.RestTemplateParmas;
 
 @Controller
 @RequestMapping("/user")
+@PropertySource("classpath:/url.properties")
 public class SysUserController {
-	private static final String sys_url = "http://localhost:8029/user";
+	@Value("${sys_user_url}")
+	private String sys_url;
 	@Autowired
 	private RestTemplate restTemplate;
-
-	@Autowired
-	private ShiroUserRealm shiroUserRealm;
-
+	
+	@RequiresPermissions("sys:user:view")
 	@RequestMapping("doUserListUI.do")
 	public String doUserListUI() {
 		return "pages/sys/sys_user_list";
@@ -93,8 +96,9 @@ public class SysUserController {
 
 	private AtomicInteger counter = new AtomicInteger(0);
 
-	//@RequestMapping("doLogin.do")
-	public String doLogin(String username, String password) {
+	@RequestMapping("doLogin.do")
+	@ResponseBody
+	public JsonResult doLogin(String username, String password) {
 		// 1.封装用户信息
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		// 2.提交用户信息
@@ -102,14 +106,8 @@ public class SysUserController {
 		subject.login(token);// 提交给SecurityManager
 		int count = counter.incrementAndGet();// count+1;
 		System.out.println("在线人数:" + count);
-		return "redirect:../doIndexUI";
+		return new JsonResult().build(200, "登陆成功");
 	}
 	
-	//@RequestMapping("doLogout.do")
-	public String doLogout() {
-		shiroUserRealm.logout();
-		counter.decrementAndGet();
-		return "redirect:../doLoginUI.do";
-	}
 
 }

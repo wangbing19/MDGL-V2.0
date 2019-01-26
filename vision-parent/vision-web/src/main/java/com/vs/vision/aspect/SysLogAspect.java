@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,15 +20,16 @@ import com.vs.vision.annoation.RequiresLog;
 import com.vs.vision.pojo.sys.Logs;
 import com.vs.vision.utils.IPUtils;
 import com.vs.vision.vo.JsonResult;
-import com.vs.vision.vo.sys.RestTemplateParmas;
 
 
 
 @Aspect
 @Service
+@PropertySource("classpath:/url.properties")
 public class SysLogAspect {
 	
-	private static final String sys_url = "http://localhost:8029/log";
+	@Value("${sys_log_url}")
+	private String sys_log_url;
     @Autowired
     private RestTemplate restTemplate;
 
@@ -73,8 +76,7 @@ public class SysLogAspect {
 		log.setTime(totalTime);
 		log.setCreatedTime(new Date());
 		// 3.发送到后台-日志模块
-		
-		restTemplate.postForObject(sys_url + "/doInsertObjects", log, JsonResult.class);
+		restTemplate.postForObject(sys_log_url + "/doInsertObjects", log, JsonResult.class);
 		
 	}
 }

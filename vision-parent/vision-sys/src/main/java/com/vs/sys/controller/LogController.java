@@ -30,14 +30,14 @@ public class LogController {
 	@ResponseBody
 	public JsonResult doDeleteObjects(@RequestBody Integer[] ids) {// spring mvc请求参数映射
 		logService.deleteObjects(ids);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 	
 	@PostMapping("doInsertObjects") // 只能处理post请求
 	@ResponseBody
 	public JsonResult doInsertObjects(@RequestBody Logs log) {// spring mvc请求参数映射
 		logService.insertObject(log);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 	/**
