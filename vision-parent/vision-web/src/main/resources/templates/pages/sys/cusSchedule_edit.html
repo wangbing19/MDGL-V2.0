@@ -175,9 +175,9 @@
  }
  function doLoadRoles(){
 	// alert("gggggggggg");
-	 var url="role/doFindRoles.do"
+	 var url="resSymptomType/doFindSymptomType";
 	 $.getJSON(url,function(result){
-		 if(result.status==1){
+		 if(result.status==200){
 		  doInitPageRoles(result.data);
 		  doInitFormData();//修改时
 		 }else{
@@ -215,7 +215,7 @@ function doInitPageRoles(data){
 		 //记住每次replace时都会产生一个新的字符串对象
 		 var newInput=
 		 input.replace("[id]",data[i].id)
-		 .replace("[name]",data[i].name);
+		 .replace("[name]",data[i].serviceName);
 		 div.append(newInput)
 	 }
  }
