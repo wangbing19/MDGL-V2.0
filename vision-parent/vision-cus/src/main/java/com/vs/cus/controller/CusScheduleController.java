@@ -43,16 +43,40 @@ public class CusScheduleController {
 		return null;
 	}
 	
-//	/**基于id查询课程信息*/
-//	@RequestMapping("/findObjectById")
-//	@ResponseBody
-//	public JsonResult findObjectById(@RequestBody Integer id) {
-//		try {
-//			return cusScheduleService.findObjectById(id);
-//		} catch (Exception e) {
-//			System.out.println("基于id查询课程信息=============错误=================");
-//		}
-//		return null;
-//	}
+	/**基于id查询课程信息*/
+	@RequestMapping("/findObjectById")
+	@ResponseBody
+	public CusSchedule findObjectById(@RequestBody Integer id) {
+		try {
+			return cusScheduleService.findObjectById(id);
+		} catch (Exception e) {
+			System.out.println("基于id查询课程信息=============错误=================");
+		}
+		return null;
+	}
+	
+	/**创建客户课程表*/
+	@RequestMapping("/saveObject")
+	@ResponseBody
+	public Integer saveObject(@RequestBody CusSchedule cusSchedule) {
+		try {
+			return cusScheduleService.saveObject(cusSchedule);
+		} catch (Exception e) {
+			System.out.println("创建客户课程表=============错误=================");
+		}
+		return null;
+	}
+	
+	/**修改课程表数据*/
+	@RequestMapping("/updateObject")
+	@ResponseBody
+	public Integer updateObject(@RequestBody CusSchedule cusSchedule) {
+		try {
+			return cusScheduleService.updateObject(cusSchedule);
+		} catch (Exception e) {
+			System.out.println("修改课程表数据=============错误=================");
+		}
+		return null;
+	}
 	
 }

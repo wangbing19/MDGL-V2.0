@@ -12,5 +12,9 @@ public interface CusScheduleService {
 	/**基于id删除课程信息*/
 	Integer deleteObject(Integer id);
 	/**基于id查询课程信息*/
-//	JsonResult findObjectById(Integer id);
+	CusSchedule findObjectById(Integer id);
+	/**创建客户课程表*/
+	Integer saveObject(CusSchedule cusSchedule);
+	/**修改课程表数据*/
+	Integer updateObject(CusSchedule cusSchedule);
 }
