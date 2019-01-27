@@ -13,4 +13,9 @@ public interface ResProjectConfigMapper extends BaseMapper<ResProjectConfig>{
 												@Param("startIndex") int startIndex,
 												@Param("pageSize") int pageSize);
 	
+	
+	int getRowCount(
+			@Param("projectName") String projectName,
+			@Param("userId")Integer userId);
+	
 }
