@@ -469,7 +469,7 @@
 									<label for="tutorId" class="col-sm-2 control-label">咨询导师</label>
 										<div class="col-sm-10" style="width: 15%;">
 											<select class="form-control" name="tutor" id="tutorId" >
-												<option></option>
+												<!-- <option></option> -->
 											</select>
 										</div>
 										
@@ -520,12 +520,15 @@
 			});
 	//获取医师姓名
 	function getTutor(){
-		var url = "appointment/doFindAppointmentName";
+		var url = "appointment/getAppoName";
 		$.getJSON(url,function(result){	
-			console.log(result);
+			//console.log(result);
+		//	console.log("//////////////////////");
+			
+			//console.log(result.data);
 	    	if(result.status==200){
 	    		 for (var i = 0; i < result.data.length; i++) 
-	    		$("#tutorId").append("<option >" + result.data[i].title + "</option>");
+	    		$("#tutorId").append("<option >" + result.data[i].trainerName + "</option>");
 	    	}  	
 	    }) 
 	}
@@ -546,7 +549,8 @@
 		$("#lDId").val("3.2");
 		$("#rCvaId").val("3.2");
 		$("#lCvaId").val("3.2");
-		$("#tutorId").val("Tim");
+		$("#tutorId").append("<option selected>" + "Tim" + "</option>");
+		//val("Tim");
 		
 	}
 	
@@ -560,6 +564,7 @@
 		var rowData = $("#mainContentId").data("rowData");
 		//1.获取表单数据
 		var params = check();
+		console.log(params.tutor);
 		if (rowData)
 			params.id = rowData.id;
 		//2.发起异步请求
@@ -785,7 +790,8 @@
 		$("#lDId").val(data.ld);
 		$("#rCvaId").val(data.rcva);
 		$("#lCvaId").val(data.lcva);
-		$("#tutorId").val(data.tutor);
+		$("#tutorId").append("<option selected>" + data.tutor + "</option>");
+	//	$("#tutorId").val(data.tutor);
 
 	}
 
