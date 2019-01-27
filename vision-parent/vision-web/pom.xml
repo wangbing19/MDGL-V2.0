@@ -27,6 +27,26 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    
+    <build>
+    <resources>
+    
+    <resource>
+    <directory>/src/main/resources</directory>
+    <includes>
+    <include>**/*.html</include>
+    <include>**/*.jsp</include>
+    <include>**/*.css</include>
+    <include>**/*.js</include>
+    <include>**/*.png</include>
+    <include>**/*.jpg</include>
+    </includes>
+    
+    
+    
+    </resource>
+    </resources>
+    </build>
 
 
 </project>

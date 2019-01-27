@@ -3,6 +3,7 @@ package com.vs.ppo.service;
 
 
 import com.alibaba.druid.util.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vs.ppo.mapper.PpoAppointmentMapper;
 import com.vs.vision.exception.ServiceException;
 import com.vs.vision.pojo.ppo.PpoAppointment;
@@ -86,6 +87,14 @@ public class PpoAppointmentserviceImpl implements PpoAppointmentservice {
 		Long id = ppoAppointment.getId();
 		int deleteById = ppoAppointmentMapper.deleteById(id);
 		return deleteById;
+	}
+
+	@Override
+	public List<PpoAppointment> findAppointmentName(Integer userId) {
+		QueryWrapper<PpoAppointment> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("user_id", userId);
+		List<PpoAppointment> list = ppoAppointmentMapper.selectList(queryWrapper);
+		return list;
 	}
 
 

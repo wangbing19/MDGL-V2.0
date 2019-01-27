@@ -181,7 +181,42 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 	@Override
 	public Integer updateObjectByMoney(RecPayUser recPayUser) {
 		
-		
-		return null;
+		CusCustomer cusCustomer = new CusCustomer();
+		CusCustomer customer = cusCustomerMapper.selectById(recPayUser.getCustomerId());
+		//修改充值次数
+		cusCustomer.setRechargeCount(customer.getRechargeCount()+1);
+		//计算总金额
+		double money = customer.getMoney();
+		double rechargeAmount = recPayUser.getRechargeAmount();
+		double presentedAmount = recPayUser.getPresentedAmount();
+		money = money + rechargeAmount + presentedAmount;
+		cusCustomer.setMoney(money);
+		//计算余额
+		double balance = customer.getBalance();
+		balance = balance + rechargeAmount + presentedAmount;
+		cusCustomer.setBalance(balance);
+		//修改总训练次数
+		Integer totalTrainingTime = customer.getTotalTrainingTime();
+		totalTrainingTime = totalTrainingTime + recPayUser.getPracticeTimes();
+		cusCustomer.setTotalTrainingTime(totalTrainingTime);
+		//修改时间
+		cusCustomer.setGmtModified(new Date());
+		//根据id修改信息
+		cusCustomer.setId(recPayUser.getCustomerId());
+		int rows = cusCustomerMapper.updateById(cusCustomer);
+		return rows;
+	}
+
+	/**基于训练记录表返回信息更改训练次数*/
+	@Override
+	public Integer updateObjectByTimesOfTraining(Integer customerId) {
+		CusCustomer cusCustomer = new CusCustomer();
+		CusCustomer customer = cusCustomerMapper.selectById(customerId);
+		//获取训练次数并修改赋值
+		cusCustomer.setTimesOfTraining(customer.getTimesOfTraining()+1);
+		cusCustomer.setId(customerId);
+		cusCustomer.setGmtCreate(new Date());
+		int rows = cusCustomerMapper.updateById(cusCustomer);
+		return rows;
 	}
 }

@@ -29,7 +29,7 @@ public class RemoteDiagnoseServiceImpl implements RemoteDiagnoseService{
 
 	/**分页*/
 	@Override
-	public PageObject<ExpRemoteDiagnoseVo> findPageObjects(String customerName, Integer pageCurrent) {
+	public PageObject<ExpRemoteDiagnoseVo> findPageObjects(String customerName, Integer pageCurrent,Integer parentId) {
 		// 1.判断当前页是否合法
 		if (pageCurrent == null || pageCurrent <= 0)
 			throw new ServiceException("参数不合法");
@@ -40,7 +40,7 @@ public class RemoteDiagnoseServiceImpl implements RemoteDiagnoseService{
 		//Integer parentId = user.getParentId();
 		// 2.依据条件获取总记录数
 
-		int rowCount = remoteDiagnoseMapper.getRowCount(customerName);//parentId);
+		int rowCount = remoteDiagnoseMapper.getRowCount(customerName,parentId);
 		//System.out.println("rowCount" + rowCount);
 		// 3.判断记录是否存在
 		if (rowCount == 0)
@@ -53,8 +53,8 @@ public class RemoteDiagnoseServiceImpl implements RemoteDiagnoseService{
 		// System.out.println("5555"+user.getParentId());
 
 		// 5.依据条件获取当前页数据
-		List<ExpRemoteDiagnoseVo> records = remoteDiagnoseMapper.findPageObjects(customerName, startIndex, pageSize);//1);
-		//parentId);// 获取父级id
+		List<ExpRemoteDiagnoseVo> records = remoteDiagnoseMapper.findPageObjects(customerName, startIndex, pageSize//1);
+		,parentId);// 获取父级id
 		//System.out.println("records=" + records);
 
 		// 6.封装数据
@@ -75,16 +75,16 @@ public class RemoteDiagnoseServiceImpl implements RemoteDiagnoseService{
 
 	/**修改解决状态*/
 	@Override
-	public Integer validById(Integer id,Integer valid) {
+	public Integer validById(Integer id,Integer valid,String modifyuser) {
 
 
 		RemoteDiagnose entity = new RemoteDiagnose();
 		entity.setValid(valid);
+		entity.setModifiedUser(modifyuser);
 		//entity.setId(id);
 		UpdateWrapper<RemoteDiagnose> updateWrapper = new UpdateWrapper<>();
 		updateWrapper.eq("id",id);
 
-		//到时候获取登录用户
 
 		Integer i = remoteDiagnoseMapper.update(entity, updateWrapper);
 		return i;
@@ -127,9 +127,7 @@ public class RemoteDiagnoseServiceImpl implements RemoteDiagnoseService{
 			throw new IllegalArgumentException("发送人电话不能为空");
 		entity.setGmtCreate(new Date());
 		entity.setGmtModified(entity.getGmtCreate());
-		entity.setRegisterUser("admin");
-		entity.setModifiedUser("admin");
-		entity.setRegisterParentid(1);
+		
 	//	Integer in = remoteDiagnoseMapper.insertObject(entity);
 		//entity.setId(50);
 		int in = remoteDiagnoseMapper.insert(entity);

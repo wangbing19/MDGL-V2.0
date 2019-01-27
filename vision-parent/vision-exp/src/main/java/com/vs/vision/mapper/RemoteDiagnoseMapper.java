@@ -22,8 +22,8 @@ public interface RemoteDiagnoseMapper extends BaseMapper<RemoteDiagnose> {
 	List<ExpRemoteDiagnoseVo> findPageObjects(
 			@Param("customerName") String customerName,
 			@Param("startIndex")Integer startIndex,
-			@Param("pageSize")Integer pageSize);
-			//@Param("registerParentid")Integer registerParentid);
+			@Param("pageSize")Integer pageSize,
+			@Param("registerParentid")Integer registerParentid);
 
 	/**
 	 * 查询对应客户姓名的数量,如果没输入客户姓名则查询远程诊断表中的所有数量
@@ -31,8 +31,8 @@ public interface RemoteDiagnoseMapper extends BaseMapper<RemoteDiagnose> {
 	 * @return
 	 */
 	int getRowCount(
-			@Param("customerName") String customerName);
-			//@Param("registerParentid")Integer registerParentid);
+			@Param("customerName") String customerName,
+			@Param("registerParentid")Integer registerParentid);
 
 	/**
 	 * 通过选择的id在修改页面获取远程诊断表对应id中的信息
