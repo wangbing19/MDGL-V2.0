@@ -33,10 +33,6 @@ public class ResProjectConfigServiceImpl implements ResProjectConfigService{
         pageObject.setPageSize(pageSize);
         pageObject.setRowCount(count);
         pageObject.setRecords(records);
-    
-        int pageCount=(count-1)/pageSize+1;
-   //     System.out.println(pageCount);
-        pageObject.setPageCount(pageCount);
         return pageObject;
 		
 	}

@@ -24,7 +24,7 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>ID</th>
+							<th>序号</th>
 							<th>症状名称</th>
 							<th>症状描述</th>
 							<th>状态类型</th>
@@ -46,6 +46,7 @@
 <script type="text/javascript">
    $(document).ready(function(){
 	   $("#pageId").load("doPageUI",function(){
+		   debugger
 		   doGetObjects();
 	   });
 	   $(".input-group-btn")
@@ -118,7 +119,7 @@
        var btn=$(this);//获取点击的button对象
 	   $.post(url,params,function(result){
     	   if(result.status==200){
-    		   alert(result.msg);
+    		   alert(result.data);
     		   doGetObjects();//重新查询刷新
     		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
     		   //doEditRow(btn,rowData.projectState);
@@ -156,15 +157,17 @@
 	 //  console.log("name:"+name);
 	  // if(name)params.name=name;
 		 var url="ResProjectConfig/doFingPageObject";
-	   
+	   debugger
 	   
 	   $.getJSON(url,params,function(result){
+		   debugger
 		   console.log(result);
 		   doHandleResponseResult(result);
 	   });
    }
    
    function doHandleResponseResult(result){
+	   debugger
 	   if(result.status==200){
 		   
 		   console.log(result.data);

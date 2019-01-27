@@ -12,14 +12,13 @@ import com.vs.res.servise.ResProjectConfigService;
 import com.vs.vision.pojo.res.ResProjectConfig;
 import com.vs.vision.vo.PageObject;
 @RestController
-@RequestMapping("/ResProjectConfig")
 public class ResProjectConfigContorller {
 	@Autowired
 	private ResProjectConfigService resProjectConfigService;
 	
 	
 	/**查询所有配置类型*/
-	@RequestMapping("/findAll")
+	@RequestMapping("findAll")
 	public PageObject<ResProjectConfig> dofindObjects(@RequestBody Map map){
 		try {
 			PageObject<ResProjectConfig> result=resProjectConfigService.dofindObjects(map);

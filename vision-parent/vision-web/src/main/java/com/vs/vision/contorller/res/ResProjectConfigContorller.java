@@ -14,38 +14,41 @@ import org.springframework.web.client.RestTemplate;
 
 import com.vs.vision.pojo.exp.ExpRemoteDiagnoseVo;
 import com.vs.vision.pojo.res.ResProjectConfig;
+import com.vs.vision.pojo.sys.Users;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
-	@Controller
-	@RequestMapping("/ResProjectConfig")
-	public class ResProjectConfigContorller {
-		
-		private static final String provider_url = "http://localhost:8028";
+@Controller
+@RequestMapping("/ResProjectConfig/")
+public class ResProjectConfigContorller {
 
-		@Autowired
-		private RestTemplate restTemplate;
-		
-		
-		
-	@RequestMapping("/doResProjectConfigUI")
+	private static final String provider_url = "http://localhost:8028";
+
+	@Autowired
+	private RestTemplate restTemplate;
+
+
+
+	@RequestMapping("doResProjectConfigUI")
 	public String doResProjectConfigUI() {
 		return "/pages/sys/ResProjectConfig_List";
 	}
-	
+
 	/**
 	 * 查询所有症状类型信息
 	 * @return
 	 */
-	@RequestMapping("/doFingPageObject")
+	@RequestMapping("/doFingPageObject.do")
 	@ResponseBody
 	public JsonResult dofindObjects(Integer pageCurrent) {
-		int userId=0;
+		Users user = ShiroUtils.getUser();
+		Integer userId = user.getId();
 		try {
 			Map<String,Object> map= new HashMap<>();
 			map.put("pageCurrent", pageCurrent);
 			map.put("userId", userId);
-			PageObject<ResProjectConfig> postForObject = restTemplate.postForObject(provider_url + "/ResProjectConfig/findAll", map, PageObject.class);
+			PageObject<ResProjectConfig> postForObject = restTemplate.postForObject(provider_url + "/findAll", map, PageObject.class);
 			return JsonResult.oK(postForObject);
 		} catch (Exception e) {
 			e.printStackTrace();
