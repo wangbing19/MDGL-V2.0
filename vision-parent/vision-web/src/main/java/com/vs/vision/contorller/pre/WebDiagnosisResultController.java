@@ -23,6 +23,7 @@ import com.vs.vision.vo.Node;
 @Controller
 @RequestMapping("/diagnosis")
 
+
 public class WebDiagnosisResultController {
 	public static final String local_url = "http://localhost:8026";
 	@Autowired
