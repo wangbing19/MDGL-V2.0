@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vs.res.mapper.ResProjectConfigMapper">
+   
+	
+	<select id="findResProjectConfigList" resultType="ResProjectConfig">
+		select * from  res_project_config
+		order by gmt_create desc
+		limit #{startIndex},#{pageSize}
+		<!-- limit 子句为分页查询子句,第一个参数代表下标位置 -->
+	</select>
+</mapper>

@@ -8,11 +8,11 @@ import com.vs.vision.vo.PageObject;
 
 public interface RemoteDiagnoseService {
 
-    PageObject<ExpRemoteDiagnoseVo> findPageObjects(String customerName, Integer pageCurrent);
+    PageObject<ExpRemoteDiagnoseVo> findPageObjects(String customerName, Integer pageCurrent,Integer parentId);
 
 	ExpRemoteDiagnoseVo select(Integer id);
 
-	Integer validById(Integer id,Integer valid);
+	Integer validById(Integer id,Integer valid,String modifyuser);
 
 	Integer doDelete(Integer[] ids);
 

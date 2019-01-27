@@ -1,6 +1,7 @@
 package com.vs.vision.contorller.ppo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,5 +147,22 @@ public class PpoAppointmentController {
 		return JsonResult.build(201, "删除失败！");
 	}
 	
+	
+	
+	@RequestMapping("/getAppoName")
+	@ResponseBody
+	public JsonResult findAppointmentName() {
+		try {
+			Integer userId=0;
+			List<PpoAppointment> result = restTemplate.postForObject(provider_url+"/findAppointmentName", userId, List.class);
+			if(result.size() !=0 || result !=null) {
+				return JsonResult.oK(result);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "没有训练师");
+	}
 	
 }

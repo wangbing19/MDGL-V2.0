@@ -2,6 +2,8 @@ package com.vs.vision.contorller.exp;
 
 import com.vs.vision.pojo.exp.ExpRemoteDiagnoseVo;
 import com.vs.vision.pojo.exp.RemoteDiagnose;
+import com.vs.vision.pojo.sys.Users;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -75,9 +77,13 @@ public class WebRemoteDiagnoseController {
 	@ResponseBody
 	public JsonResult doFindPageObjects(
 			String customerName,Integer pageCurrent){
+		// 获取登录用户的账号
+		Users user=ShiroUtils.getUser(); 
+		Integer parentId = user.getParentId();
 		Map<Object, Object> map = new HashMap<>();
 		map.put("customerName",customerName);
 		map.put("pageCurrent",pageCurrent);
+		map.put("parentId", parentId);
 		try {
 			PageObject<ExpRemoteDiagnoseVo> postForObject = restTemplate.postForObject(provider_url+"/doFindPageObjects",map,PageObject.class);
 			if(!(postForObject.getRecords().size()==0)) {
@@ -118,9 +124,12 @@ public class WebRemoteDiagnoseController {
 	@RequestMapping("doValidById.do")
 	@ResponseBody
 	public JsonResult doValidById(Integer id,Integer valid){
-		Map<String, Integer> map = new HashMap<>();
+		Users user=ShiroUtils.getUser();
+		String modifyuser=user.getUsername();//获取修改时用户的账号名(添加时默认是自身账号)
+		Map<Object, Object> map = new HashMap<>();
 		map.put("id",id);
 		map.put("valid",valid);
+		map.put("modifyuser", modifyuser);
 		try {
 			Integer i = restTemplate.postForObject(provider_url+"/doValidById", map, Integer.class);
 			if(!StringUtils.isEmpty(i)) {
@@ -165,6 +174,14 @@ public class WebRemoteDiagnoseController {
 			RemoteDiagnose entity){
 		//System.out.println("ExpRemoteDiagnose="+entity);
 		//expDiagnoseService.saveObject(entity);
+		Users user=ShiroUtils.getUser();
+		String loginuser=user.getUsername();//获取添加时用户的账号名
+		String modifyuser=user.getUsername();//获取修改时用户的账号名(添加时默认是自身账号)
+		Integer parentId=user.getParentId();
+		entity.setRegisterUser(loginuser);
+		entity.setModifiedUser(modifyuser);
+		entity.setRegisterParentid(parentId);
+		
 		try {
 			Integer en = restTemplate.postForObject(provider_url+"/doSaveObject", entity, Integer.class);
 			if(!StringUtils.isEmpty(en)) {
@@ -186,6 +203,9 @@ public class WebRemoteDiagnoseController {
 	@ResponseBody
 	public JsonResult doUpdate(RemoteDiagnose entity) {
 		//expDiagnoseService.update(entity);
+		Users user = ShiroUtils.getUser();
+		String modifyuser = user.getUsername();
+		entity.setModifiedUser(modifyuser);
 		try {
 			Integer ps = restTemplate.postForObject(provider_url+"/doUpdate", entity, Integer.class);
 			if(!StringUtils.isEmpty(ps)) {

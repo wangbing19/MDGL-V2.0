@@ -8,6 +8,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.vs.vision.pojo.cus.CusDiagnose;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.sys.Users;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -31,8 +33,12 @@ public class CusDiagnoseController {
 	@ResponseBody
 	public JsonResult doFindPageObjects(CusVo cusVo) {
 		try {
-			cusVo.setUserId(0);
-			cusVo.setUserParentId(0);
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+        	
+			cusVo.setUserId(user.getId());
+			cusVo.setUserParentId(user.getParentId());
+			
 			PageObject<CusDiagnose> pageObject = restTemplate.postForObject(provider_url+"/cusDiagnose/findPageObjects", cusVo, PageObject.class);
 			if(pageObject.getRecords().size()!=0) {
 				return JsonResult.oK(pageObject);
@@ -86,10 +92,13 @@ public class CusDiagnoseController {
 	@ResponseBody
 	public JsonResult doSaveObject(CusDiagnose cusDiagnose) {
 		try {
-			cusDiagnose.setCreatedUser("admin");
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+        	
+			cusDiagnose.setCreatedUser(user.getUsername());
 			cusDiagnose.setModifiedUser(cusDiagnose.getCreatedUser());
-			cusDiagnose.setUserId(0);
-			cusDiagnose.setUserParentId(0);
+			cusDiagnose.setUserId(user.getId());
+			cusDiagnose.setUserParentId(user.getParentId());
 			Integer row = restTemplate.postForObject(provider_url+"/cusDiagnose/saveObject", cusDiagnose, Integer.class);
 			if(row != 0 && row != null) {
 				return JsonResult.oK();

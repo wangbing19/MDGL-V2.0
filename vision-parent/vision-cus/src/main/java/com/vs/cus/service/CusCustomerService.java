@@ -23,4 +23,6 @@ public interface CusCustomerService {
 	Integer updateObject(CusCustomer cusCustomer);
 	/**基于用户id修改金额,余额及充值次数*/
 	Integer updateObjectByMoney(RecPayUser recPayUser);
+	/**基于训练记录表返回信息更改训练次数*/
+	Integer updateObjectByTimesOfTraining(Integer customerId);
 }

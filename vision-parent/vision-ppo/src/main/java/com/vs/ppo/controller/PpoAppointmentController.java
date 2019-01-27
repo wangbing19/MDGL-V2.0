@@ -9,6 +9,7 @@ import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,11 @@ public class PpoAppointmentController {
     @RequestMapping("/saveAll")
     @ResponseBody
     public JsonResult doinsertAppointment(@RequestBody PpoAppointment ppoAppointment ) {
+    	
     	try {
+    		
+    		Integer  userId =0;
+    		ppoAppointment.setUserId(userId);
     		ppoAppointmentservice.saveppoAppointmentAll(ppoAppointment);
 			return JsonResult.oK();
 		} catch (Exception e) {
@@ -109,4 +114,18 @@ public class PpoAppointmentController {
 		}
     	return null;
     }
+    
+    
+    @RequestMapping("/findAppointmentName")
+    @ResponseBody
+    public List<PpoAppointment> findAppointmentName(@RequestBody Integer userId) {
+    	try {
+    		List<PpoAppointment> result=ppoAppointmentservice.findAppointmentName(userId);
+    		return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    
 }

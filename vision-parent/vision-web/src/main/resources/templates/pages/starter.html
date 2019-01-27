@@ -115,7 +115,7 @@ right: 20px;
 		<header class="main-header">
 			<!-- ============================================================================================ -->
 			<!-- logo文本设置 -->
-			<a href="doIndexUI" class="logo"> <span class="logo-mini">视力</span>
+			<a href="doIndexUI.do" class="logo"> <span class="logo-mini">视力</span>
 				<span class="logo-lg">视力矫正后台管理系统</span>
 			</a>
 			<!-- ============================================================================================ -->
@@ -227,7 +227,7 @@ right: 20px;
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a id="load-traInformationrecord-id">训练记录</a></li>
+							<li><a id="load-tra-id">训练记录</a></li>
 							<li><a id="load-cus-schedule-id">课程表</a></li>
 						</ul></li>
 					<!-- ************************************************** -->
@@ -384,14 +384,11 @@ right: 20px;
 				doLoadUI("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI")
 				doLoadUI("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do")
 				doLoadUI("load-cus-diagnose-id","cusDiagnose/doCusDiagnoseListUI")
-				doLoadUI("load-traInformationrecord-id","traInformationrecord/doTraInformationrecordUI.do")
-
+				doLoadUI("load-tra-id","tra/doTraInformationrecordUI.do")
 				doLoadUI("load-activity-id","activity/doLoadActivityUI.do")
 				doLoadUI("load-pay-records","recUser/doRecUserRecordUI.do")
-
 				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI")
 				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList")
-
 				doLoadUI("load-cus-schedule-id","cusSchedule/doScheduleListUI")
 			});
 			
@@ -427,7 +424,7 @@ right: 20px;
 				init("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI");
 				init("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do");
 				init("load-cus-diagnose-id", "cusDiagnose/doCusDiagnoseListUI");
-				init("load-traInformationrecord-id", "traInformationrecord/doTraInformationrecordUI.do");
+				init("load-tra-id", "tra/doTraInformationrecordUI.do");
 				init("load-res_symptom_type-id", "ResProjectConfig/doResProjectConfigUI.do");
 				init("load-res_project_config-id", "resSymptomType/doResSymptomTypeList.do");
 			}

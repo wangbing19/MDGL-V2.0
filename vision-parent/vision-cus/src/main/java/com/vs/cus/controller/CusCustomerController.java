@@ -104,16 +104,27 @@ public class CusCustomerController {
 		return null;
 	}
 	
-	/**基于用户id修改金额,余额及充值次数*/
+	/**基于充值记录表返回信息用户id修改金额,余额及充值次数*/
 	@RequestMapping("/updateObjectByMoney")
 	@ResponseBody
 	public Integer updateObjectByMoney(@RequestBody RecPayUser recPayUser) {
 		try {
 			return cusCustomerService.updateObjectByMoney(recPayUser);
 		} catch (Exception e) {
-			System.out.println("根据咨询表id查询客户表信息有无=============错误=================");
+			System.out.println("基于充值记录表返回信息用户id修改金额,余额及充值次数=============错误=================");
 		}
 		return null;
 	}
 	
+	/**基于训练记录表返回信息更改训练次数*/
+	@RequestMapping("/updateObjectByTimesOfTraining")
+	@ResponseBody
+	public Integer updateObjectByTimesOfTraining(@RequestBody Integer customerId) {
+		try {
+			return cusCustomerService.updateObjectByTimesOfTraining(customerId);
+		} catch (Exception e) {
+			System.out.println("基于训练记录表返回信息更改训练次数=============错误=================");
+		}
+		return null;
+	}
 }

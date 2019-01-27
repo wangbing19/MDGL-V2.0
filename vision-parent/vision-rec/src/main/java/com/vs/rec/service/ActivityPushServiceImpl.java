@@ -63,6 +63,14 @@ public class ActivityPushServiceImpl implements ActivityPushService {
 		}
 		return "更新失败";
 	}
+
+	@Override
+	public RecActivityPush findPageObjectByTitle(String title) {
+		QueryWrapper<RecActivityPush> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("title", title);
+		RecActivityPush selectOne = activityPushMapper.selectOne(queryWrapper);
+		return selectOne;
+	}
 }
 
 

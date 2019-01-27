@@ -34,19 +34,21 @@
 	 }
  })
  function doCancel(){
-	 $("#mainContentId").load("resSymptomType/doResSymptomTypeList.do");	 
+	 $("#mainContentId").load("resSymptomType/doResSymptomTypeList");	 
  }
  function doInsertOrUpdate(){
-	 var insertUrl = "resSymptomType/doSaveObject.do";
-	 var updateUrl = "resSymptomType/doupdateObject.do";
+	 var insertUrl = "resSymptomType/doSaveObject";
+	 var updateUrl = "resSymptomType/doupdateObject";
 	 var resDataId=$("#mainContentId").data("resDataId");
 	 var url=resDataId?updateUrl:insertUrl;	 
 	 var params = getAllHtmlDate();
 	 if(resDataId) params.id=resDataId;
 	 $.post(url,params,function(result){
-		 if(result.state==1){
-			 alert(result.message);
-		 }
+		 if(result.status==200){
+			 alert(result.msg);
+		 }else{
+			  alert(result.msg);
+		   }
 	 })
 	 doCancel();
 	
@@ -69,25 +71,27 @@
 	 return params;
  }
  function doInitEditFormData(resDataId){
-	 var url = "resSymptomType/dofindPageObject.do";
+	 var url = "resSymptomType/dofindPageObject";
 	 var params = { "id":resDataId};
 	 $.post(url,params,function(result){
-		 if(result.state==1){
+		 if(result.status==200){
 			 console.log(result);
-			 $("#xmName").val(result.data[0].service_name);
-			 if(result.data[0].choose_type==1){
+			 $("#xmName").val(result.data.serviceName);
+			 if(result.data.chooseType==1){
 				 document.getElementById("userName").checked=true;
 				
 			 }else{
 				 document.getElementById("userName").checked=false;
 			 }
 			 
-			 if(result.data[0].service_state==1){
+			 if(result.data.serviceState==1){
 				 document.getElementById("userPhone").checked=true;
 			 }else{
 				 document.getElementById("userPhone").checked=false;
 			 }
-		 }
+		 }else{
+			  alert(result.msg);
+		   }
 	 })
  }
 

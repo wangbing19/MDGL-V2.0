@@ -12,25 +12,32 @@
 	<artifactId>vision-web</artifactId>
 
 	<dependencies>
-		<!-- &lt;!&ndash; -springboot 整合Web组件 整合SpringMVC 就会把传统方式的SpringMVC依赖的jar全部给下载来 
-			&ndash;&gt; &lt;!&ndash; 引入spring-boot-starter-web 帮你整合好所有相关的依赖jar包 原理 maven依赖传递 
-			&ndash;&gt; &lt;!&ndash; 原理： spring-boot-starter-parent< 中，整合号相关 jar依赖信息 
-			&ndash;&gt; -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
 		<dependency>
 			<groupId>com.vs</groupId>
 			<artifactId>vision-api</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>/src/main/resources</directory>
+				<includes>
+					<include>**/*.html</include>
+					<include>**/*.jsp</include>
+					<include>**/*.css</include>
+					<include>**/*.js</include>
+					<include>**/*.png</include>
+					<include>**/*.jpg</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

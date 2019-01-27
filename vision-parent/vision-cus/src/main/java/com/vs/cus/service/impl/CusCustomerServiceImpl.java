@@ -36,7 +36,7 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 		}
 		Integer pageCurrent = cusVo.getPageCurrent();
 		int userId = cusVo.getUserId();
-		int userParentId = cusVo.getUserParentId();
+		Integer userParentId = cusVo.getUserParentId();
 
 		//1.数据合法性验证
 		if(pageCurrent==null||pageCurrent<=0)
@@ -180,24 +180,43 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 	/**基于用户id修改金额,余额及充值次数*/
 	@Override
 	public Integer updateObjectByMoney(RecPayUser recPayUser) {
+		
+		CusCustomer cusCustomer = new CusCustomer();
 		CusCustomer customer = cusCustomerMapper.selectById(recPayUser.getCustomerId());
 		//修改充值次数
-		customer.setRechargeCount(customer.getRechargeCount()+1);
+		cusCustomer.setRechargeCount(customer.getRechargeCount()+1);
 		//计算总金额
 		double money = customer.getMoney();
 		double rechargeAmount = recPayUser.getRechargeAmount();
 		double presentedAmount = recPayUser.getPresentedAmount();
 		money = money + rechargeAmount + presentedAmount;
-		customer.setMoney(money);
+		cusCustomer.setMoney(money);
 		//计算余额
 		double balance = customer.getBalance();
 		balance = balance + rechargeAmount + presentedAmount;
-		customer.setBalance(balance);
+		cusCustomer.setBalance(balance);
 		//修改总训练次数
 		Integer totalTrainingTime = customer.getTotalTrainingTime();
-	//	totalTrainingTime = totalTrainingTime + recPayUser.getP
+		totalTrainingTime = totalTrainingTime + recPayUser.getPracticeTimes();
+		cusCustomer.setTotalTrainingTime(totalTrainingTime);
 		//修改时间
-		customer.setGmtModified(new Date());
-		return null;
+		cusCustomer.setGmtModified(new Date());
+		//根据id修改信息
+		cusCustomer.setId(recPayUser.getCustomerId());
+		int rows = cusCustomerMapper.updateById(cusCustomer);
+		return rows;
+	}
+
+	/**基于训练记录表返回信息更改训练次数*/
+	@Override
+	public Integer updateObjectByTimesOfTraining(Integer customerId) {
+		CusCustomer cusCustomer = new CusCustomer();
+		CusCustomer customer = cusCustomerMapper.selectById(customerId);
+		//获取训练次数并修改赋值
+		cusCustomer.setTimesOfTraining(customer.getTimesOfTraining()+1);
+		cusCustomer.setId(customerId);
+		cusCustomer.setGmtCreate(new Date());
+		int rows = cusCustomerMapper.updateById(cusCustomer);
+		return rows;
 	}
 }

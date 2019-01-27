@@ -1,10 +1,14 @@
 package com.vs.cus.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.vs.cus.mapper.CusConsultationMapper;
+import com.vs.cus.mapper.CusCustomerMapper;
 import com.vs.cus.service.CusConsultationService;
 import com.vs.vision.exception.ServiceException;
 import com.vs.vision.pojo.cus.CusConsultation;
+import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.vo.PageObject;
 
@@ -18,6 +22,8 @@ import java.util.List;
 public class CusConsultationServiceImpl implements CusConsultationService {
 	@Autowired
 	private CusConsultationMapper cusConsultationMapper;
+	@Autowired
+	private CusCustomerMapper CusCustomerMapper;
 
 
 	/**基于用户/电话及当前页码值条件查询用户信息*/
@@ -32,7 +38,7 @@ public class CusConsultationServiceImpl implements CusConsultationService {
 		Integer pageCurrent = cusVo.getPageCurrent();
 		//	System.out.println(pageCurrent);
 		int userId = cusVo.getUserId();
-		int userParentId = cusVo.getUserParentId();
+		Integer userParentId = cusVo.getUserParentId();
 
 		//1.数据合法性验证
 		if(pageCurrent==null||pageCurrent<=0)
@@ -120,6 +126,20 @@ public class CusConsultationServiceImpl implements CusConsultationService {
 		//执行
 		entity.setFOther(null);
 		int rows = cusConsultationMapper.updateObject(entity);
+		//修改客户数据信息
+		QueryWrapper<CusCustomer> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("consultation_id", entity.getId());
+		Integer i = CusCustomerMapper.selectCount(queryWrapper);
+		if(i == 1 ) {
+			CusCustomer cusCustomer = new CusCustomer();
+			cusCustomer.setName(entity.getName());
+			cusCustomer.setAge(entity.getAge());
+			cusCustomer.setGender(entity.getGender());
+			cusCustomer.setTel(entity.getTel());
+			UpdateWrapper<CusCustomer> updateWrapper = new UpdateWrapper<>();
+			updateWrapper.eq("consultation_id", entity.getId());
+			CusCustomerMapper.update(cusCustomer, updateWrapper);
+		}
 		if(rows==0)
 			throw new ServiceException("修改失败");
 		return rows;
