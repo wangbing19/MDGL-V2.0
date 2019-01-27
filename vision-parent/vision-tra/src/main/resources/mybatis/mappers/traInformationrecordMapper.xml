@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vs.vision.mapper.TraInformationrecordMapper">
+	
+	<!-- 通过sql元素定义sql语句中的共性 -->
+	<sql id="queryWhereId">
+		<where>
+			<if test="name!=null and name!=''">
+				name like concat("%",#{name},"%") and
+			</if>
+			
+			<if test="userParentId !=null">
+			 	user_parent_id= #{userParentId} 
+			</if>
+			<if test="userParentId ==null"> 
+			 	user_parent_id is null
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageObjects" resultType="com.vs.vision.pojo.pra.TraInformationrecord">
+		select * from tra_informationrecord
+		<include refid="queryWhereId" />
+		order by gmt_create desc
+		limit #{startIndex},#{pageSize}
+		<!-- limit 子句为分页查询子句,第一个参数代表下标位置 -->
+	</select>
+	
+	
+	
+	<select id="getRowCount" resultType="int">
+		select count(*) from tra_informationrecord
+		<include refid="queryWhereId" />
+	</select>
+
+</mapper>

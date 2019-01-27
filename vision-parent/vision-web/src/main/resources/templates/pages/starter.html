@@ -14,7 +14,7 @@ body {
 padding: 20px;
 
 }
-#container {
+#viewAutoCenter {
 width: 600px;
 height: 400px;
 border: 3px solid #333;
@@ -73,7 +73,7 @@ color: #fff;
 .arrow:hover {
 background-color: RGBA(0, 0, 0, .7);
 }
-#container:hover .arrow {
+#viewAutoCenter:hover .arrow {
 display: block;
 }
 #prev {
@@ -227,7 +227,7 @@ right: 20px;
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a id="load-traInformationrecord-id">训练记录</a></li>
+							<li><a id="load-tra-id">训练记录</a></li>
 							<li><a id="load-cus-schedule-id">课程表</a></li>
 						</ul></li>
 					<!-- ************************************************** -->
@@ -385,7 +385,7 @@ right: 20px;
 				doLoadUI("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do")
 
 				doLoadUI("load-cus-diagnose-id","cusDiagnose/doCusDiagnoseListUI")
-				doLoadUI("load-traInformationrecord-id","traInformationrecord/doTraInformationrecordUI.do")
+				doLoadUI("load-tra-id","tra/doTraInformationrecordUI.do")
 				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI")
 				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList")
 				doLoadUI("load-cus-schedule-id","cusSchedule/doScheduleListUI")
@@ -423,7 +423,7 @@ right: 20px;
 				init("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI");
 				init("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do");
 				init("load-cus-diagnose-id", "cusDiagnose/doCusDiagnoseListUI");
-				init("load-traInformationrecord-id", "traInformationrecord/doTraInformationrecordUI.do");
+				init("load-tra-id", "tra/doTraInformationrecordUI.do");
 				init("load-res_symptom_type-id", "ResProjectConfig/doResProjectConfigUI.do");
 				init("load-res_project_config-id", "resSymptomType/doResSymptomTypeList.do");
 			}

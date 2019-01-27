@@ -30,11 +30,12 @@ public class RemoteDiagnoseController {
 		System.out.println("1111");
 		String customerName = (String)map.get("customerName");
 		Integer pageCurrent = (Integer)map.get("pageCurrent");
+		Integer parentId = (Integer)map.get("parentId");
 		System.out.println(customerName);
 		System.out.println(pageCurrent);
 		PageObject<ExpRemoteDiagnoseVo> pageObject=
 				remoteDiagnoseService.findPageObjects(customerName,
-						pageCurrent);
+						pageCurrent,parentId);
 		System.out.println(pageObject.getRowCount());
 		return pageObject;
 	}
@@ -53,7 +54,8 @@ public class RemoteDiagnoseController {
 	public Integer doValidById(@RequestBody Map map) {
 		Integer id = (Integer)map.get("id");
 		Integer valid = (Integer)map.get("valid");
-		return remoteDiagnoseService.validById(id,valid);
+		String modifyuser = (String)map.get("modifyuser");
+		return remoteDiagnoseService.validById(id,valid,modifyuser);
 	}
 	
 	/**删除*/

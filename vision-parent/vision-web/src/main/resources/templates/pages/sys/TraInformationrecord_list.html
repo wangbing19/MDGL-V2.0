@@ -7,7 +7,7 @@
 				<div class="box-tools">
 					<div class="input-group input-group-sm" style="width: 350px;">
 						<input type="text" name="table_search" id="searchNameId"
-							class="form-control pull-right" placeholder="用户姓名">
+							class="form-control pull-right" placeholder="客户姓名">
 
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default btn-search">
@@ -26,6 +26,7 @@
 						<tr>
 						    <th>序号</th>
 							<th>姓名</th>
+							<!-- <th>电话</th> -->
 							<th>裸眼视力</th>
 							<th>评分</th>
 							<th>评价</th>
@@ -60,7 +61,26 @@
 	  $("#tbodyId")
 	  .on("click",".btn-delete",doDeleteObject)
 	  .on("click",".btn-update",doLoadEditUI)
+	  //.on("click",".btn-btn-training",docontent)
    });
+   
+   
+  /*  function docontent(){
+	   var tel=$(this).parents("tr").data("tel");
+	   var params={"tel":tel};
+	   var url = "tra/doSelectTel.do"
+	   $.getJSON(url,params,function(result){
+	   		if(result.status==200){
+				   
+				$("#mainContentId").data("content",result.data);
+				// console.log("选中的行数据:");
+				// console.log(result);
+				doLoadPageUI(title);//异步加载页面  
+			}else{
+				  alert(result.msg); 
+			}
+   }
+   } */
    
    function doLoadEditUI(){
 	   var title;
@@ -72,17 +92,17 @@
 		   var id=$(this).parents("tr").data("id");
 		   var params={"id":id};
 		   //console.log("id:"+id);
-		   var url="traInformationrecord/doFindObjectById.do";
+		   var url="tra/doSelectUI.do";
 		   //console.log("测试");
 		   $.getJSON(url,params,function(result){
-			   if(result.state==1){
+			   if(result.status==200){
 				   
 				  $("#mainContentId").data("data",result.data);
 				 // console.log("选中的行数据:");
 				 // console.log(result);
 				  doLoadPageUI(title);//异步加载页面  
 			   }else{
-				  alert(result.message); 
+				  alert(result.msg); 
 			   }
 		   });
 	   }
@@ -95,7 +115,7 @@
 	   })
    } */
    function doLoadPageUI(title){
-	   var url="traInformationrecord/doUpdateUI.do"
+	   var url="tra/doUserEditUI.do"
 	   $("#mainContentId")
 	   .load(url,function(){
 		   $(".box-title").html(title);
@@ -109,16 +129,16 @@
 	   //console.log("id:"+id);
 	   var params={"id":id};
 	   //2.url
-	   var url="traInformationrecord/doDeleteObject.do"
+	   var url="tra/doDeleteObject.do"
 	   //3.ajax request
 	   console.log("params:"+params);
 	   console.log("params.id:"+params.id);
 	   $.post(url,params,function(result){
-		   if(result.state==1){	
-			   alert(result.message);
+		   if(result.status==200){	
+			   alert(result.data);
 			   doGetObjects();
 		   }else{
-			   alert(result.message);
+			   alert(result.msg);
 		   }
 	   })
 	   
@@ -140,7 +160,7 @@
 	   console.log("name:"+name);
 	   if(name)params.name=name;
 	   //2.url
-	   var url="traInformationrecord/dofindPageObjects.do";
+	   var url="tra/doFindPageObjects.do";
 	   //3.ajax request
 	   console.log("params:"+params);
 	   $.getJSON(url,params,function(result){
@@ -150,15 +170,15 @@
    }
    function doHandleResponseResult(result){
 	   
-	   if(result.state==1){
+	   if(result.status==200){
 		   
 		  doSetTableBodyRows(result.data.records);
 		  doSetPagination(result.data);
 	   }else{
-		  doSetTableBodyErrors(result.message);
+		  doSetTableBodyErrors(result.msg);
 	   }
    }
-   function doSetTableBodyErrors(message){
+   function doSetTableBodyErrors(msg){
 	   //获取body对象并清空
 	   var tBody=$("#tbodyId");
 	   tBody.empty();
@@ -169,7 +189,7 @@
 	   var len=$("table th").length;
 	   var td=$("<td></td>");
 	   td.prop("colspan",len);
-	   td.append(message);
+	   td.append(msg);
 	   tr.append(td);
 	   //将tr追加到tbody
 	   tBody.append(tr);
@@ -193,19 +213,21 @@
 	   }
    }
    function doCreateTds(row,i){
-	   console.log(row)
+	   console.log("row="+row)
+	   //debugger
 	   var tds=
        "<td>"+(parseInt(i)+1)+"</td>"+
-	   "<td>"+row.username+"</td>"+
-       "<td>"+"R:"+row.rVision+"<br/>"+"L:"+row.lVision+"</td>"+
+	   "<td>"+row.name+"</td>"+
+	   //"<td>"+row.tel+"</td>"+
+       "<td>"+"R:"+row.rvision+"<br/>"+"L:"+row.lvision+"</td>"+
        "<td>"+row.grade+"</td>"+
        "<td>"+row.evaluate+"</td>"+
        "<td>"+row.content+"</td>"+
        "<td>"+row.tutor+"</td>"+
-       "<td>"+row.evaluate+"</td>"+
        "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
-       "<td><a class='btn-delete'>删除</a>"+
-       "&nbsp;<a class='btn-update'>修改</a></td>";
+       "<td><button type='button' class='btn btn-default btn-delete'>"+"删除"+"</button>"+
+       "&nbsp;<button type='button' class='btn btn-default btn-update'>"+"修改"+"</button></td>";
+       //"&nbsp;<button type='button' class='btn btn-default btn-training'>"+"训练内容"+"</button>
        return tds;
    }
 </script>
