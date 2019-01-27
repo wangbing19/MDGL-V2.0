@@ -264,8 +264,8 @@ right: 20px;
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a id="load-dept-id">充值记录</a></li>
-							<li><a id="load-dept-id">充值类型</a></li>
+							<li><a id="load-pay-records">充值记录</a></li>
+							<li><a id="load-activity-id">充值类型</a></li>
 						</ul></li>
 					<!-- ************************************************** -->
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
@@ -383,9 +383,10 @@ right: 20px;
 				doLoadUI("load-appointment-id", "appointment/doAppointmentUI")
 				doLoadUI("load-cus-consultation-id", "cusConsultation/doCusConsultationListUI")
 				doLoadUI("load-pre-diagnosis_id", "diagnosis/doDiagnosis.do")
-
 				doLoadUI("load-cus-diagnose-id","cusDiagnose/doCusDiagnoseListUI")
 				doLoadUI("load-tra-id","tra/doTraInformationrecordUI.do")
+				doLoadUI("load-activity-id","activity/doLoadActivityUI.do")
+				doLoadUI("load-pay-records","recUser/doRecUserRecordUI.do")
 				doLoadUI("load-res_symptom_type-id","ResProjectConfig/doResProjectConfigUI")
 				doLoadUI("load-res_project_config-id","resSymptomType/doResSymptomTypeList")
 				doLoadUI("load-cus-schedule-id","cusSchedule/doScheduleListUI")

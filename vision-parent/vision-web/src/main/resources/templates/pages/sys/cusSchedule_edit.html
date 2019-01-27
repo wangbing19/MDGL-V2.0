@@ -6,45 +6,75 @@
 	<!-- /.box-header -->
 	<!-- form start -->
 	<form class="form-horizontal">
-		<div class="box-body">
+		<div class="box-body" style="margin: 0 15%;">
+
 			<div class="form-group">
 				<label for="usernameId" class="col-sm-2 control-label">用户名</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="usernameId">
+					<input type="text" class="form-control" id="usernameId" style="width: 35%;" readonly="readonly">
 				</div>
 			</div>
-			<div class="form-group" id="pwdDiv">
-				<label for="passwordId" class="col-sm-2 control-label">密码</label>
+			<!-- 课程名称course_title -->
+			<div class="form-group">
+				<label for="courseTitleId" class="col-sm-2 control-label">课程名称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="courseTitleId"
+						style="width: 35%;">
+				</div>
+			</div>
+			<!-- 课程价格price_of_course -->
+			<div class="form-group">
+				<label for="priceOfCourseId" class="col-sm-2 control-label">课程价格</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="priceOfCourseId" onblur="dogettotalPriceId(this)" style="width: 35%;">
+				</div>
+			</div>
+			<!-- 课程训练数course_training -->
+			<div class="form-group">
+				<label for="courseTrainingId" class="col-sm-2 control-label">课程建议训练数</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="courseTrainingId" onblur="calculateTotalPriceId(this)" style="width: 35%;">
+				</div>
+			</div>
+			<!-- 课程项目数number_of_course -->
+			<div class="form-group">
+				<label for="numberOfCourseId" class="col-sm-2 control-label">课程项目数</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="numberOfCourseId" style="width: 35%;" readonly="readonly">
+				</div>
+			</div>
+			<!-- 总价格total_price -->
+			<div class="form-group">
+				<label for="totalPriceId" class="col-sm-2 control-label">建议训练数总价格</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="totalPriceId" style="width: 35%;" readonly="readonly">
+				</div>
+			</div>
+			<!-- 训练项目res_symptom_type -->
+			<div class="form-group">
 
-				<div class="col-sm-10">
-					<input type="password" class="form-control" id="passwordId">
-				</div>
-			</div>
-<!-- 
-			<div class="form-group">
-				<label for="deptId" class="col-sm-2 control-label">所属部门</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control load-sys-dept"
-						readonly="readonly" id="deptId" placeholder="上级部门">
-				</div>
-			</div> -->
+				<label for="resSymptomTypeId" class="col-sm-2 control-label">训练项目</label>
+				<div class="col-sm-10" id="resSymptomTypeId"
+					style="width: 35%; font-size: 120%"></div>
 
+			</div>
+			<!-- 诊断师diagnostics -->
 			<div class="form-group">
-				<label for="emailId" class="col-sm-2 control-label">邮箱</label>
+				<label for="diagnosticsId" class="col-sm-2 control-label">诊断师</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="emailId">
+					<input type="text" class="form-control" id="diagnosticsId"
+						style="width: 35%;">
 				</div>
 			</div>
+			<!-- 修改时间gmt_modified -->
 			<div class="form-group">
-				<label for="phoneId" class="col-sm-2 control-label">手机号</label>
+				<label for="gmtModifiedId" class="col-sm-2 control-label">时间</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="phoneId">
+					<input type="text" class="form-control" id="gmtModifiedId"
+						style="width: 35%;">
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="rolesId" class="col-sm-2 control-label">角色</label>
-				<div class="col-sm-10" id="rolesId"></div>
-			</div>
+
 		</div>
 		<!-- /.box-body -->
 		<div class="box-footer">
@@ -53,172 +83,195 @@
 		</div>
 		<!-- /.box-footer -->
 	</form>
-	<!--      <div class="layui-layer layui-layer-page layui-layer-molv layer-anim" id="treeLayer" type="page" times="2" showtime="0" contype="object"
-		style="z-index:59891016; width: 300px; height: 450px; top: 100px; left: 500px; display:none">
-		<div class="layui-layer-title" style="cursor: move;">选择部门</div>
-		<div class="layui-layer-content" style="height: 358px;">
-			<div style="padding: 10px;" class="layui-layer-wrap">
-				<ul id="zTreeId" class="ztree"></ul>    动态加载树
-			</div>
-		</div>
-		<span class="layui-layer-setwin"> <a class="layui-layer-ico layui-layer-close layui-layer-close1 btn-cancel" ></a></span>
-		<div class="layui-layer-btn layui-layer-btn-">
-			<a class="layui-layer-btn0 btn-confirm">确定</a>
-			<a class="layui-layer-btn1 btn-cancel">取消</a>
-	     </div>
-      </div> -->
+
 </div>
 <script type="text/javascript"
 	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="bower_components/layer/layer.js"></script>
 <script type="text/javascript">
-/*  var zTree; 
- //初始化zTree时会用到
- var setting = {
-	data : {
-		simpleData : {
-			enable : true,
-			idKey : "id",  //节点数据中保存唯一标识的属性名称
-			pIdKey : "parentId",  //节点数据中保存其父节点唯一标识的属性名称
-			rootPId : null  //根节点id
-		}//json 格式javascript对象
+	//json 格式的javascript对象
+	$(document).ready(
+			function() {
+				//页面加载完成以后加载角色信息并初始化页面
+				//	doInitFormData();
+				doLoadRoles();
+			
+				//事件注册
+				$('#gmtModifiedId').val(getNowFormatDate());
+				$(".box-footer").on("click", ".btn-cancel", doCancel).on(
+						"click", ".btn-save", doSaveOrUpdate);
+
+			});
+
+	function calculateTotalPriceId(numberOfTime) {
+		var unitPrice = $("#priceOfCourseId").val();
+		var quantity = numberOfTime.value;
+		var totalPrice = unitPrice * quantity;
+		if(unitPrice == 0){
+		//	alert("请输入价格");
+			return;
+		}
+		$("#totalPriceId").val(totalPrice);
 	}
- } */
- //json 格式的javascript对象
- $(document).ready(function(){
-	 //页面加载完成以后加载角色信息并初始化页面
-	  doLoadRoles();
 	
-	 //事件注册
-	 $(".box-footer")
-	 .on("click",".btn-cancel",doCancel)
-	 .on("click",".btn-save",doSaveOrUpdate);
-	 
-	 /*  $("#treeLayer")
-	  .on("click",".btn-cancel",doHideTree)
-	  .on("click",".btn-confirm",doConfirm); */
-	 
-	/*  $(".form-horizontal")
-	 .on("click",".load-sys-dept",doLoadZTreeNodes); */
- });
- 
-/*  function doHideTree(){
-	  $("#treeLayer").css("display","none");
- }
- //确定按钮
- function doConfirm(){
-	  //1.获取选中的记录(id,name);
-	  var selectedNodes=zTree.getSelectedNodes();
-	  var node=selectedNodes[0];
-	  //2.将id和name填写或绑定在具体对象上
-	  $("#deptId").val(node.name);
-	  console.log("node.id="+node.id)
-	  $("#deptId").data("deptId",node.id)
-	  //3.隐藏zTree对应的Div
-	  doHideTree();
- } */
- 
- /* function doLoadZTreeNodes(){
-	  var url="dept/doFindZTreeNodes.do";
-	  $("#treeLayer").css("display","block");
-	  $.getJSON(url,function(result){
-		  if(result.state==1){
-			  zTree = $.fn.zTree.init($("#zTreeId"),setting,result.data);
-		  }else{
-			  alert(result.message);
-		  }
-	  } );
- }*/
- function doCancel(){
-	$("#mainContentId").removeData("rowData");
-	$("#mainContentId").load("cusSchedule/doScheduleListUI");
- }
- function doSaveOrUpdate(){
-	 var rowData=$("#mainContentId").data("rowData");
-	 //1.获取表单数据
-	 var params=doGetEditFormData();
-	 if(rowData)params.id=rowData.user.id;
-	 //2.发起异步请求
-	 var insertUrl="user/doSaveObject.do";
-	 var updateUrl="user/doUpdateObject.do";
-	 var url=rowData?updateUrl:insertUrl;
-//	 console.log(params);
-	 $.post(url,params,function(result){
-		 
-		 if(result.status==200){
-			 alert(result.msg);
-			 doCancel();
-		 }else{
-			alert(result.msg);
-		 }
-	 })
- }
- function doGetEditFormData(){
-	 //获取用户输入的数据
-	 var params={
-	    username:$("#usernameId").val(),
-	    password:$("#passwordId").val(),
-	    email:$("#emailId").val(),
-	    mobile:$("#phoneId").val(),
-	    deptId:$("#deptId").data("deptId")
-	 }
-	 //获取选择的角色
-	 var roleIds=new Array();
-	 $("#rolesId input[name='roleId']")
-	 .each(function(){
-		 if($(this).prop("checked")){
-			roleIds.push($(this).val());
-		 }
-	 });
-	 params.roleIds=roleIds.toString();
-	 return params;
- }
- function doLoadRoles(){
-	// alert("gggggggggg");
-	 var url="resSymptomType/doFindSymptomType";
-	 $.getJSON(url,function(result){
-		 if(result.status==200){
-		  doInitPageRoles(result.data);
-		  doInitFormData();//修改时
-		 }else{
-		  alert(result.msg);
-		 }
-	 })
- }
- function doInitFormData(){
-     var data=$("#mainContentId").data("rowData");
-     if(!data)return;
-     $("#pwdDiv").remove();
-	// console.log(data);
-	 //初始化用户信息 
-	 $("#usernameId").val(data.user.username);
-	 $("#deptId").val(data.user.sysDept.name);
-//	 console.log("data.user.sysDept.idss="+data.user.sysDept.id);
-	 $("#deptId").data("deptId",data.user.sysDept.id);
-	 $("#emailId").val(data.user.email);
-	 $("#phoneId").val(data.user.mobile);
-	 //初始化用户角色信息
-	 var ids=data.roleIds;
-	 for(var i in ids){
-	  $("#rolesId input[value='"+ids[i]+"']")
-	  .prop("checked",true);
-	 }
- }
-function doInitPageRoles(data){
-	 //1.获取角色要显示的位置对象
-	 var div=$("#rolesId");
-	 div.empty();
-	 //2.迭代数据，将数据追加到div
-	 console.log(data);
-	 var input="<input type='checkbox' name='roleId' value='[id]'>[name]"
-	 for(var i in data){
-		 //记住每次replace时都会产生一个新的字符串对象
-		 var newInput=
-		 input.replace("[id]",data[i].id)
-		 .replace("[name]",data[i].serviceName);
-		 div.append(newInput)
-	 }
- }
+	function dogettotalPriceId(univalence) {
+		var quantity = $("#courseTrainingId").val();
+		var unitPrice = univalence.value;
+		var totalPrice = unitPrice * quantity;
+		if(quantity == 0){
+		//	alert("请输入数量");
+			return;
+		}
+		$("#totalPriceId").val(totalPrice);
+	}
+
+	//返回
+	function doCancel() {
+		$("#mainContentId").removeData("rowData");
+		$("#mainContentId").load("cusSchedule/doScheduleListUI");
+	}
+	//保存或修改
+	function doSaveOrUpdate() {
+		var rowData = $("#mainContentId").data("rowData");
+		//	console.log(rowData);
+		//1.获取表单数据
+		var params = doGetEditFormData();
+		if (rowData)
+			params.id = rowData.id;
+		//2.发起异步请求
+		var insertUrl = "cusSchedule/doSaveObject";
+		var updateUrl = "cusSchedule/doUpdateObject";
+		var url = rowData ? updateUrl : insertUrl;
+		// console.log(params);
+		$.post(url, params, function(result) {
+			if (result.status == 200) {
+				alert(result.msg);
+				doCancel();
+			} else {
+				alert(result.msg);
+			}
+		})
+	}
+	//修改页面获取数据
+	function doGetEditFormData() {
+		var customerId = $("#mainContentId").data("getcustomerId");
+		$("#mainContentId").removeData("getcustomerId");
+		//获取用户输入的数据
+		var params = {
+			name : $("#usernameId").val(),
+			courseTitle : $("#courseTitleId").val(),
+			priceOfCourse : $("#priceOfCourseId").val(),
+			courseTraining : $("#courseTrainingId").val(),
+			numberOfCourse : $("#numberOfCourseId").val(),
+			totalPrice : $("#totalPriceId").val(),
+			//	resSymptomType:$("#resSymptomTypeId").val(),
+			diagnostics : $("#diagnosticsId").val(),
+			customerId : customerId
+
+		}
+		//获取选择的训练项目
+		var symptomTypes = new Array();
+		$("#resSymptomTypeId input[name='roleId']").each(function() {
+			if ($(this).prop("checked")) {
+				symptomTypes.push($(this).val());
+			}
+		});
+		params.symptomTypes = symptomTypes.toString();
+		return params;
+	}
+	//转向修改页面获取训练项目信息
+	function doLoadRoles() {
+		var url = "resSymptomType/doFindSymptomType";
+		$.getJSON(url, function(result) {
+			if (result.status == 200) {
+
+				doInitPageRoles(result.data);
+				doInitFormData();//修改时
+			} else {
+				alert(result.msg);
+			}
+		})
+	}
+	//
+	function doInitFormData() {
+		var data = $("#mainContentId").data("rowData");
+		var getcustomerData = $("#mainContentId").data("getcustomerName");
+		if (getcustomerData) {
+			$("#usernameId").val(getcustomerData);
+			$("#mainContentId").removeData("getcustomerName");
+		} else if (!data) {
+			return;
+		} else {
+			$("#pwdDiv").remove();
+			//初始化用户信息 
+			$("#usernameId").val(data.name), 
+			$("#courseTitleId").val(data.courseTitle), 
+			$("#priceOfCourseId").val(data.priceOfCourse), 
+			$("#courseTrainingId").val(data.courseTraining), 
+			$("#numberOfCourseId").val(data.numberOfCourse), 
+			$("#totalPriceId").val(data.totalPrice),
+			//$("#resSymptomTypeId").val(),
+			$("#diagnosticsId").val(data.diagnostics)
+			
+			//初始化用户角色信息
+			var ids = data.symptomTypes;
+			for ( var i in ids) {
+				$("#resSymptomTypeId input[value='" + ids[i] + "']").prop(
+						"checked", true);
+			}
+			doit();
+		}
+	}
+	function doInitPageRoles(data) {
+		//1.获取角色要显示的位置对象
+		var div = $("#resSymptomTypeId");
+		div.empty();
+		//2.迭代数据，将数据追加到div
+		//	 console.log(data);
+		var input = "<td><input type='checkbox' name='roleId' value='[id]' onclick='doit();'>[name] &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp </td>"
+		var input2 = "<td><input type='checkbox' name='roleId' value='[id]' onclick='doit();'>[name]</td>"
+			
+		for ( var i in data) {
+			//记住每次replace时都会产生一个新的字符串对象
+			if (i % 2 == 0) {
+				var newInput = input.replace("[id]", data[i].id).replace(
+						"[name]", data[i].serviceName);
+				div.append("<tr>").append(newInput).append();
+			} else if (i % 2 == 1) {
+				var newInput = input2.replace("[id]", data[i].id).replace(
+						"[name]", data[i].serviceName);
+				div.append(newInput).append("</tr>")
+			}
+
+		}
+	}
+
+	
+	function doit() {
+		var n = 0;
+		var objs = document.getElementsByName("roleId");
+		for (var i = 0; i < objs.length; i++) {
+			if (objs[i].checked) {
+				n++;
+			}
+		}
+		$("#numberOfCourseId").val(n);
+	}
+
+	//获取系统当前时间
+	function getNowFormatDate() {
+		var date = new Date();
+		var month = date.getMonth() + 1;
+		var strDate = date.getDate();
+		if (month >= 1 && month <= 9) {
+			month = "0" + month;
+		}
+		if (strDate >= 0 && strDate <= 9) {
+			strDate = "0" + strDate;
+		}
+		var currentdate = date.getFullYear() + "-" + month + "-" + strDate;
+		return currentdate;
+	}
 </script>
 
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.vs.vision.exception.ServiceException;
 import com.vs.vision.mapper.TraInformationrecordMapper;
-import com.vs.vision.pojo.exp.ExpRemoteDiagnoseVo;
 import com.vs.vision.pojo.pra.TraInformationrecord;
 import com.vs.vision.vo.PageObject;
 
@@ -78,7 +77,8 @@ public class TraInformationrecordServiceImpl implements TraInformationrecordServ
 	/**通过id查询*/
 	@Override
 	public TraInformationrecord doSelect(Integer id) {
-		return traInformationrecordMapper.selectById(id);
+		TraInformationrecord se = traInformationrecordMapper.selectId(id);
+		return se;
 	}
 
 

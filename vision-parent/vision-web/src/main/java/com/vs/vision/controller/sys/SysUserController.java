@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.vs.vision.pojo.sys.Users;
 import com.vs.vision.shiro.ShiroUserRealm;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.sys.RestTemplateParmas;
 
@@ -45,8 +46,8 @@ public class SysUserController {
 	@ResponseBody
 	public JsonResult doFindPageObjects(String username, Integer pageCurrent) {
 		RestTemplateParmas restTemplateParmas = new RestTemplateParmas();
+		restTemplateParmas.setUser(ShiroUtils.getUser());
 		restTemplateParmas.setName(username);
-		;
 		restTemplateParmas.setPageCurrent(pageCurrent);
 		return restTemplate.postForObject(sys_url + "/doFindPageObjects", restTemplateParmas, JsonResult.class);
 	}
@@ -63,10 +64,11 @@ public class SysUserController {
 	@RequestMapping("doValidById.do")
 	@ResponseBody
 	public JsonResult doValidById(Integer id, Integer valid) {
+		String username = ShiroUtils.getUser().getUsername();
 		RestTemplateParmas restTemplateParmas = new RestTemplateParmas();
 		restTemplateParmas.setId(id);
-		;
 		restTemplateParmas.setValid(valid);
+		restTemplateParmas.setName(username);
 		return restTemplate.postForObject(sys_url + "/doValidById", restTemplateParmas, JsonResult.class);
 	}
 
@@ -79,7 +81,11 @@ public class SysUserController {
 	@RequestMapping("doSaveObject.do")
 	@ResponseBody
 	public JsonResult doSaveObject(Users Users) {
-		return restTemplate.postForObject(sys_url + "/doSaveObject", Users, JsonResult.class);
+		RestTemplateParmas restTemplateParmas = new RestTemplateParmas();
+		restTemplateParmas.setUser(ShiroUtils.getUser());
+		restTemplateParmas.setUserentity(Users);
+		System.out.println(Users);
+		return restTemplate.postForObject(sys_url + "/doSaveObject", restTemplateParmas, JsonResult.class);
 	}
 
 	@RequestMapping("doFindObjectById.do")
@@ -91,6 +97,7 @@ public class SysUserController {
 	@RequestMapping("doUpdateObject.do")
 	@ResponseBody
 	public JsonResult doUpdateObject(Users Users) {
+		Users.setModifiedUser(ShiroUtils.getUser().getUsername());
 		return restTemplate.postForObject(sys_url + "/doUpdateObject", Users, JsonResult.class);
 	}
 
@@ -106,7 +113,7 @@ public class SysUserController {
 		subject.login(token);// 提交给SecurityManager
 		int count = counter.incrementAndGet();// count+1;
 		System.out.println("在线人数:" + count);
-		return new JsonResult().build(200, "登陆成功");
+		return JsonResult.build(200, "登陆成功");
 	}
 	
 

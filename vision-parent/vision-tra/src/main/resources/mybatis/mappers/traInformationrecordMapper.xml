@@ -34,4 +34,8 @@
 		<include refid="queryWhereId" />
 	</select>
 
+
+	<select id="selectId" resultType="com.vs.vision.pojo.pra.TraInformationrecord"> 
+	 select * from tra_informationrecord where id=#{id} 
+	</select>
 </mapper>

@@ -83,18 +83,22 @@
    } */
    
    function doLoadEditUI(){
+	   
 	   var title;
 	   if($(this).hasClass('btn-add')){
 		   title="添加";
 		   doLoadPageUI(title);
 	   }else{
+		   
 		   title="修改"
 		   var id=$(this).parents("tr").data("id");
 		   var params={"id":id};
 		   //console.log("id:"+id);
+		   debugger
 		   var url="tra/doSelectUI.do";
 		   //console.log("测试");
 		   $.getJSON(url,params,function(result){
+			   debugger
 			   if(result.status==200){
 				   
 				  $("#mainContentId").data("data",result.data);
@@ -226,7 +230,7 @@
        "<td>"+row.tutor+"</td>"+
        "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
        "<td><button type='button' class='btn btn-default btn-delete'>"+"删除"+"</button>"+
-       "&nbsp;<button type='button' class='btn btn-default btn-update'>"+"修改"+"</button></td>";
+       "&nbsp;<button type='button' class='btn btn-default btn-update'>"+"修改:"+"</button></td>";
        //"&nbsp;<button type='button' class='btn btn-default btn-training'>"+"训练内容"+"</button>
        return tds;
    }

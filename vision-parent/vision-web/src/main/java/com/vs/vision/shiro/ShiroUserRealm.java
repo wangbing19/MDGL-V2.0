@@ -79,8 +79,7 @@ public class ShiroUserRealm extends AuthorizingRealm {
 		// 3.封装用户信息并返回
 		ByteSource credentialsSalt = ByteSource.Util.bytes(user.getSalt());
 
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), credentialsSalt,
-				getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), credentialsSalt, getName());
 		return info;// 返回给认证管理器
 	}
 

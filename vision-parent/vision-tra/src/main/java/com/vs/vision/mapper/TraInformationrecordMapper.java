@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.vs.vision.pojo.exp.ExpRemoteDiagnoseVo;
 import com.vs.vision.pojo.pra.TraInformationrecord;
 
 public interface TraInformationrecordMapper extends BaseMapper<TraInformationrecord>{
@@ -20,4 +19,7 @@ public interface TraInformationrecordMapper extends BaseMapper<TraInformationrec
 	int getRowCount(
 			@Param("name") String name,
 			@Param("userParentId")Integer userParentId);
+
+
+	TraInformationrecord selectId(Integer id);
 }

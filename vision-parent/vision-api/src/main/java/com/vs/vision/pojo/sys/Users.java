@@ -1,9 +1,8 @@
 package com.vs.vision.pojo.sys;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Users implements Serializable{
+public class Users {
     private Integer id;
 
     private String username;
@@ -14,6 +13,8 @@ public class Users implements Serializable{
 
     private Integer parentId;
 
+    private String parentUsername;
+
     private String salt;
 
     private String address;
@@ -22,7 +23,7 @@ public class Users implements Serializable{
 
     private String mobile;
 
-    private Byte valid;
+    private Integer valid;
 
     private Integer customerLimit;
 
@@ -80,6 +81,14 @@ public class Users implements Serializable{
         this.parentId = parentId;
     }
 
+    public String getParentUsername() {
+        return parentUsername;
+    }
+
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
+    }
+
     public String getSalt() {
         return salt;
     }
@@ -112,11 +121,11 @@ public class Users implements Serializable{
         this.mobile = mobile;
     }
 
-    public Byte getValid() {
+    public Integer getValid() {
         return valid;
     }
 
-    public void setValid(Byte valid) {
+    public void setValid(Integer valid) {
         this.valid = valid;
     }
 
@@ -187,11 +196,11 @@ public class Users implements Serializable{
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
-				+ ", parentId=" + parentId + ", salt=" + salt + ", address=" + address + ", email=" + email
-				+ ", mobile=" + mobile + ", valid=" + valid + ", customerLimit=" + customerLimit + ", customerNum="
-				+ customerNum + ", deptLimit=" + deptLimit + ", deptNum=" + deptNum + ", createdTime=" + createdTime
-				+ ", modifiedTime=" + modifiedTime + ", createdUser=" + createdUser + ", modifiedUser=" + modifiedUser
-				+ "]";
+				+ ", parentId=" + parentId + ", parentUsername=" + parentUsername + ", salt=" + salt + ", address="
+				+ address + ", email=" + email + ", mobile=" + mobile + ", valid=" + valid + ", customerLimit="
+				+ customerLimit + ", customerNum=" + customerNum + ", deptLimit=" + deptLimit + ", deptNum=" + deptNum
+				+ ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime + ", createdUser=" + createdUser
+				+ ", modifiedUser=" + modifiedUser + "]";
 	}
     
 }
