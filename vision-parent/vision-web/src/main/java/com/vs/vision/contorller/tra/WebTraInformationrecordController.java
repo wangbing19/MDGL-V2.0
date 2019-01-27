@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import com.vs.vision.pojo.exp.ExpRemoteDiagnoseVo;
-import com.vs.vision.pojo.exp.RemoteDiagnose;
 import com.vs.vision.pojo.pra.TraInformationrecord;
 import com.vs.vision.pojo.sys.Users;
 import com.vs.vision.utils.ShiroUtils;
