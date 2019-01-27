@@ -3,38 +3,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vs.vision.mapper.TraInformationrecordMapper">
 	
-	<!-- 通过sql元素定义sql语句中的共性 -->
+	<!-- 基于用户名/电话的查询条件sql引用语句 -->
 	<sql id="queryWhereId">
 		<where>
+		 	user_id=#{userId} 
+		 	<if test="userParentId!=null and userParentId!=''">
+				and user_parent_id=#{userParentId} 
+			</if>
+			<!-- name条件 -->
 			<if test="name!=null and name!=''">
-				name like concat("%",#{name},"%") and
-			</if>
-			
-			<if test="userParentId !=null">
-			 	user_parent_id= #{userParentId} 
-			</if>
-			<if test="userParentId ==null"> 
-			 	user_parent_id is null
+				and name like concat("%",#{name},"%")
 			</if>
 		</where>
 	</sql>
-
+	
+	<!-- 基于用户姓名及分页条件查询,无用户名输入基于分页条件查询 -->
 	<select id="findPageObjects" resultType="com.vs.vision.pojo.pra.TraInformationrecord">
 		select * from tra_informationrecord
-		<include refid="queryWhereId" />
-		order by gmt_create desc
+		<include refid="queryWhereId" /> 
 		limit #{startIndex},#{pageSize}
-		<!-- limit 子句为分页查询子句,第一个参数代表下标位置 -->
 	</select>
 	
-	
-	
+	<!-- 基于用户名查询该用户总数,无用户名输入查询所有用户总数 -->
 	<select id="getRowCount" resultType="int">
-		select count(*) from tra_informationrecord
+		select count(*) from tra_informationrecord <!-- where user_id=#{userId} and user_parent_id=#{userParentId} -->
 		<include refid="queryWhereId" />
 	</select>
-
-
+	
 	<select id="selectId" resultType="com.vs.vision.pojo.pra.TraInformationrecord"> 
 	 select * from tra_informationrecord where id=#{id} 
 	</select>

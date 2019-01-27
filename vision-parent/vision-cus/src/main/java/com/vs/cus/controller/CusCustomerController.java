@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vs.cus.service.CusCustomerService;
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.pra.TraInformationrecord;
 import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
@@ -119,9 +120,9 @@ public class CusCustomerController {
 	/**基于训练记录表返回信息更改训练次数*/
 	@RequestMapping("/updateObjectByTimesOfTraining")
 	@ResponseBody
-	public Integer updateObjectByTimesOfTraining(@RequestBody Integer customerId) {
+	public Integer updateObjectByTimesOfTraining(@RequestBody TraInformationrecord entity) {
 		try {
-			return cusCustomerService.updateObjectByTimesOfTraining(customerId);
+			return cusCustomerService.updateObjectByTimesOfTraining(entity);
 		} catch (Exception e) {
 			System.out.println("基于训练记录表返回信息更改训练次数=============错误=================");
 		}
