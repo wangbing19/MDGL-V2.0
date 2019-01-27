@@ -25,7 +25,7 @@ import com.vs.vision.vo.PageObject;
 @RequestMapping("/ResProjectConfig/")
 public class ResProjectConfigContorller {
 
-	private static final String provider_url = "http://localhost:8028";
+	private static final String provider_url = "http://176.198.114.246:8028";
 
 	@Autowired
 	private RestTemplate restTemplate;
