@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/cusConsultation")
 public class CusConsultationController {
 
-    private static final String provider_url = "http://localhost:8022";
+    private static final String provider_url = "http://176.198.114.246:8022";
     @Autowired
     private RestTemplate restTemplate;
 

@@ -17,7 +17,7 @@ import com.vs.vision.vo.PageObject;
 @Controller
 @RequestMapping("/tra/")
 public class WebTraInformationrecordController {
-	private static final String provider_url = "http://localhost:8030/traInformationrecord";
+	private static final String provider_url = "http://176.198.114.246:8030/traInformationrecord";
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -63,7 +63,7 @@ public class WebTraInformationrecordController {
 		try {
 			Integer rows = restTemplate.postForObject(provider_url+"/doSaveObject", entity, Integer.class);
 			if(rows != null && rows != 0) {
-				restTemplate.postForObject("http://localhost:8022/customer/updateObjectByTimesOfTraining", entity, Integer.class);
+				restTemplate.postForObject("http://176.198.114.246:8022/customer/updateObjectByTimesOfTraining", entity, Integer.class);
 				return JsonResult.oK("保存成功");
 			}
 		} catch (Exception e) {
