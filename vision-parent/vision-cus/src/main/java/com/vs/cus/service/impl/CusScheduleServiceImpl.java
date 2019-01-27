@@ -9,7 +9,6 @@ import com.vs.vision.exception.ServiceException;
 import com.vs.vision.pojo.cus.CusResSchedule;
 import com.vs.vision.pojo.cus.CusSchedule;
 import com.vs.vision.pojo.cus.vo.CusVo;
-import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
 import java.util.Date;
@@ -25,6 +24,7 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 	private CusScheduleMapper cusScheduleMapper;
 	@Autowired
 	private CusResScheduleMapper cusResScheduleMapper;
+	
 
 	/**基于用户/电话及当前页码值条件查询课程信息*/
 	@Override
@@ -116,7 +116,11 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 		//保存数据
 		cusSchedule.setGmtCreate(new Date());
 		cusSchedule.setGmtModified(cusSchedule.getGmtCreate());
+		//保存课程表数据
 		int rows = cusScheduleMapper.insert(cusSchedule);
+		//更改用户表课程数量信息
+		
+		//循环遍历保存课程表训练项目id
 		for (Integer resSymptomId : cusSchedule.getSymptomTypes()) {
 
 			CusResSchedule cusResSchedule = new CusResSchedule();
@@ -145,7 +149,6 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 		
 		//删除课程表与资源配置表(训练项目表)的关系表
 		deleteCusResSchedule(cusSchedule.getId());
-		
 		for (Integer resSymptomId : cusSchedule.getSymptomTypes()) {
 
 			CusResSchedule cusResSchedule = new CusResSchedule();
@@ -162,6 +165,15 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 		QueryWrapper<CusResSchedule> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("cus_schedule_id", cusScheduleId);
 		cusResScheduleMapper.delete(queryWrapper);
+	}
+
+	/**基于客户id查询用户课程表信息*/
+	@Override
+	public List<CusSchedule> findByCustomerId(Integer customerId) {
+		QueryWrapper<CusSchedule> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("customer_id", customerId);
+		List<CusSchedule> list = cusScheduleMapper.selectList(queryWrapper);
+		return list;
 	}
 
 

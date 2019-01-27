@@ -42,7 +42,7 @@
 					 column="id"
 					 select="com.vs.cus.mapper.CusScheduleMapper.findByCustomerId">
 		</association>
-		<!-- 关联查询课程记录数 -->
+		<!-- 关联查询上次训练时间 -->
 		<!-- <association property="lastTrain"
 					 column="id"
 					 select="com.md.sys.dao.tra.TraInformationrecordDao.findByCustomerId">
