@@ -1,4 +1,4 @@
-<div id="container" stye="text-align:center;">
+<div id="viewAutoCenter" stye="text-align:center;">
 	<div id="list" style="left: -600px;">
 		<img src="img/5.jpg" alt="1" name="tu5" style="CURSOR: hand" onclick='window.open("http://www.baidu.com")'/>
 		<img src="img/1.jpg" alt="1" name="tu1" style="CURSOR: hand" onclick='window.open("http://www.baidu.com")'/>
@@ -26,7 +26,7 @@
 $(function () {
 	//debugger
 //document.getElementById方法可返回对拥有指定 ID 的第一个对象的引用。
-var container = document.getElementById('container');
+var viewAutoCenter = document.getElementById('viewAutoCenter');
 var list = document.getElementById('list');
 var buttons = document.getElementById('buttons').getElementsByTagName('span');
 var prev = document.getElementById('prev');
@@ -97,8 +97,8 @@ index = clickIndex; //存放鼠标点击后的位置，用于小圆点的正常�
 buttonsShow();
 }
 }
-container.onmouseover = stop;
-container.onmouseout = play;
+viewAutoCenter.onmouseover = stop;
+viewAutoCenter.onmouseout = play;
 play();
 })
 </script>

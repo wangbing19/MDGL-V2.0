@@ -14,10 +14,10 @@ import lombok.experimental.Accessors;
 public class RecActivityPush {
 	@TableId(type=IdType.AUTO)
 	private Long id;
+	private Long userId;
+	private Long parentId;
 	/**标题*/
 	private String title;
-	/**内容*/
-	private String content;
 	/**充值金额*/
 	private Double payAmount;
 	/**赠送金额*/
