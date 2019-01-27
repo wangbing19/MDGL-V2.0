@@ -17,6 +17,7 @@ public class PpoAppointment {
      * 主键ID
      */
     private Long id;
+    private Integer usre_id;
     private String trainerName;
     private String gender;
     private String tel;

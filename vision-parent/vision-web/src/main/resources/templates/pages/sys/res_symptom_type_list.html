@@ -71,7 +71,7 @@
 		if ($(this).hasClass("btn-add")) {
 
 			title = "项目新增";
-			$("#mainContentId").removeData("resData");
+			$("#mainContentId").removeData("resDataId");
 			$("#mainContentId").load(url, function() {
 				//设置模态框的标题
 				$("#myModalLabel").html(title);
@@ -100,7 +100,7 @@
 	}
 
 	function doLoadHtmlData() {
-		$.post("resSymptomType/doFindSymptomType",function(result) {
+		$.post("resSymptomType/dofindObjects",function(result) {
 			if (result.status == 200) {
 				doSetTableBodyRows(result.data);
 			}else{
@@ -152,7 +152,7 @@
 			return;
 		}
 		// console.log(array);
-		var url = "resSymptomType/doDeleteObject.do";
+		var url = "resSymptomType/doDeleteObject";
 		var params = {
 			"id" : array[0]
 		};
