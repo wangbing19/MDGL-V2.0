@@ -72,7 +72,6 @@
 		   var url="role/doFindObjectById.do";
 		   $.getJSON(url,params,function(result){
 			   if(result.status==200){
-				   console.log(result.data);
 				  $("#mainContentId").data("data",result.data);
 				  doLoadPageUI(title);//异步加载页面  
 			   }else{
@@ -100,7 +99,6 @@
 	   var url="role/doDeleteObject.do"
 	   //3.ajax request
 	   $.post(url,params,function(result){
-		   console.log(result);
 		   if(result.status==200){
 			   alert(result.msg);
 			   doGetObjects();
@@ -128,9 +126,7 @@
 	   //2.url
 	   var url="role/doFindPageObjects.do";
 	   //3.ajax request
-	   console.log(params);
 	   $.getJSON(url,params,function(result){
-		   console.log(result.data);
 		   doHandleResponseResult(result);
 	   });
    }

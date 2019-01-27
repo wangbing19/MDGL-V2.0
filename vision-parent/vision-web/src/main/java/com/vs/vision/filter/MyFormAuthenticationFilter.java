@@ -13,6 +13,6 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
         String successUrl = "/doIndexUI";
         WebUtils.issueRedirect(request,response,successUrl);
-        return false;
+        return true;
     }
 }

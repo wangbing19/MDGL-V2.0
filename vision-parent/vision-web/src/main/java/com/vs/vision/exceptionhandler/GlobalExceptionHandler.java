@@ -17,27 +17,24 @@ import com.vs.vision.vo.JsonResult;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	
-	 @ExceptionHandler(ShiroException.class)
-	  @ResponseBody
-	  public JsonResult doHandleShiroException(
-			  ShiroException e){
-		  e.printStackTrace();
-		  JsonResult r=new JsonResult();
-		  if(e instanceof UnknownAccountException){
-			  r.build(201, "用户不存在");
-		  }else if(e instanceof LockedAccountException){
-			  r.build(201, "账户已禁用");
-		  }else if(e instanceof IncorrectCredentialsException){
-			  r.build(201, "密码不正确");
-		  }else if(e instanceof AuthorizationException){
-			  r.build(201, "没有此操作权限");
-		  }else{
-			  r.build(201, e.getMessage());
-		  }
-		  return r;
-	  }
-	 
+	@ExceptionHandler(ShiroException.class)
+	@ResponseBody
+	public JsonResult doHandleShiroException(ShiroException e) {
+		e.printStackTrace();
+		if (e instanceof UnknownAccountException) {
+			return JsonResult.build(201, "用户不存在");
+		} else if (e instanceof LockedAccountException) {
+			return JsonResult.build(201, "账户已禁用");
+		} else if (e instanceof IncorrectCredentialsException) {
+			System.out.println("密码不正确");
+			return JsonResult.build(201, "用户名或密码不正确");
+		} else if (e instanceof AuthorizationException) {
+			return JsonResult.build(201, "没有此操作权限");
+		} else {
+			return JsonResult.build(201, e.getMessage());
+		}
+	}
+
 	/**
 	 * @ExceptionHandler 对象描述的方法为一个异常处理方法
 	 * @ExceptionHandler 内部定义的异常处理类型为本方法 可以处理的异常
@@ -50,17 +47,15 @@ public class GlobalExceptionHandler {
 		System.out.println("GlobalExceptionHandler.doHandleException");
 		e.printStackTrace();
 		// System.out.println(e instanceof ServiceException);
-		return new JsonResult().build(201, e.getMessage());// 封装异常
+		return JsonResult.build(201, e.getMessage());// 封装异常
 	}
 
 	@ExceptionHandler(Throwable.class)
 	@ResponseBody
 	public JsonResult doHandleThrowable(Throwable e) {
 		e.printStackTrace();
-		JsonResult r = new JsonResult();
-		r.build(201, "系统维护中");
-		// 给运维人员发短信
-		return r;// 封装异常
+		return  JsonResult.build(201, "系统维护中");
+		
 	}
 
 }

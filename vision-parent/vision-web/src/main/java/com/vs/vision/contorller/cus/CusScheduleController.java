@@ -1,5 +1,7 @@
 package com.vs.vision.contorller.cus;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,22 +67,72 @@ public class CusScheduleController {
 		return JsonResult.build(201, "该数据可能已经被删除");
 	}
 	
-//	/**基于id查询课程信息*/
-//	@RequestMapping("/doFindObjectById")
-//	@ResponseBody
-//	public JsonResult doFindObjectById(Integer id) {
-//		try {
-//			CusSchedule cusSchedule = restTemplate.postForObject(provider_url+"/schedule/findObjectById", id, CusSchedule.class);
-//			if(cusSchedule != null) {
-//				return JsonResult.oK(cusSchedule);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return JsonResult.build(201, "修改查询数据错误");
-//	}
+	/**基于id查询课程信息*/
+	@RequestMapping("/doFindObjectById")
+	@ResponseBody
+	public JsonResult doFindObjectById(Integer id) {
+		try {
+			CusSchedule cusSchedule = restTemplate.postForObject(provider_url+"/schedule/findObjectById", id, CusSchedule.class);
+			if(cusSchedule != null) {
+				return JsonResult.oK(cusSchedule);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "修改查询数据错误");
+	}
+	
+	/**创建客户课程表*/
+	@RequestMapping("/doSaveObject")
+	@ResponseBody
+	public JsonResult doSaveObject(CusSchedule cusSchedule) {
+		try {
+			cusSchedule.setUserId(0);
+			cusSchedule.setUserParentId(0);
+			cusSchedule.setCreatedUser("admin");
+			cusSchedule.setModifiedUser("admin");
+			Integer rows = restTemplate.postForObject(provider_url+"/schedule/saveObject", cusSchedule, Integer.class);
+			if(rows != 0 && rows != null) {
+				
+				return JsonResult.oK();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "保存数据错误,请稍后重试");
+	}
 	
 	
+	/**修改课程表数据*/
+	@RequestMapping("/doUpdateObject")
+	@ResponseBody
+	public JsonResult doUpdateObject(CusSchedule cusSchedule) {
+		try {
+			cusSchedule.setModifiedUser("admin");
+			Integer rows = restTemplate.postForObject(provider_url+"/schedule/updateObject", cusSchedule, Integer.class);
+			if(rows != 0 && rows != null) {
+				return JsonResult.oK();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "修改数据错误,请稍后重试");
+	}
+	
+	/**基于客户id查询用户课程表信息*/
+	@RequestMapping("/doFindByCustomerId")
+	@ResponseBody
+	public JsonResult doFindByCustomerId(Integer customerId) {
+		try {
+			List<CusSchedule> list = restTemplate.postForObject(provider_url+"/schedule/findByCustomerId", customerId, List.class);
+			if(list.size()!=0 && list != null) {
+				return JsonResult.oK(list);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return JsonResult.build(201, "该用户无课程,需添加课程信息");
+	}
 	
 	
 	

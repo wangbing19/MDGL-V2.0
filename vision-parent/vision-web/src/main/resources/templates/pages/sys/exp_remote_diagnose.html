@@ -16,6 +16,7 @@
 							<button type="button" class="btn btn-default btn-add">添加</button>
 							<button type="button" class="btn btn-default btn-update">修改</button>
 							<button type="button" class="btn btn-default btn-delete">删除</button>
+							<button type="button" class="btn btn-default btn-zhifu">支付</button>
 						</div>
 					</div>
 				</div>
@@ -68,8 +69,8 @@
      $(".input-group-btn")
      .on("click",".btn-search",doQueryObjects)//对应搜索图标按钮
      .on("click",".btn-delete",doDeleteObjects)//对应删除按钮
-     .on("click",".btn-add,.btn-update",doLoadEditUI);//对应添加和修改按钮
-     
+     .on("click",".btn-add,.btn-update",doLoadEditUI)//对应添加和修改按钮
+     .on("click",".btn-zhifu",doSikpzhifu);
      
      $("tbody").on("click",".btn-valid",doValidById);//点击启动和禁用
      $("tbody").on("click",".btn-symptomsDescribed",dosymptomsDescribed);//点击症状描述
@@ -87,6 +88,14 @@
 	
 	
 	
+	function doSikpzhifu(){
+		 //debugger
+		 var url ="skipzhifu"
+	$("#mainContentId").load(url,function(){
+					
+		}) 
+	}
+	 
 
 	
 	
@@ -138,6 +147,7 @@
 	   //1.判定点击的对象
 	   var title;
 	   if($(this).hasClass("btn-add")){
+		   //debugger
 		   $("#mainContentId").removeData("rowData")
 		   title="添加用户";
 		   doLoadPage(title);//方法在下面

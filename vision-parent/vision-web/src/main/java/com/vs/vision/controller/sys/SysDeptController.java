@@ -1,8 +1,15 @@
 package com.vs.vision.controller.sys;
 
 import com.vs.vision.pojo.sys.Depts;
+import com.vs.vision.pojo.sys.Users;
+import com.vs.vision.service.DeptService;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,14 +17,17 @@ import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping("/dept")
+@PropertySource("classpath:/url.properties")
 public class SysDeptController {
-    private static final String sys_url = "http://localhost:8029/dept";
+	@Value("${sys_dept_url}")
+	private String sys_url;
     @Autowired
     private RestTemplate restTemplate;
     /**
      *
      * @return 组织管理--加载页面
      */
+	@RequiresPermissions("sys:dept:view")
     @RequestMapping("/doDeptListUI.do")
     public String doDeptListUI() {
         return "pages/sys/sys_dept_list";
@@ -26,6 +36,7 @@ public class SysDeptController {
      * 加载编辑页面
      * @return
      */
+	@RequiresPermissions("sys:dept:add")
     @RequestMapping("/doDeptEditUI.do")
     public String doDeptEditUI() {
         return "pages/sys/sys_dept_edit";
@@ -76,6 +87,7 @@ public class SysDeptController {
 	 * @param id
 	 * @return
 	 */
+	@RequiresPermissions("sys:dept:delete")
 	@RequestMapping("doDeleteObject.do")
 	@ResponseBody
 	public JsonResult doDeleteObject(Integer id){

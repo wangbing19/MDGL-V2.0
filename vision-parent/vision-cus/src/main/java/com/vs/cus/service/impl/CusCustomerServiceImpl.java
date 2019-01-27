@@ -9,6 +9,7 @@ import com.vs.vision.exception.ServiceException;
 import com.vs.vision.pojo.cus.CusConsultation;
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.vo.PageObject;
 
 import java.util.Date;
@@ -125,6 +126,7 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 		entity.setBalance(0.0);
 		entity.setTotalTrainingTime(0);
 		entity.setTimesOfTraining(0);
+		entity.setRechargeCount(0);
 		//建立咨询表对象并赋值
 		CusConsultation consultation = new CusConsultation();
 		consultation.setId(entity.getConsultationId());
@@ -173,5 +175,29 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 		int rows = cusCustomerMapper.updateById(entity);
 		//返回结果
 		return rows;
+	}
+
+	/**基于用户id修改金额,余额及充值次数*/
+	@Override
+	public Integer updateObjectByMoney(RecPayUser recPayUser) {
+		CusCustomer customer = cusCustomerMapper.selectById(recPayUser.getCustomerId());
+		//修改充值次数
+		customer.setRechargeCount(customer.getRechargeCount()+1);
+		//计算总金额
+		double money = customer.getMoney();
+		double rechargeAmount = recPayUser.getRechargeAmount();
+		double presentedAmount = recPayUser.getPresentedAmount();
+		money = money + rechargeAmount + presentedAmount;
+		customer.setMoney(money);
+		//计算余额
+		double balance = customer.getBalance();
+		balance = balance + rechargeAmount + presentedAmount;
+		customer.setBalance(balance);
+		//修改总训练次数
+		Integer totalTrainingTime = customer.getTotalTrainingTime();
+	//	totalTrainingTime = totalTrainingTime + recPayUser.getP
+		//修改时间
+		customer.setGmtModified(new Date());
+		return null;
 	}
 }

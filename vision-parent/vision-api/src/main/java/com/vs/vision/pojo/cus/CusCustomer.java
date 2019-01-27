@@ -19,15 +19,11 @@ import java.util.Date;
 @TableName("cus_customer")
 public class CusCustomer {
 
-	/**充值记录数*/
-	@TableField(exist=false)	//mybatis入库操作时,忽略该字段
-	private int rechargeCount;
+	
 	/**课程记录数*/
 	@TableField(exist=false)	//mybatis入库操作时,忽略该字段
 	private int scheduleCount;
-	/**上次训练时间*/
-	@TableField(exist=false)	//mybatis入库操作时,忽略该字段
-	private Date lastTrain;
+	
 	
     @TableId(type = IdType.AUTO)
     private int id; /**序号*/
@@ -71,6 +67,10 @@ public class CusCustomer {
     private Integer consultationId;
     /**诊断表id*/
     private Integer diagnoseId;
+    /**充值记录数*/
+	private Integer rechargeCount;
+	/**上次训练时间*/
+	private Date lastTrain;
     /**建表时间*/
     private Date gmtCreate;
     /**修改时间*/

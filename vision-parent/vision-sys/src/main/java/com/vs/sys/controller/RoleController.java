@@ -39,7 +39,7 @@ public class RoleController {
 		Roles entity = RestTemplateParmas.getRole();
 		Integer[] menuIds =RestTemplateParmas.getIds();
 		roleService.updateObject(entity, menuIds);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 	@RequestMapping("/doSaveObject")
@@ -48,14 +48,14 @@ public class RoleController {
 		Roles entity = RestTemplateParmas.getRole();
 		Integer[] menuIds =RestTemplateParmas.getIds();
 		roleService.saveObject(entity, menuIds);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 	@RequestMapping("/doDeleteObject")
 	@ResponseBody
 	public JsonResult doDeleteObject(@RequestBody Long id) {
 		roleService.deleteObject(id);
-		return new JsonResult().oK();
+		return JsonResult.oK();
 	}
 
 	@RequestMapping("/doFindPageObjects")

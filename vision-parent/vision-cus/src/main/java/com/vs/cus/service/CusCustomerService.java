@@ -2,6 +2,7 @@ package com.vs.cus.service;
 
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.vo.PageObject;
 
 public interface CusCustomerService {
@@ -20,4 +21,6 @@ public interface CusCustomerService {
 	Integer deleteObject(Integer id);
 	/**基于客户id修改客户信息*/
 	Integer updateObject(CusCustomer cusCustomer);
+	/**基于用户id修改金额,余额及充值次数*/
+	Integer updateObjectByMoney(RecPayUser recPayUser);
 }

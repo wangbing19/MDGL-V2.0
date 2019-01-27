@@ -25,6 +25,11 @@ public interface UsersMapper {
 			 @Param("username")String username,
 			 @Param("startIndex")Integer startIndex,
 			 @Param("pageSize")Integer pageSize);
+	 List<Users> findPageObjectsByParentId(
+			 @Param("username")String username,
+			 @Param("parentId")Integer parentId,
+			 @Param("startIndex")Integer startIndex,
+			 @Param("pageSize")Integer pageSize);
 	 List<Users> searchPageObjects(
 			 @Param("username")String username,
 			 @Param("startIndex")Integer startIndex,

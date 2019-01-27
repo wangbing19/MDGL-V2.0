@@ -1,0 +1,184 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">充值类型</h3>
+
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 350px;">
+						<input type="text" name="table_search" id="searchNameId"
+							class="form-control pull-right" placeholder="填入无效或者有效">
+
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default btn-search">
+								<i class="fa fa-search"></i>
+							</button>
+							<button type="button" class="btn btn-default btn-add">添加</button>
+							<!-- <button type="button" class="btn btn-default btn-update">修改</button> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th></th>
+							<th>活动名称</th>
+							<th>充值金额</th>
+							<th>赠送金额</th>
+							<th>活动起始时间</th>
+							<th>活动终止时间</th>
+							<th>活动状态</th>
+							<th>创建时间</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyId"></tbody>
+				</table>
+			</div>
+			<div id="pageId" class="box-footer clearfix"></div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				$("#searchNameId").val(null);
+				doGetObjects();
+				/* $("#pageId").load("doPageUI",function(){
+				   $("#mainContentId").removeData("rowData");
+				   doGetObjects();
+				}); */
+				$(".input-group-btn")
+						.on("click", ".btn-search", doQueryObjects)
+						.on("click",".btn-add", doLoadEditUI);
+				$("tbody").on("click", ".btn-delete", doDeleteObject)
+						  .on("click", ".btn-update", doLoadEditUI);
+			});
+	//判定修改/删除并返回页面
+	function doLoadEditUI() {
+		//1.判定点击的对象
+		var title;
+		var rowData=null;
+		if ($(this).hasClass("btn-add")) {
+			title = "添加充值类型";
+			
+			$("#mainContentId").removeData("activity_row_data");
+			
+		} else if ($(this).hasClass("btn-update")) {
+			rowData = $(this).parents("tr").data("rowData");
+			$("#mainContentId").data("activity_row_data",rowData);
+			var id = rowData.id;
+			title = "修改充值类型";
+			//基于id进行查询并加载编辑页面
+		}
+		doLoadPage(title,rowData);
+	}
+
+	function doLoadPage(title) {
+		var url = "activity/doSaveOrUpdateObject";
+		$("#mainContentId").load(url, function() {
+			$(".box-title").html(title);
+		})
+	}
+
+	//处理查询按钮事件
+	function doQueryObjects() {
+		var state_name = $("#searchNameId").val().trim();
+		if (state_name == "有效" || state_name == "无效") {
+			var activityState;
+			if (state_name == "有效")
+				activityState = 1;
+			if (state_name == "无效")
+				activityState = 0;
+			var params = {
+				"activityState" : activityState
+			};
+			doGetObjects(params);
+		} else {
+			alert("请输入正确的搜索词");
+			return;
+		}
+
+	}
+	//页面加载完成异步加载当前页数据
+	function doGetObjects(params) {
+		var url = "activity/doFindPageObjects";
+		$.getJSON(url, params, function(result) {
+			doHandleResponseResult(result);
+		});
+	}
+
+	function doHandleResponseResult(result) {
+		if (result.status == 200) {
+			doSetTableBodyRows(result.data);
+		} else {
+			alert(result.msg);
+		}
+	}
+	//通过服务端返回的数据初始化页面
+	function doSetTableBodyRows(data) {
+		//1.获取tbody对象，并清空内容
+		var tBody = $("#tbodyId");
+		tBody.empty();
+		//2.迭代data内容将数据追加到tbody中
+		//  console.log(data);
+
+		for ( var i in data) {
+			var tr = $("<tr></tr>");
+			tr.data("rowData", data[i]);
+			var tds = doCreateTds(data[i], i);
+			tr.append(tds);
+			tBody.append(tr);
+		}
+	}
+
+	function doDeleteObject() {
+		if (!confirm("确认删除吗"))
+			return;
+		//1.params
+		var rowData = $(this).parents("tr").data("rowData");
+		var id = rowData.id;
+		var params = {
+			"id" : id
+		};
+		//2.url
+		var url = "activity/doDeleteObject"
+		//3.ajax request
+		$.post(url, params, function(result) {
+			if (result.status == 200) {
+				alert(result.msg);
+				$("#searchNameId").val(null);
+				doGetObjects();
+			} else {
+				alert(result.msg);
+			}
+		})
+
+	}
+
+	//获取返回的值
+	function doCreateTds(row, i) {
+		//   console.log(row);
+		var out_date_d_state = row.activityState == 1 ? "有效" : "无效";
+		var tds = "<td>" + (parseInt(i) + 1) + "</td>" + "<td>" + row.title
+				+ "</td>" + "<td>" + row.payAmount + "</td>" + "<td>"
+				+ row.presentedAmount + "<br/>" + "<td>"
+				+ row.activityStartTime.substring(0,row.activityStartTime.indexOf('T')) + "<br/>"
+				+ "<td>" + row.activityEndTime.substring(0,row.activityEndTime.indexOf('T'))
+				+ "</td>" + "<td>" + out_date_d_state + "<br/>" + "<td>"
+				+ row.gmtCreate.substring(0,row.gmtCreate.indexOf('T')) + "</td>"
+				+ "<td><button type='button' class='btn-delete'>" + "删除"
+				+ "</button>" + "<button type='button' class='btn-update'>"
+				+ "修改" + "</button>";
+		return tds;
+	}
+
+</script>
+
+
+
+

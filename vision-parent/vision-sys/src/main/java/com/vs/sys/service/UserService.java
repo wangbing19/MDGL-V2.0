@@ -15,16 +15,16 @@ public interface UserService {
 	 * @param pageCurrent
 	 * @return
 	 */
-	PageObject<Users> findPageObjects(String username, Integer pageCurrent);
+	PageObject<Users> findPageObjects(String username, Integer pageCurrent,Users user);
 	PageObject<Users> searchPageObjects(String username, Integer pageCurrent);
 
 	List<Users> findUserByUserName();
 
-	int doValidById(Integer id, Integer valid);
+	int doValidById(Integer id, Integer valid,String username);
 
 	List<Node> findZTreeNodes();
 
-	int doSaveObject(Users Users);
+	int doSaveObject(Users user,Users entity);
 
 	Users doFindObjectById(Integer id);
 	

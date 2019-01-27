@@ -150,12 +150,10 @@
 	   var params={"pageCurrent":pageCurrent};
 	   params.username=$("#searchNameId").val().trim();
 	   if(params.username){
-		   console.log(params.username);
 		   url="user/doSearchPageObjects.do";
 	   }
 	   
 	   $.getJSON(url,params,function(result){
-		   console.log(result);
 		   doHandleResponseResult(result);
 	   });
    }
@@ -163,7 +161,6 @@
    function doHandleResponseResult(result){
 	   if(result.status==200){
 		   
-		   console.log(result.data.records);
 		   
 		  doSetPagination(result.data);
 		  doSetTableBodyRows(result.data.records);
@@ -186,7 +183,6 @@
 	  }
    }
    function doCreateTds(row){
-	   console.log(row);
 	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
 	     "<td>"+row.username+"</td>"+
 	     "<td>"+row.parentUsername+"</td>"+
