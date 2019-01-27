@@ -75,7 +75,7 @@ public class WebRecUser {
 		String url = local_url+"/recUser/insertObjectRecUser";
 		String insertMessage = restTemplate.postForObject(url,recPayUser,String.class);
 		
-		if(insertMessage.equals("新增成功")) {
+		if(insertMessage.equals("新增记录成功")) {
 			restTemplate.postForObject("http://localhost:8022/customer/updateObjectByMoney",recPayUser,Integer.class);
 		}		
 		return JsonResult.oK(insertMessage);	
