@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 public class TraInformationrecord {
 	/** 训练管理表id*/
 	@TableId(type=IdType.AUTO)
-	private Long id;
+	private Integer id;
 	/**门店id*/
 	private Integer userId;
 	/**上级门店id*/
@@ -23,7 +23,7 @@ public class TraInformationrecord {
 	/** 客户姓名*/
 	private String name;
 	/**客户电话*/
-	private String tel;
+//	private String tel;
 	/**左眼视力*/
 	private Double lVision;
 	/**右眼视力*/
@@ -43,7 +43,11 @@ public class TraInformationrecord {
 	/**表修改时间*/
 	private Date gmtModified;
 	/**客户id*/
-	private Long customerId;
+	private Integer customerId;
 	/**课程表id*/
 	private Integer scheduleId;
+	/**创建用户*/
+    private String createdUser;
+    /**修改用户*/
+    private String modifiedUser;
 }

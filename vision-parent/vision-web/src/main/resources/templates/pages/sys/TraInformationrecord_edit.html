@@ -1,144 +1,161 @@
 <!-- Horizontal Form -->
- <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title ">添加</h3>
-       
-      </div>
-      <!-- /.box-header -->
-      <!-- form start -->
-      <form class="form-horizontal">
-        <div class="box-body">
-          <div class="form-group">
-            <label for="usernameId" class="col-sm-2 control-label">姓名</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="name" id="usernameId" placeholder="名称">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="tel" class="col-sm-2 control-label">电话</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="tel" id="tel" placeholder="手机号码">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="l_visionId" class="col-sm-2 control-label">裸眼视力(左)</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="lVision" id="l_visionId" placeholder="裸眼视力(左)">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="r_visionId" class="col-sm-2 control-label">裸眼视力(右)</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="rVision" id="r_visionId" placeholder="裸眼视力(右)">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="gradeId" class="col-sm-2 control-label">评分</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="grade" id="gradeId" placeholder="评分">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="evaluateId" class="col-sm-2 control-label">评价</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="evaluate" id="evaluateId" placeholder="评价">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="contentId" class="col-sm-2 control-label">项目内容</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="content" id="contentId" placeholder="项目内容">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="tutorId" class="col-sm-2 control-label">导师</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="tutor" id="tutorId" placeholder="导师">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="gmt_modifiedId" class="col-sm-2 control-label">时间</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="gmtModified" id="gmt_modifiedId" placeholder="时间">
-            </div>
-          </div>
-          <!-- <div class="form-group">
-            <label for="nameId" class="col-sm-2 control-label">操作</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" name="name" id="nameId" placeholder="操作">
-            </div>
-          </div> -->
-          
-          
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          <button type="button" class="btn btn-default btn-cancel">退出</button>
-          <button type="button" class="btn btn-info pull-right btn-save">保存</button>
-        </div>
-        <!-- /.box-footer -->
-      </form>
-    </div>
-    <script type="text/javascript" src="bower_components/ztree/jquery.ztree.all.min.js"></script>
-    <script type="text/javascript">
-    var zTree; 
-    var setting = {
-   	data : {
-   	    simpleData : {
-   			enable : true,
-   			idKey : "id",  //节点数据中保存唯一标识的属性名称
-   			pIdKey : "parentId",  //节点数据中保存其父节点唯一标识的属性名称
-   			rootPId : null  //根节点id
-   		}
-   	},
-   	check:{
-   		enable:true,
-   		nocheckInherit:true
-   	}//此配置提供复选框操作(可查官方zTree)
-    }
-    $(function(){
-    	//异步加载菜单信息,初始化页面菜单
-    	//doLoadSysMenus();
-    	doInitFormData();//初始化表单数据
-    	$("#gmt_modifiedId").val(getNowFormatDate());
-    	$(".box-footer")
-    	.on("click",".btn-save",doSaveOrUpdate)
-    	.on("click",".btn-cancel",doCancel);
-    	
-    });
-    function doInitFormData(){
-        var data=$("#mainContentId").data("data");//取出之前放在data域中的数据(你选中的哪一行的数据)
-        if(!data)return;
-        $("#pwdDiv").remove();
-   	 //console.log(data);
-   	 //初始化用户信息 
-   	 $("#usernameId").val(data.name);
-   	 $("#tel").val(data.tel);
-   	 $("#l_visionId").val(data.lvision);
-   	 $("#r_visionId").val(data.rvision);
-   	 $("#gradeId").val(data.grade);
-   	 $("#evaluateId").val(data.evaluate);
-   	 $("#contentId").val(data.content);
-   	 $("#tutorId").val(data.tutor);
-   	 $("#gmt_modifiedId").val(new Date(data.gmtModified).toLocaleString());
-   	 //初始化用户角色信息
-   	 var ids=data.roleIds;
-   	 for(var i in ids){
-   	  $("#rolesId input[value='"+ids[i]+"']")
-   	  .prop("checked",true);
-   	 }
-    }
-    function doCancel(){
-    	var url="tra/doTraInformationrecordUI.do";
-    	//var params={"pageCurrent":1};
-    	$("#mainContentId").load(url,function(){
-    	  $("#mainContentId").removeData();
-    	}); 
-    	
-    }
-    
-    /**获取当前时间*/
-    function getNowFormatDate() {
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title ">添加</h3>
+
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal">
+		<div class="box-body">
+			<div class="form-group">
+				<label for="usernameId" class="col-sm-2 control-label">姓名</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="name" id="usernameId"
+						placeholder="名称" style="width: 30%" readonly="readonly">
+					<!--  -->
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="l_visionId" class="col-sm-2 control-label">裸眼视力(左)</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="lVision"
+						id="l_visionId" placeholder="裸眼视力(左)" style="width: 30%"
+						maxlength="3">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="r_visionId" class="col-sm-2 control-label">裸眼视力(右)</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="rVision"
+						id="r_visionId" placeholder="裸眼视力(右)" style="width: 30%"
+						maxlength="3">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="gradeId" class="col-sm-2 control-label">评分</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="grade" id="gradeId"
+						placeholder="评分" style="width: 30%" maxlength="1">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="evaluateId" class="col-sm-2 control-label">评价</label>
+				<div class="col-sm-10">
+					<!-- <input type="text" class="form-control" name="evaluate" id="evaluateId" placeholder="评价" style="width: 30%"> -->
+
+					<textarea rows="5" class="form-control" name="evaluate"
+						id="evaluateId" placeholder="评价" style="width: 30%"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="contentId" class="col-sm-2 control-label">项目内容</label>
+				<div class="col-sm-10" style="width: 26.5%;">
+					<select class="form-control" name="content" id="contentId"></select>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label for="tutorId" class="col-sm-2 control-label">训练师</label>
+				<div class="col-sm-10" style="width: 26.5%;">
+					<select class="form-control" name="tutor" id="tutorId"></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="gmt_modifiedId" class="col-sm-2 control-label">时间</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="gmtModified"
+						id="gmt_modifiedId">
+				</div>
+			</div>
+
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer">
+			<button type="button" class="btn btn-default btn-cancel">退出</button>
+			<button type="button" class="btn btn-info pull-right btn-save">保存</button>
+		</div>
+		<!-- /.box-footer -->
+	</form>
+</div>
+<script type="text/javascript"
+	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript">
+
+	$(function() {
+		//异步加载菜单信息,初始化页面菜单
+		getTutor();
+		getSchedule();
+		//doLoadSysMenus();
+		doInitFormData();//初始化表单数据
+		$("#gmt_modifiedId").val(getNowFormatDate());
+		$(".box-footer").on("click", ".btn-save", doSaveOrUpdate).on("click",
+				".btn-cancel", doCancel);
+
+	});
+	//获取医师名
+	function getTutor(){
+		var url = "appointment/getAppoName";
+		$.getJSON(url,function(result){	
+	    	if(result.status==200){
+	    		 for (var i = 0; i < result.data.length; i++) 
+	    		$("#tutorId").append("<option >" + result.data[i].trainerName + "</option>");
+	    	}  	
+	    });
+	}
+	//获取课程表
+	function getSchedule(){
+		var url = "cusSchedule/doFindByCustomerId";
+		var customerId = $("#mainContentId").data("getcustomerId");
+		var params={"customerId":customerId};
+		
+		$.getJSON(url,params,function(result){	
+			$("#mainContentId").data("dataOfSchedule",result);
+		//	console.log(result);
+	    	if(result.status==200){
+	    		 for (var i = 0; i < result.data.length; i++) 
+	    		$("#contentId").append("<option >" + result.data[i].courseTitle + "</option>");
+	    	}	
+	    });
+	}
+	
+	
+	function doInitFormData() {
+		var data = $("#mainContentId").data("data");//取出之前放在data域中的数据(你选中的哪一行的数据)
+		var getcustomerData = $("#mainContentId").data("getcustomerName");
+		console.log(data);
+		if (getcustomerData) {
+			$("#usernameId").val(getcustomerData);
+			$("#mainContentId").removeData("getcustomerName");
+		} else if (!data) {
+			return;
+		} else {
+			$("#pwdDiv").remove();
+			//初始化用户信息 
+			$("#usernameId").val(data.name);
+			// 	 $("#tel").val(data.tel);
+			$("#l_visionId").val(data.lvision);
+			$("#r_visionId").val(data.rvision);
+			$("#gradeId").val(data.grade);
+			$("#evaluateId").val(data.evaluate);
+			$("#contentId").append("<option selected>" + data.content + "</option>");
+			//val(data.content);
+			$("#tutorId").append("<option selected>" + data.tutor + "</option>");
+			//val(data.tutor);
+		}
+	}
+	function doCancel() {
+		var url = "tra/doTraInformationrecordUI.do";
+		$("#mainContentId").load(url, function() {
+			$("#mainContentId").removeData();
+		});
+
+	}
+
+	/**获取当前时间*/
+	function getNowFormatDate() {
 		var date = new Date();
 		var month = date.getMonth() + 1;
 		var strDate = date.getDate();
@@ -151,81 +168,66 @@
 		var currentdate = date.getFullYear() + "-" + month + "-" + strDate;
 		return currentdate;
 	}
-    
-    function doSaveOrUpdate(){	
-    	
-     var rowData=$("#mainContentId").data("data");
-     console.log(rowData);
-   	 //1.获取表单数据
-   	 var params=doGetEditFormData();
-   	// console.log(params)
-     if(!params.name.trim()){
-		alert("用户名不能为空");
-		return;
-	} 
-   	 if(rowData) params.id=rowData.id;
-   	 //2.发起异步请求
-   	 var insertUrl="tra/doSaveObject.do";
-   	 var updateUrl="tra/doUpdate.do";
-   	 var url=rowData?updateUrl:insertUrl;
 
-   	 $.post(url,params,function(result){
-   		// consle.log(result)
-   		 
-   		 if(result.status==200){
-   			 alert(result.data);
-   			 doCancel();
-   		 }else{
-   			alert(result.msg);
-   		 }
-   	 })
-    }
-    function doGetEditFormData(){
-    	//1.获取用户输入的信息
-    	var params={
-    		name:$("#usernameId").val(),
-    		tel:$("#tel").val,
-    		lVision:$("#l_visionId").val(),
-    		rVision:$("#r_visionId").val(),
-    		grade:$("#gradeId").val(),
-    		evaluate:$("#evaluateId").val(),
-    		content:$("#contentId").val(),
-    		tutor:$("#tutorId").val(),
-    		gmtCreate:$("#gmtCreateId").val()
-    	};
-    	console.log(params);
-    	/* //2.获取选中菜单信息
-    	var nameIds=[];
-    	console.log(zTree)
-    	var checkedNodes=
-    	zTree.getCheckedNodes(true);
-    	for(var i in checkedNodes){
-    		nameIds.push(checkedNodes[i].id);
-    	} */
-    //	params.menuIds=nameIds.toString();
-    	return params;
-    }
-       //页面加载完成时初始化zTree
-       function doLoadSysMenus(){
-    	var url="menu/doFindZtreeMenuNodes.do"
-    	$.getJSON(url,function(result){
-    	 if(result.state==1){
-    		zTree=$.fn.zTree.init(
-    		$("#menuTree"),setting,result.data);
-    		//修改时添加如下代码(注意先后顺序)
-    		var rowData=$("#mainContentId").data("data");
-    	    if(rowData)doInitEditFormData(rowData);
-    	 }else{
-    		alert(result.message);
-    	 }
-    });
-} 
+	function doSaveOrUpdate() {
+
+		var rowData = $("#mainContentId").data("data");
+		//1.获取表单数据
+		var params = doGetEditFormData(rowData);
+		//console.log(params);
+	//	return;
+		if (rowData)
+			params.id = rowData.id;
+		//2.发起异步请求
+		var insertUrl = "tra/doSaveObject.do";
+		var updateUrl = "tra/doUpdate.do";
+		var url = rowData ? updateUrl : insertUrl;
+		$.post(url, params, function(result) {
+			if (result.status == 200) {
+				alert(result.msg);
+				doCancel();
+			} else {
+				alert(result.msg);
+			}
+		})
+	}
+	function doGetEditFormData(rowData) {
+		var customerId = $("#mainContentId").data("getcustomerId");
+		$("#mainContentId").removeData("getcustomerId");
+		var dataOfSchedule = $("#mainContentId").data("dataOfSchedule");
+		var content = $("#contentId").val();
+		
+		if(!rowData){
+			var scheduleId;
+			for (var i = 0; i < dataOfSchedule.data.length; i++) {
+	    		if(content == dataOfSchedule.data[i].courseTitle){
+	    			scheduleId = dataOfSchedule.data[i].id;
+	    			console.log(scheduleId);
+	    		}
+			}
+		}
+		
+		//1.获取用户输入的信息
+		var params = {
+			name : $("#usernameId").val(),
+			lVision : $("#l_visionId").val(),
+			rVision : $("#r_visionId").val(),
+			grade : $("#gradeId").val(),
+			evaluate : $("#evaluateId").val(),
+			content : $("#contentId").val(),
+			tutor : $("#tutorId").val(),
+		//	gmtCreate : $("#gmtCreateId").val()
+			customerId : customerId,
+			scheduleId : scheduleId
+		};
+		return params;
+	}
+
 </script>
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
