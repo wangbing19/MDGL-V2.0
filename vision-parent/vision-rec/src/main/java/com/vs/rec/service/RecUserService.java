@@ -12,4 +12,6 @@ public interface RecUserService {
 
 	RecActivityPush doFindActivityObjectByUserPayType(Integer id);
 
+	String insertObjectRecUser(RecPayUser recPayUser);
+
 }

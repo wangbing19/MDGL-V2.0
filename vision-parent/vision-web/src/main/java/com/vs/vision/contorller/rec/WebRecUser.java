@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.vs.vision.pojo.rec.RecActivityPush;
 import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.pojo.sys.Users;
@@ -47,7 +48,7 @@ public class WebRecUser {
 	@RequestMapping("/doFindActivityObjectByUserPayType")
 	@ResponseBody
 	public JsonResult doFindActivityObjectByUserPayType(Integer id) {
-		String url = local_url+"recUser/doFindActivityObjectByUserPayType";
+		String url = local_url+"/recUser/doFindActivityObjectByUserPayType";
 		MultiValueMap map = new LinkedMultiValueMap<>();
 		map.add("id", id);
 		System.out.println("查询标题："+id);
@@ -55,4 +56,53 @@ public class WebRecUser {
 		System.out.println("数据："+postForObject);
 		return JsonResult.oK(postForObject);
 	}
+	@RequestMapping("/insertObjectRecUser")
+	@ResponseBody
+	public JsonResult insertObjectRecUser(RecPayUser recPayUser) {
+		System.out.println("前台请求保存充值记录："+recPayUser);
+		Users user = ShiroUtils.getUser();
+		System.out.println(user);
+		if(user!=null) {
+			if(user.getId()!=null) {
+				long user_id = user.getId();
+				recPayUser.setUserId(user_id);
+			}		
+			if(user.getParentId()!=null) {
+				long parent_id = user.getParentId();
+				recPayUser.setParentId(parent_id);
+			}	
+		}		
+		String url = local_url+"/recUser/insertObjectRecUser";
+		String insertMessage = restTemplate.postForObject(url,recPayUser,String.class);
+		
+		if(insertMessage.equals("新增成功")) {
+			restTemplate.postForObject("http://localhost:8022/customer/updateObjectByMoney",recPayUser,Integer.class);
+		}		
+		return JsonResult.oK(insertMessage);	
+	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

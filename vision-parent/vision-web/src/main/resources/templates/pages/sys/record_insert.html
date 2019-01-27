@@ -25,17 +25,18 @@
 			<div class="form-group">
 				<label for="nameId" class="col-sm-2 control-label">活动名称</label>
 				<div class="col-sm-10" style="width: 300px;">
-					<select class="form-control" name="orgName" id="activity_name" onchange = "checkLawyerType()"> 
+					<select class="form-control" name="orgName" id="activity_name"
+						onchange="checkLawyerType()">
 						<option>--请选择--</option>
 
 					</select>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="nameId" class="col-sm-2 control-label">课程名称</label>
 				<div class="col-sm-10" style="width: 300px;">
-					<select class="form-control" name="orgName" id="course_name" >
+					<select class="form-control" name="orgName" id="course_name" onchange="checkTimeType()">
 						<option>--请选择--</option>
 
 					</select>
@@ -43,11 +44,19 @@
 			</div>
 
 			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">训练次数</label>
+				<div class="col-sm-10" style="width: 300px;">
+					<input type="text" class="form-control" id="practice_time"
+						onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="格式：输入次数"
+						onblur="payInput(this)">
+				</div>
+			</div>
+			<div class="form-group">
 				<label for="nameId" class="col-sm-2 control-label">充值金额(元)</label>
 				<div class="col-sm-10" style="width: 300px;">
-					<input type="text" class="form-control" id="pay_amount"
-						onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="格式：输入金额"  onblur="payInput(this)">
-				
+					<input type="text" class="form-control" id="pay_amount" readonly="readonly"
+					>
+
 				</div>
 			</div>
 
@@ -59,14 +68,8 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label for="nameId" class="col-sm-2 control-label">训练次数</label>
-				<div class="col-sm-10" style="width: 300px;">
-					<input type="text" class="form-control" id="practice_time"
-						>
-				</div>
-			</div>
-			
+
+
 			<div class="form-group">
 				<label for="nameId" class="col-sm-2 control-label">建议次数</label>
 				<div class="col-sm-10" style="width: 300px;">
@@ -74,7 +77,7 @@
 						readonly="readonly">
 				</div>
 			</div>
-			
+
 		</div>
 
 		<div class="box-footer">
@@ -103,43 +106,95 @@ function doGetObjects(){
 	//初始化充值类型
 	var url = "activity/doFindPageObjects";
 	$.getJSON(url,function(result){		
-    	if(result.status==200){
+    	if(result.status==200){   		
     		 for (var i = 0; i < result.data.length; i++) 
     		$("#activity_name").append("<option >" + result.data[i].title + "</option>");
     	}  	
     }) 	
     
-    var url = "activity/doFindPageObjects";
+    var url = "cusSchedule/doFindByCustomerId";
 	var params = {"customerId":$("#mainContentId").data("getRecUser").id}
-	$.getJSON(url,function(result){		
+	$.getJSON(url,params,function(result){		
+		//console.log(result);
     	if(result.status==200){
+    		$("#mainContentId").data("time_data",result.data);
     		 for (var i = 0; i < result.data.length; i++) 
-    		$("#course_name").append("<option >" + result.data[i].courseTitle + "</option>");
+    		$("#course_name").append("<option >" + result.data[i].courseTitle+"("+result.data[i].priceOfCourse+")"+ "</option>");
     	}  	
     }) 	 
     
     var UserData = $("#mainContentId").data("getRecUser");
+	//console.log(123);
+	console.log(UserData);
 	$("#user_name").val(UserData.name);
+	$("#user_yue").val(UserData.balance);
+	
+	
 	//debugger;
 }
-
-function payInput(pay_money){
-	alert(pay_money.value);
+function checkTimeType(){
+	var time_data =  $("#mainContentId").data("time_data");
+	//console.log(time_data);
+	for (var i = 0; i < time_data.length; i++) {
+		var sele = $("#course_name  option:selected").text();
+		if(time_data[i].courseTitle==sele.substring(0,sele.indexOf('('))){
+			$("#mainContentId").data("yy",time_data[i].courseTraining);
+		}
+	}
+	$("#advice_time").val($("#mainContentId").data("yy"));
+}
+//输入完充值次数后计算赠送金额和总金额
+function payInput(pay_time){
+	var coursetitledata = $("#course_name  option:selected").text();
+	var index1 = coursetitledata.indexOf('(');
+	var index2 = coursetitledata.indexOf(')');
+	coursetitledata = coursetitledata.substring(index1+1,index2);
+	//计算原价
+	var yuanJia = coursetitledata* $("#practice_time").val();
+	//获取选择充值类型的规则
+	var payAmount = $("#mainContentId").data("payAmount");
+	var presentedAmount = $("#mainContentId").data("presentedAmount");
+	//计算赠送金额
+	var zengSong = (Math.trunc(yuanJia/payAmount))*presentedAmount;
+	//计算优惠后的价格
+	var youHuiJia = yuanJia-zengSong;
+	$("#pay_amount").val(youHuiJia);
+	$("#presented_amount").val(zengSong);
 }
 function doCancel(){
-	$("#mainContentId").load("customer/doCustomerListUI");
+	$("#mainContentId").load("customer/doCustomerListUI");  
 }
 function doPay(){
-	
+	var UserData = $("#mainContentId").data("getRecUser");
+	var paramsAll = {
+			"name":UserData.name,
+			"customerId":UserData.id,
+			"rechargeType":$("#mainContentId").data("activity_id"),
+			"money":$("#user_yue").val(),
+			"rechargeAmount":$("#pay_amount").val(),
+			"presentedAmount":$("#presented_amount").val(),
+			"practiceTimes":$("#practice_time").val(),
+			"courseName":$("#course_name  option:selected").text()
+	}
+	var urlInsert = "recUser/insertObjectRecUser";
+	$.post(urlInsert,paramsAll,function(result){
+		if(result.status==200){
+			alert(result.data);
+		}
+	})
 }
+//根据选中的充值类型查询充值金额和赠送金额
 function checkLawyerType(){
 	var activityName = $("#activity_name  option:selected").text();
-	var param1 = {"activityName":activityName};
-	 var url = "activity/doFindPageObjects";
+	var param1 = {"title":activityName};
+	 var url = "activity/doFindPageObjectByTitle";
 	$.getJSON(url,param1,function(result){		
     	if(result.status==200){
-    		result.data.payAmount;
-    		result.data.presentedAmount;
+    		var payAmount = result.data.payAmount;
+    		var presentedAmount = result.data.presentedAmount;
+    		$("#mainContentId").data("payAmount",payAmount);
+    		$("#mainContentId").data("activity_id",result.data.id);
+    		$("#mainContentId").data("presentedAmount",presentedAmount);   		
     	}  	
     })  
 }

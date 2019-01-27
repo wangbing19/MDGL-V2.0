@@ -68,6 +68,17 @@ public class WebRecActivityPush {
 		return JsonResult.oK(updateMessage);
 	}
 	
+	@RequestMapping("/doFindPageObjectByTitle")
+	@ResponseBody
+	public JsonResult doFindPageObjectByTitle(String title) {
+		System.out.println("前台请求通过标题查询赠送金额："+title);
+		String url = local_url + "activity/findPageObjectByTitle";
+		MultiValueMap map = new LinkedMultiValueMap<>();
+		map.add("title", title);
+		RecActivityPush object = restTemplate.postForObject(url,map,RecActivityPush.class);
+		return JsonResult.oK(object);
+	}
+	
 }
 
 

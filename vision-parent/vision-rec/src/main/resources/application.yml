@@ -18,3 +18,4 @@ mybatis-plus:
     #开启驼峰映射
     configuration:
       map-underscore-to-camel-case: true
+     # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -14,5 +14,7 @@ public interface ActivityPushService {
 
 	String updateRecActivityObject(RecActivityPush recActivityPush);
 
+	RecActivityPush findPageObjectByTitle(String title);
+
 
 }
