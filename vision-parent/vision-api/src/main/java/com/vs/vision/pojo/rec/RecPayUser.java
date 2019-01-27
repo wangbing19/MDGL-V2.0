@@ -30,7 +30,9 @@ public class RecPayUser {
 	/**赠送金额*/
 	private Double presentedAmount;
 	/**充值的次数*/
-	private Integer payTimes;
+	private Integer practiceTimes;
+	/**课程名称*/
+	private String courseName;
 	/**上次充值时间*/
 	private Date lastPayTime;
 	private Date gmtCreate;
