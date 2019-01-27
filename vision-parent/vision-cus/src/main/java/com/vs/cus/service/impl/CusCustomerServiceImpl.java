@@ -125,6 +125,7 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 		entity.setBalance(0.0);
 		entity.setTotalTrainingTime(0);
 		entity.setTimesOfTraining(0);
+		entity.setRechargeCount(0);
 		//建立咨询表对象并赋值
 		CusConsultation consultation = new CusConsultation();
 		consultation.setId(entity.getConsultationId());

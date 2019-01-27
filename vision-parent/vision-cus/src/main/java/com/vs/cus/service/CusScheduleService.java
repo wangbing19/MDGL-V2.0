@@ -1,5 +1,7 @@
 package com.vs.cus.service;
 
+import java.util.List;
+
 import com.vs.vision.pojo.cus.CusSchedule;
 import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.vo.JsonResult;
@@ -17,4 +19,6 @@ public interface CusScheduleService {
 	Integer saveObject(CusSchedule cusSchedule);
 	/**修改课程表数据*/
 	Integer updateObject(CusSchedule cusSchedule);
+	/**基于客户id查询用户课程表信息*/
+	List<CusSchedule> findByCustomerId(Integer id);
 }

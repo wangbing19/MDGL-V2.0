@@ -1,5 +1,7 @@
 package com.vs.cus.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -75,6 +77,18 @@ public class CusScheduleController {
 			return cusScheduleService.updateObject(cusSchedule);
 		} catch (Exception e) {
 			System.out.println("修改课程表数据=============错误=================");
+		}
+		return null;
+	}
+	
+	/**基于客户id查询用户课程表信息*/
+	@RequestMapping("/findByCustomerId")
+	@ResponseBody
+	public List<CusSchedule> findByCustomerId(@RequestBody Integer id) {
+		try {
+			return cusScheduleService.findByCustomerId(id);
+		} catch (Exception e) {
+			System.out.println("基于客户id查询用户课程表信息=============错误=================");
 		}
 		return null;
 	}

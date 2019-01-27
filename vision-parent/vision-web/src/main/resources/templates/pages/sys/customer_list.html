@@ -28,7 +28,7 @@
 							<th>联系电话</th>
 							<th>账户余额</th>
 							<th>训练数</th>
-							<!-- <th>充值记录</th> -->
+							<th>充值记录</th>
 							<th>课程记录</th>
 							<th>状态</th>
 							<th>咨询/诊断表</th>
@@ -198,12 +198,14 @@
 	   
    }
    function doCreateTds(row){
+	 
 	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
 	   "<td>"+row.name+"</td>"+
 	     "<td>"+row.tel+"</td>"+
 	  //   "<td>"+row.balance+"</td>"+
 	     "<td><button type='button' class='btn btn-default btn-addBalance' style='border:none;' >"+row.balance+"</button></td>"+
 	     "<td>"+row.totalTrainingTime+"/"+row.timesOfTraining+"</td>"+
+	     "<td>"+row.rechargeCount+"</td>"+
 	     "<td><button type='button' class='btn btn-default btn-addSchedule' style='border:none;' >"+row.scheduleCount+"</button></td>"+
 	     "<td>"+(row.state?"启用":"禁用")+"</td>"+
 	     "<td><button type='button' class='btn-doConsultationUpdate'>"+"咨询表"+"</button>"+
