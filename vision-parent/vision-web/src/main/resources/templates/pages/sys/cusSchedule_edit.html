@@ -11,8 +11,7 @@
 			<div class="form-group">
 				<label for="usernameId" class="col-sm-2 control-label">用户名</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="usernameId"
-						style="width: 35%;">
+					<input type="text" class="form-control" id="usernameId" style="width: 35%;" readonly="readonly">
 				</div>
 			</div>
 			<!-- 课程名称course_title -->
@@ -27,40 +26,37 @@
 			<div class="form-group">
 				<label for="priceOfCourseId" class="col-sm-2 control-label">课程价格</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="priceOfCourseId"
-						style="width: 35%;">
+					<input type="text" class="form-control" id="priceOfCourseId" onblur="dogettotalPriceId(this)" style="width: 35%;">
 				</div>
 			</div>
 			<!-- 课程训练数course_training -->
 			<div class="form-group">
-				<label for="courseTrainingId" class="col-sm-2 control-label">课程训练数</label>
+				<label for="courseTrainingId" class="col-sm-2 control-label">课程建议训练数</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="courseTrainingId"
-						style="width: 35%;">
+					<input type="text" class="form-control" id="courseTrainingId" onblur="calculateTotalPriceId(this)" style="width: 35%;">
 				</div>
 			</div>
 			<!-- 课程项目数number_of_course -->
 			<div class="form-group">
 				<label for="numberOfCourseId" class="col-sm-2 control-label">课程项目数</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="numberOfCourseId"
-						style="width: 35%;">
+					<input type="text" class="form-control" id="numberOfCourseId" style="width: 35%;" readonly="readonly">
 				</div>
 			</div>
 			<!-- 总价格total_price -->
 			<div class="form-group">
-				<label for="totalPriceId" class="col-sm-2 control-label">总价格</label>
+				<label for="totalPriceId" class="col-sm-2 control-label">建议训练数总价格</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="totalPriceId"
-						style="width: 35%;">
+					<input type="text" class="form-control" id="totalPriceId" style="width: 35%;" readonly="readonly">
 				</div>
 			</div>
 			<!-- 训练项目res_symptom_type -->
 			<div class="form-group">
-				
+
 				<label for="resSymptomTypeId" class="col-sm-2 control-label">训练项目</label>
-				<div class="col-sm-10" id="resSymptomTypeId" style="width: 35%; font-size: 120%"></div>
-				
+				<div class="col-sm-10" id="resSymptomTypeId"
+					style="width: 35%; font-size: 120%"></div>
+
 			</div>
 			<!-- 诊断师diagnostics -->
 			<div class="form-group">
@@ -97,14 +93,37 @@
 	$(document).ready(
 			function() {
 				//页面加载完成以后加载角色信息并初始化页面
-			//	doInitFormData();
+				//	doInitFormData();
 				doLoadRoles();
+			
 				//事件注册
 				$('#gmtModifiedId').val(getNowFormatDate());
 				$(".box-footer").on("click", ".btn-cancel", doCancel).on(
 						"click", ".btn-save", doSaveOrUpdate);
 
 			});
+
+	function calculateTotalPriceId(numberOfTime) {
+		var unitPrice = $("#priceOfCourseId").val();
+		var quantity = numberOfTime.value;
+		var totalPrice = unitPrice * quantity;
+		if(unitPrice == 0){
+		//	alert("请输入价格");
+			return;
+		}
+		$("#totalPriceId").val(totalPrice);
+	}
+	
+	function dogettotalPriceId(univalence) {
+		var quantity = $("#courseTrainingId").val();
+		var unitPrice = univalence.value;
+		var totalPrice = unitPrice * quantity;
+		if(quantity == 0){
+		//	alert("请输入数量");
+			return;
+		}
+		$("#totalPriceId").val(totalPrice);
+	}
 
 	//返回
 	function doCancel() {
@@ -114,7 +133,7 @@
 	//保存或修改
 	function doSaveOrUpdate() {
 		var rowData = $("#mainContentId").data("rowData");
-	//	console.log(rowData);
+		//	console.log(rowData);
 		//1.获取表单数据
 		var params = doGetEditFormData();
 		if (rowData)
@@ -135,9 +154,8 @@
 	}
 	//修改页面获取数据
 	function doGetEditFormData() {
-		 var customerId = $("#mainContentId").data("getcustomerId");
-		 $("#mainContentId").removeData("getcustomerId");
-		// console.log(customerId);
+		var customerId = $("#mainContentId").data("getcustomerId");
+		$("#mainContentId").removeData("getcustomerId");
 		//获取用户输入的数据
 		var params = {
 			name : $("#usernameId").val(),
@@ -166,7 +184,7 @@
 		var url = "resSymptomType/doFindSymptomType";
 		$.getJSON(url, function(result) {
 			if (result.status == 200) {
-				
+
 				doInitPageRoles(result.data);
 				doInitFormData();//修改时
 			} else {
@@ -177,29 +195,31 @@
 	//
 	function doInitFormData() {
 		var data = $("#mainContentId").data("rowData");
-		var getcustomerData =  $("#mainContentId").data("getcustomerName");
-		if(getcustomerData){
+		var getcustomerData = $("#mainContentId").data("getcustomerName");
+		if (getcustomerData) {
 			$("#usernameId").val(getcustomerData);
 			$("#mainContentId").removeData("getcustomerName");
-		} else if (!data){
+		} else if (!data) {
 			return;
 		} else {
-		$("#pwdDiv").remove();
-		//初始化用户信息 
-		$("#usernameId").val(data.name), 
-		$("#courseTitleId").val(data.courseTitle), 
-		$("#priceOfCourseId").val(data.priceOfCourse), 
-		$("#courseTrainingId").val(data.courseTraining), 
-		$("#numberOfCourseId").val(data.numberOfCourse), 
-		$("#totalPriceId").val(data.totalPrice),
-		//$("#resSymptomTypeId").val(),
-		$("#diagnosticsId").val(data.diagnostics)
-
-		//初始化用户角色信息
-		var ids = data.symptomTypes;
-		for ( var i in ids) {
-			$("#resSymptomTypeId input[value='" + ids[i] + "']").prop("checked", true);
-		}
+			$("#pwdDiv").remove();
+			//初始化用户信息 
+			$("#usernameId").val(data.name), 
+			$("#courseTitleId").val(data.courseTitle), 
+			$("#priceOfCourseId").val(data.priceOfCourse), 
+			$("#courseTrainingId").val(data.courseTraining), 
+			$("#numberOfCourseId").val(data.numberOfCourse), 
+			$("#totalPriceId").val(data.totalPrice),
+			//$("#resSymptomTypeId").val(),
+			$("#diagnosticsId").val(data.diagnostics)
+			
+			//初始化用户角色信息
+			var ids = data.symptomTypes;
+			for ( var i in ids) {
+				$("#resSymptomTypeId input[value='" + ids[i] + "']").prop(
+						"checked", true);
+			}
+			doit();
 		}
 	}
 	function doInitPageRoles(data) {
@@ -208,19 +228,34 @@
 		div.empty();
 		//2.迭代数据，将数据追加到div
 		//	 console.log(data);
-		var input = "<td><input type='checkbox' name='roleId' value='[id]'>[name] &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp </td>"
-		var input2 = "<td><input type='checkbox' name='roleId' value='[id]'>[name]</td>"
+		var input = "<td><input type='checkbox' name='roleId' value='[id]' onclick='doit();'>[name] &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp </td>"
+		var input2 = "<td><input type='checkbox' name='roleId' value='[id]' onclick='doit();'>[name]</td>"
+			
 		for ( var i in data) {
 			//记住每次replace时都会产生一个新的字符串对象
 			if (i % 2 == 0) {
-				var newInput = input.replace("[id]", data[i].id).replace("[name]", data[i].serviceName);
+				var newInput = input.replace("[id]", data[i].id).replace(
+						"[name]", data[i].serviceName);
 				div.append("<tr>").append(newInput).append();
 			} else if (i % 2 == 1) {
-				var newInput = input2.replace("[id]", data[i].id).replace("[name]", data[i].serviceName);
+				var newInput = input2.replace("[id]", data[i].id).replace(
+						"[name]", data[i].serviceName);
 				div.append(newInput).append("</tr>")
 			}
 
 		}
+	}
+
+	
+	function doit() {
+		var n = 0;
+		var objs = document.getElementsByName("roleId");
+		for (var i = 0; i < objs.length; i++) {
+			if (objs[i].checked) {
+				n++;
+			}
+		}
+		$("#numberOfCourseId").val(n);
 	}
 
 	//获取系统当前时间
