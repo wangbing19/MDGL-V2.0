@@ -169,9 +169,9 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 
 	/**基于客户id查询用户课程表信息*/
 	@Override
-	public List<CusSchedule> findByCustomerId(Integer id) {
+	public List<CusSchedule> findByCustomerId(Integer customerId) {
 		QueryWrapper<CusSchedule> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("customer_id", id);
+		queryWrapper.eq("customer_id", customerId);
 		List<CusSchedule> list = cusScheduleMapper.selectList(queryWrapper);
 		return list;
 	}

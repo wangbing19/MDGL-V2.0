@@ -26,6 +26,7 @@
 							<th>ID</th>
 							<th>姓名</th>
 							<th>联系电话</th>
+							<th>已充值金额</th>
 							<th>账户余额</th>
 							<th>训练数</th>
 							<th>充值记录</th>
@@ -202,7 +203,7 @@
 	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
 	   "<td>"+row.name+"</td>"+
 	     "<td>"+row.tel+"</td>"+
-	  //   "<td>"+row.balance+"</td>"+
+	     "<td>"+row.money+"</td>"+
 	     "<td><button type='button' class='btn btn-default btn-addBalance' style='border:none;' >"+row.balance+"</button></td>"+
 	     "<td>"+row.totalTrainingTime+"/"+row.timesOfTraining+"</td>"+
 	     "<td>"+row.rechargeCount+"</td>"+

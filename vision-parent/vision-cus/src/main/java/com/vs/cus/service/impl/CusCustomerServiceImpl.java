@@ -9,6 +9,7 @@ import com.vs.vision.exception.ServiceException;
 import com.vs.vision.pojo.cus.CusConsultation;
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.vo.PageObject;
 
 import java.util.Date;
@@ -174,5 +175,12 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 		int rows = cusCustomerMapper.updateById(entity);
 		//返回结果
 		return rows;
+	}
+
+	/**基于用户id修改金额,余额及充值次数*/
+	@Override
+	public Integer updateObjectByMoney(RecPayUser recPayUser) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

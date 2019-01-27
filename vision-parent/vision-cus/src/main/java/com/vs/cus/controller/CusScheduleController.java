@@ -84,9 +84,9 @@ public class CusScheduleController {
 	/**基于客户id查询用户课程表信息*/
 	@RequestMapping("/findByCustomerId")
 	@ResponseBody
-	public List<CusSchedule> findByCustomerId(@RequestBody Integer id) {
+	public List<CusSchedule> findByCustomerId(@RequestBody Integer customerId) {
 		try {
-			return cusScheduleService.findByCustomerId(id);
+			return cusScheduleService.findByCustomerId(customerId);
 		} catch (Exception e) {
 			System.out.println("基于客户id查询用户课程表信息=============错误=================");
 		}

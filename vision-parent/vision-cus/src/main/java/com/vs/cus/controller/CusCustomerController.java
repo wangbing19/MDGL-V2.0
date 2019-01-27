@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vs.cus.service.CusCustomerService;
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -103,5 +104,16 @@ public class CusCustomerController {
 		return null;
 	}
 	
+	/**基于用户id修改金额,余额及充值次数*/
+	@RequestMapping("/updateObject")
+	@ResponseBody
+	public Integer updateObject(@RequestBody RecPayUser recPayUser) {
+		try {
+			return cusCustomerService.updateObjectByMoney(recPayUser);
+		} catch (Exception e) {
+			System.out.println("根据咨询表id查询客户表信息有无=============错误=================");
+		}
+		return null;
+	}
 	
 }

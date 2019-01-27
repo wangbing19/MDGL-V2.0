@@ -20,5 +20,5 @@ public interface CusScheduleService {
 	/**修改课程表数据*/
 	Integer updateObject(CusSchedule cusSchedule);
 	/**基于客户id查询用户课程表信息*/
-	List<CusSchedule> findByCustomerId(Integer id);
+	List<CusSchedule> findByCustomerId(Integer customerId);
 }

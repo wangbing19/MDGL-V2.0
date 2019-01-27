@@ -122,9 +122,9 @@ public class CusScheduleController {
 	/**基于客户id查询用户课程表信息*/
 	@RequestMapping("/doFindByCustomerId")
 	@ResponseBody
-	public JsonResult doFindByCustomerId(Integer id) {
+	public JsonResult doFindByCustomerId(Integer customerId) {
 		try {
-			List<CusSchedule> list = restTemplate.postForObject(provider_url+"/schedule/findByCustomerId", id, List.class);
+			List<CusSchedule> list = restTemplate.postForObject(provider_url+"/schedule/findByCustomerId", customerId, List.class);
 			if(list.size()!=0 && list != null) {
 				return JsonResult.oK(list);
 			}
