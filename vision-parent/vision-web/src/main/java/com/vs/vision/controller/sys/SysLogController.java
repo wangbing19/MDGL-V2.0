@@ -54,7 +54,7 @@ public class SysLogController {
 	 * @param page
 	 * @return
 	 */
-	@RequiresLog("2019日志查询")
+	@RequiresLog("日志查询")
 	@RequestMapping("doFindPageObjects.do")
 	@ResponseBody
 	public JsonResult doFindPageObjects(String username, @RequestParam(value = "pageCurrent", required = false) Integer pageCurrent) {

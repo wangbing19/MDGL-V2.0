@@ -1,5 +1,6 @@
 package com.vs.vision.controller.sys;
 
+import com.vs.vision.annoation.RequiresLog;
 import com.vs.vision.pojo.sys.Depts;
 import com.vs.vision.pojo.sys.Users;
 import com.vs.vision.service.DeptService;
@@ -27,6 +28,7 @@ public class SysDeptController {
      *
      * @return 组织管理--加载页面
      */
+    
 	@RequiresPermissions("sys:dept:view")
     @RequestMapping("/doDeptListUI.do")
     public String doDeptListUI() {
@@ -41,7 +43,7 @@ public class SysDeptController {
     public String doDeptEditUI() {
         return "pages/sys/sys_dept_edit";
     }
-
+	@RequiresLog("组织管理查询")
     @RequestMapping("/doFindObjects.do")
     @ResponseBody
     public JsonResult doFindObjects(){

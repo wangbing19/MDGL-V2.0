@@ -1,8 +1,9 @@
 package com.vs.vision.pojo.sys;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Users {
+public class Users implements Serializable{
     private Integer id;
 
     private String username;
