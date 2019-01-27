@@ -113,7 +113,6 @@ public class SysUserController {
 		Subject subject = SecurityUtils.getSubject();
 		subject.login(token);// 提交给SecurityManager
 		int count = counter.incrementAndGet();// count+1;
-		System.out.println("在线人数:" + count);
 		return JsonResult.build(200, "登陆成功");
 	}
 	

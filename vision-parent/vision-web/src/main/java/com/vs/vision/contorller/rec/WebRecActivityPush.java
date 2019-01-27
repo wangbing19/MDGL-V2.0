@@ -18,7 +18,7 @@ import com.vs.vision.vo.JsonResult;
 public class WebRecActivityPush {
 	@Autowired
 	private RestTemplate restTemplate;
-	public static final String local_url = "http://localhost:8027";
+	public static final String local_url = "http://176.198.114.248:8027";
 	@RequestMapping("doLoadActivityUI.do")
 	public String doLoadActivityUI() {
 		return "pages/sys/rec_activity_push";
