@@ -42,4 +42,10 @@ public class ActivityPushController {
 		return activityPushService.updateRecActivityObject(recActivityPush);
 	}
 	
+	@RequestMapping("/findPageObjectByTitle")
+	public RecActivityPush findPageObjectByTitle(String title) {
+		System.out.println("后台转呗查询数据，标题名称："+title);
+		return activityPushService.findPageObjectByTitle(title);
+	}
+	
 }
