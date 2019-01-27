@@ -180,8 +180,24 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 	/**基于用户id修改金额,余额及充值次数*/
 	@Override
 	public Integer updateObjectByMoney(RecPayUser recPayUser) {
-		
-		
+		CusCustomer customer = cusCustomerMapper.selectById(recPayUser.getCustomerId());
+		//修改充值次数
+		customer.setRechargeCount(customer.getRechargeCount()+1);
+		//计算总金额
+		double money = customer.getMoney();
+		double rechargeAmount = recPayUser.getRechargeAmount();
+		double presentedAmount = recPayUser.getPresentedAmount();
+		money = money + rechargeAmount + presentedAmount;
+		customer.setMoney(money);
+		//计算余额
+		double balance = customer.getBalance();
+		balance = balance + rechargeAmount + presentedAmount;
+		customer.setBalance(balance);
+		//修改总训练次数
+		Integer totalTrainingTime = customer.getTotalTrainingTime();
+	//	totalTrainingTime = totalTrainingTime + recPayUser.getP
+		//修改时间
+		customer.setGmtModified(new Date());
 		return null;
 	}
 }
