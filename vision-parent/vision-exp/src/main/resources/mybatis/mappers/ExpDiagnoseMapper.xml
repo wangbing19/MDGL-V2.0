@@ -12,8 +12,12 @@
 				customer_name like concat("%",#{customerName},"%")
 			</if>
 
-			<!-- <if test="registerParentid !=1"> register_parentid= #{registerParentid} 
-				</if> <if test="registerParentid ==1"> register_parentid=1 </if> -->
+			<if test="registerParentid !=null"> 
+				register_parentid= #{registerParentid} 
+			</if> 
+			<if test="registerParentid ==null"> 
+				register_parentid is null
+			</if>
 		</where>
 	</sql>
 
