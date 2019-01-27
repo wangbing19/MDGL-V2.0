@@ -58,7 +58,11 @@ public class PpoAppointmentController {
     @RequestMapping("/saveAll")
     @ResponseBody
     public JsonResult doinsertAppointment(@RequestBody PpoAppointment ppoAppointment ) {
+    	
     	try {
+    		
+    		Integer  userId =0;
+    		ppoAppointment.setUsreId(userId);
     		ppoAppointmentservice.saveppoAppointmentAll(ppoAppointment);
 			return JsonResult.oK();
 		} catch (Exception e) {
