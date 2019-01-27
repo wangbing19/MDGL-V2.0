@@ -35,7 +35,7 @@
 			<div class="form-group">
 				<label for="nameId" class="col-sm-2 control-label">课程名称</label>
 				<div class="col-sm-10" style="width: 300px;">
-					<select class="form-control" name="orgName" id="course_name">
+					<select class="form-control" name="orgName" id="course_name" onchange = "checkLawyerType()">
 						<option>--请选择--</option>
 
 					</select>
@@ -47,7 +47,7 @@
 				<div class="col-sm-10" style="width: 300px;">
 					<input type="text" class="form-control" id="pay_amount"
 						onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="格式：输入金额"  onblur="payInput(this)">
-				<button>an</button>
+				
 				</div>
 			</div>
 
@@ -106,7 +106,6 @@ function doGetObjects(){
     	if(result.status==200){
     		 for (var i = 0; i < result.data.length; i++) 
     		$("#activity_name").append("<option >" + result.data[i].title + "</option>");
-    		$("#mainContentId").data(result.data[i].title+"",result.data[i].payAmount);
     	}  	
     }) 	
     
@@ -125,7 +124,6 @@ function doGetObjects(){
 }
 
 function payInput(pay_money){
-	debugger;
 	alert(pay_money.value);
 }
 function doCancel(){
@@ -133,6 +131,9 @@ function doCancel(){
 }
 function doPay(){
 	
+}
+function checkLawyerType(){
+	alert(123);
 }
 </script>
 
