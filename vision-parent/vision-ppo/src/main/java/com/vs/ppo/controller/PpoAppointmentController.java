@@ -62,7 +62,7 @@ public class PpoAppointmentController {
     	try {
     		
     		Integer  userId =0;
-    		ppoAppointment.setUsreId(userId);
+    		ppoAppointment.setUserId(userId);
     		ppoAppointmentservice.saveppoAppointmentAll(ppoAppointment);
 			return JsonResult.oK();
 		} catch (Exception e) {

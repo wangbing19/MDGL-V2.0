@@ -59,13 +59,21 @@
 
 			</div>
 			<!-- 诊断师diagnostics -->
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="diagnosticsId" class="col-sm-2 control-label">诊断师</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="diagnosticsId"
 						style="width: 35%;">
 				</div>
+			</div> -->
+			<div class="form-group">
+				<label for="diagnosticsId" class="col-sm-2 control-label">诊断师</label>
+					<div class="col-sm-10" style="width: 31%;">
+						<select class="form-control" name="diagnostics" id="diagnosticsId" ></select>
+					</div>
 			</div>
+			
+			
 			<!-- 修改时间gmt_modified -->
 			<div class="form-group">
 				<label for="gmtModifiedId" class="col-sm-2 control-label">时间</label>
@@ -94,6 +102,7 @@
 			function() {
 				//页面加载完成以后加载角色信息并初始化页面
 				//	doInitFormData();
+				getTutor();
 				doLoadRoles();
 			
 				//事件注册
@@ -103,6 +112,18 @@
 
 			});
 
+	//获取医师姓名
+	function getTutor(){
+		var url = "appointment/getAppoName";
+		$.getJSON(url,function(result){	
+	    	if(result.status==200){
+	    		 for (var i = 0; i < result.data.length; i++) 
+	    		$("#diagnosticsId").append("<option >" + result.data[i].trainerName + "</option>");
+	    	}  	
+	    }) 
+	}
+	
+	
 	function calculateTotalPriceId(numberOfTime) {
 		var unitPrice = $("#priceOfCourseId").val();
 		var quantity = numberOfTime.value;
@@ -169,6 +190,7 @@
 			customerId : customerId
 
 		}
+		console.log(params.diagnostics);
 		//获取选择的训练项目
 		var symptomTypes = new Array();
 		$("#resSymptomTypeId input[name='roleId']").each(function() {
@@ -211,7 +233,8 @@
 			$("#numberOfCourseId").val(data.numberOfCourse), 
 			$("#totalPriceId").val(data.totalPrice),
 			//$("#resSymptomTypeId").val(),
-			$("#diagnosticsId").val(data.diagnostics)
+			$("#diagnosticsId").append("<option selected>" + data.diagnostics + "</option>");
+		//	val(data.diagnostics)
 			
 			//初始化用户角色信息
 			var ids = data.symptomTypes;

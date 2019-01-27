@@ -1,6 +1,7 @@
 package com.vs.rec.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -113,6 +114,27 @@ public class RescUserServiceImpl implements RecUserService{
 	    	recPayUser.setTitle(selectById.getTitle());
 		}
 		return list;
+	}
+
+	@Override
+	public String insertObjectRecUser(RecPayUser recPayUser) {
+		String name = recPayUser.getName();
+		//查询上次充值时间
+		RecPayUser lastPayTime = recUserMapper.findLastPayTime(name);
+		System.out.println("上次充值时间为："+lastPayTime);
+		if(lastPayTime!=null)
+		recPayUser.setLastPayTime(lastPayTime.getGmtModified());
+		
+		recPayUser.setGmtCreate(new Date());
+		recPayUser.setGmtModified(recPayUser.getGmtCreate());
+		try {
+			recUserMapper.insert(recPayUser);
+			return "新增记录成功";
+		} catch (Exception e) {
+			System.out.println("新增失败");
+		}
+	
+		return null;
 	}
 }
 

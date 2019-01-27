@@ -27,4 +27,9 @@ public class RecUserController {
 	public RecActivityPush doFindActivityObjectByUserPayType(Integer id) {
 		return recUserService.doFindActivityObjectByUserPayType(id);
 	}
+	@RequestMapping("/insertObjectRecUser")
+	public String insertObjectRecUser(@RequestBody RecPayUser recPayUser) {
+		System.out.println("后台准备保存充值记录:"+recPayUser);
+		return recUserService.insertObjectRecUser(recPayUser);
+	}
 }

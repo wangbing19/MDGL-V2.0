@@ -121,7 +121,6 @@ public class ShiroUserRealm extends AuthorizingRealm {
 	public void logout() {
 		Users user = ShiroUtils.getUser();
 		authorizationCache.remove(user.getUsername());
-		// 系统底层会将用户从shiro中的session对象移除
 		SecurityUtils.getSubject().logout();
 	}
 }

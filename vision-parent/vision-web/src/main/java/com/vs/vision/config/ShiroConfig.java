@@ -22,7 +22,7 @@ import com.vs.vision.shiro.ShiroUserRealm;
  * @author ta
  */
 @Configuration
-public class AppShiroConfig {
+public class ShiroConfig {
 
 	@Bean("shiroFilter")
 	public ShiroFilterFactoryBean newShiroFilterFactoryBean(SecurityManager securityManager) {// shiro 包
@@ -57,6 +57,7 @@ public class AppShiroConfig {
 		ShiroUserRealm userRealm = new ShiroUserRealm();
 		return userRealm;
 	}
+	
 	
 	/**
 	 * 负责shiro中相关bean对象(代理对象 )的声明周期管理

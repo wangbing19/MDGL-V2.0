@@ -8,6 +8,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.sys.Users;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -31,9 +33,12 @@ public class CusCustomerController {
 	@ResponseBody
 	public JsonResult doFindPageObjects(CusVo cusVo) {
 		try {
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+        	
 			//获取登录用户id及上级id
-			cusVo.setUserId(0);
-			cusVo.setUserParentId(0);
+			cusVo.setUserId(user.getId());
+			cusVo.setUserParentId(user.getParentId());
 			PageObject<CusCustomer> pageObject = restTemplate.postForObject(provider_url+"/customer/findPageObjects", cusVo, PageObject.class);
 			if(pageObject.getRecords().size()!=0) {
 				return JsonResult.oK(pageObject);
@@ -64,7 +69,10 @@ public class CusCustomerController {
 	@ResponseBody
 	public JsonResult doUpdateStateById(CusVo cusVo) {
 		try {
-			cusVo.setUser("admin");
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+        	
+			cusVo.setUser(user.getUsername());
 			Integer row = restTemplate.postForObject(provider_url+"/customer/updateStateById", cusVo, Integer.class);
 			if(row != 0 && row != null) {
 				return JsonResult.oK();
@@ -102,10 +110,14 @@ public class CusCustomerController {
 	@ResponseBody
 	public JsonResult doSaveObject(CusCustomer cusCustomer) {
 		try {
-			cusCustomer.setCreatedUser("admin");
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+        	
+			cusCustomer.setCreatedUser(user.getUsername());
 			cusCustomer.setModifiedUser(cusCustomer.getCreatedUser());
-			cusCustomer.setUserId(0);
-			cusCustomer.setUserParentId(0);
+			cusCustomer.setUserId(user.getId());
+			cusCustomer.setUserParentId(user.getParentId());
+			
 			Integer row = restTemplate.postForObject(provider_url+"/customer/saveObject", cusCustomer, Integer.class);
 			if(row != 0 && row != null) {
 				return JsonResult.oK();
@@ -138,7 +150,11 @@ public class CusCustomerController {
 	@ResponseBody
 	public JsonResult doUpdateObject(CusCustomer cusCustomer) {
 		try {
-			cusCustomer.setModifiedUser("admin");
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+			
+			cusCustomer.setModifiedUser(user.getUsername());
+			
 			Integer row = restTemplate.postForObject(provider_url+"/customer/updateObject", cusCustomer, Integer.class);
 			if(row != 0 && row == null) {
 				return JsonResult.oK();

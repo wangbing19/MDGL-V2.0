@@ -2,6 +2,8 @@ package com.vs.vision.contorller.cus;
 
 import com.vs.vision.pojo.cus.CusConsultation;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.sys.Users;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -30,9 +32,12 @@ public class CusConsultationController {
     @ResponseBody
     public JsonResult FindPageObjects(CusVo cusVo){
         try {
+        	//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+        	
         	//获取登录用户id及上级id
-        	cusVo.setUserId(0);
-        	cusVo.setUserParentId(0);
+        	cusVo.setUserId(user.getId());
+        	cusVo.setUserParentId(user.getParentId());
         	
         	PageObject<CusConsultation> pageObject = restTemplate.postForObject(provider_url+"/cusConsultation/findPageObjects", cusVo, PageObject.class);
         	if(!(pageObject.getRecords().size()==0)) {
@@ -56,8 +61,13 @@ public class CusConsultationController {
 	@ResponseBody
 	public JsonResult doSaveObject(CusConsultation cusConsultation) {
 		try {
-			cusConsultation.setUserId(0);
-			cusConsultation.setUserParentId(0);
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+			cusConsultation.setUserId(user.getId());
+			cusConsultation.setUserParentId(user.getParentId());
+			cusConsultation.setCreatedUser(user.getUsername());
+			cusConsultation.setModifiedUser(cusConsultation.getCreatedUser());
+			
 			Integer row = restTemplate.postForObject(provider_url+"/cusConsultation/saveObject", cusConsultation, Integer.class);
 			if(row != 0 || row == null) {
 				return JsonResult.oK();
@@ -103,8 +113,10 @@ public class CusConsultationController {
 	@ResponseBody
 	public JsonResult doUpdateObject(CusConsultation cusConsultation) {
 		try {
-			cusConsultation.setUserId(0);
-			cusConsultation.setUserParentId(0);
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+			cusConsultation.setUserId(user.getId());
+			cusConsultation.setUserParentId(user.getParentId());
 			Integer row = restTemplate.postForObject(provider_url+"/cusConsultation/updateObject", cusConsultation, Integer.class);
 			if(row != 0 || row == null) {
 				return JsonResult.oK();

@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vs.vision.annoation.RequiresLog;
 import com.vs.vision.pojo.sys.Roles;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.sys.RestTemplateParmas;
@@ -76,7 +77,8 @@ public class SysRoleController {
 		System.out.println(id);
 		return restTemplate.postForObject(sys_url + "/doDeleteObject", id, JsonResult.class);
 	}
-
+	
+	@RequiresLog("角色查询")
 	@RequestMapping("/doFindPageObjects.do")
 	@ResponseBody
 	public JsonResult doFindPageObjects(String name, Integer pageCurrent) {

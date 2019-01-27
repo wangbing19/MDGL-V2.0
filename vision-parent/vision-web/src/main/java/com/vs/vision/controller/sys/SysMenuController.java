@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.vs.vision.annoation.RequiresLog;
 import com.vs.vision.pojo.sys.Menus;
 import com.vs.vision.vo.JsonResult;
 
@@ -57,7 +58,8 @@ public class SysMenuController {
 	public JsonResult doDeleteObject(Integer id) {
 		return restTemplate.postForObject(sys_url+"/doDeleteObject", id, JsonResult.class);
 	}
-
+	
+	@RequiresLog("菜单模块查询")
 	@RequestMapping("doFindObjects.do")
 	@ResponseBody
 	public JsonResult doFindObjects() {
