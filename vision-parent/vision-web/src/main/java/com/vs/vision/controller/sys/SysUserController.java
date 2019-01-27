@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.vs.vision.annoation.RequiresLog;
 import com.vs.vision.pojo.sys.Users;
 import com.vs.vision.shiro.ShiroUserRealm;
 import com.vs.vision.utils.ShiroUtils;
@@ -41,7 +42,7 @@ public class SysUserController {
 	}
 
 	
-
+	@RequiresLog("用户查询")
 	@RequestMapping("doFindPageObjects.do")
 	@ResponseBody
 	public JsonResult doFindPageObjects(String username, Integer pageCurrent) {

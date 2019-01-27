@@ -202,9 +202,7 @@ public class UserServiceImpl implements UserService {
 			throw new IllegalArgumentException("用户名不能为空");
 		if (entity.getRole() == null)
 			throw new IllegalArgumentException("必须指定其角色");
-
 		int doSaveObject = UsersMapper.doUpdateObject(entity);
-
 		return doSaveObject;
 	}
 

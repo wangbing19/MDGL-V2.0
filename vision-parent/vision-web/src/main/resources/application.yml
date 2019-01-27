@@ -5,14 +5,22 @@ server:
     
 
     
-spring:
+spring:     
   datasource:
     #引入druid数据源
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://176.198.114.212:3306/visiondb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
     username: root
     password: root
-
+  redis:
+    host: 132.232.207.236
+    port: 6379
+    max-idle: 8
+    min-idle: 0
+    max-active: 8
+    maxwait: -1
+    timeout: 0
+    isRedisCache: 1  #是否使用redis缓存
 
 
 #mybatis-plush配置
