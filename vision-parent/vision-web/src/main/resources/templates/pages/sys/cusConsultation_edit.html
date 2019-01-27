@@ -520,8 +520,9 @@
 			});
 	//获取医师姓名
 	function getTutor(){
-		var url = "appointment/findAppointmentName";
-		$.getJSON(url,function(result){		
+		var url = "appointment/doFindAppointmentName";
+		$.getJSON(url,function(result){	
+			console.log(result);
 	    	if(result.status==200){
 	    		 for (var i = 0; i < result.data.length; i++) 
 	    		$("#tutorId").append("<option >" + result.data[i].title + "</option>");
