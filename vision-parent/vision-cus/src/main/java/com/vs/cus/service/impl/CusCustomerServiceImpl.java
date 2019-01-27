@@ -180,7 +180,8 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 	/**基于用户id修改金额,余额及充值次数*/
 	@Override
 	public Integer updateObjectByMoney(RecPayUser recPayUser) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 }

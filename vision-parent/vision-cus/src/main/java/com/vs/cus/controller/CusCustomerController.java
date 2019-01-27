@@ -105,9 +105,9 @@ public class CusCustomerController {
 	}
 	
 	/**基于用户id修改金额,余额及充值次数*/
-	@RequestMapping("/updateObject")
+	@RequestMapping("/updateObjectByMoney")
 	@ResponseBody
-	public Integer updateObject(@RequestBody RecPayUser recPayUser) {
+	public Integer updateObjectByMoney(@RequestBody RecPayUser recPayUser) {
 		try {
 			return cusCustomerService.updateObjectByMoney(recPayUser);
 		} catch (Exception e) {
