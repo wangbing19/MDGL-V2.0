@@ -25,7 +25,7 @@ import com.vs.vision.vo.Node;
 
 
 public class WebDiagnosisResultController {
-	public static final String local_url = "http://localhost:8026";
+	public static final String local_url = "http://176.198.114.248:8026";
 	@Autowired
 	private RestTemplate restTemplate;
 	

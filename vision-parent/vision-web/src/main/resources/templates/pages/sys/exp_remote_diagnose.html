@@ -429,7 +429,7 @@
 	   $.post(url,params,function(result){
 		   //debugger
     	   if(result.status==200){
-    		   alert(result.msg);
+    		   alert(result.data);
     		   //doGetObjects();//重新查询刷新
     		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
     		   doEditRow(btn,rowData.valid);

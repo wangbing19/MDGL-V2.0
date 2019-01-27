@@ -124,7 +124,7 @@ public class CusConsultationServiceImpl implements CusConsultationService {
 		if(StringUtils.isEmpty(entity.getTel()))
 			throw new ServiceException("电话不能为空");
 		//执行
-		entity.setFOther(null);
+	//	entity.setFOther(null);
 		int rows = cusConsultationMapper.updateObject(entity);
 		//修改客户数据信息
 		QueryWrapper<CusCustomer> queryWrapper = new QueryWrapper<>();
