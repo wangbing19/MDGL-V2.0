@@ -7,7 +7,10 @@
 	<!-- 基于用户名的查询条件sql引用语句 -->
 	<sql id="queryWhereId">
        <where>
-       		user_id=#{userId} and user_parent_id=#{userParentId} 
+       		user_id=#{userId} 
+       		<if test="userParentId!=null and userParentId!=''">
+				and user_parent_id=#{userParentId} 
+			</if>
 			<if test="name!=null and name!=''">
 				and name like concat("%",#{name},"%")
 			</if>

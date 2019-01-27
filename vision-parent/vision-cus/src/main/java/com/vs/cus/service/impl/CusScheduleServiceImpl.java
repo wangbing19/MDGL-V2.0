@@ -35,7 +35,7 @@ public class CusScheduleServiceImpl implements CusScheduleService {
 		}
 		Integer pageCurrent = cusVo.getPageCurrent();
 		int userId = cusVo.getUserId();
-		int userParentId = cusVo.getUserParentId();
+		Integer userParentId = cusVo.getUserParentId();
 
 		//1.数据合法性验证
 		if(pageCurrent==null||pageCurrent<=0)

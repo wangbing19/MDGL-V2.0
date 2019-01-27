@@ -149,7 +149,7 @@ public class PpoAppointmentController {
 	
 	
 	
-	@RequestMapping("/doFindAppointmentName")
+	@RequestMapping("/getAppoName")
 	@ResponseBody
 	public JsonResult findAppointmentName() {
 		try {

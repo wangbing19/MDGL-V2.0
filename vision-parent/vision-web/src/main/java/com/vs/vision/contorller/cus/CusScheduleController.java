@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.vs.vision.pojo.cus.CusSchedule;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.sys.Users;
+import com.vs.vision.utils.ShiroUtils;
 import com.vs.vision.vo.JsonResult;
 import com.vs.vision.vo.PageObject;
 
@@ -39,9 +41,12 @@ public class CusScheduleController {
 	@ResponseBody
 	public JsonResult doFindPageObjects(CusVo cusVo) {
 		try {
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+			
 			//获取登录用户id及上级id
-        	cusVo.setUserId(0);
-        	cusVo.setUserParentId(0);
+        	cusVo.setUserId(user.getId());
+        	cusVo.setUserParentId(user.getParentId());
         	PageObject<CusSchedule> pageObject = restTemplate.postForObject(provider_url+"/schedule/findPageObjects", cusVo, PageObject.class);
         	if(!(pageObject.getRecords().size()==0)) {
         		return JsonResult.oK(pageObject);
@@ -87,10 +92,12 @@ public class CusScheduleController {
 	@ResponseBody
 	public JsonResult doSaveObject(CusSchedule cusSchedule) {
 		try {
-			cusSchedule.setUserId(0);
-			cusSchedule.setUserParentId(0);
-			cusSchedule.setCreatedUser("admin");
-			cusSchedule.setModifiedUser("admin");
+			//获取登录用户信息
+        	Users user = ShiroUtils.getUser();
+			cusSchedule.setUserId(user.getId());
+			cusSchedule.setUserParentId(user.getParentId());
+			cusSchedule.setCreatedUser(user.getUsername());
+			cusSchedule.setModifiedUser(user.getUsername());
 			Integer rows = restTemplate.postForObject(provider_url+"/schedule/saveObject", cusSchedule, Integer.class);
 			if(rows != 0 && rows != null) {
 				
