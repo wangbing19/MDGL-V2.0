@@ -85,7 +85,6 @@ public class SysUserController {
 		RestTemplateParmas restTemplateParmas = new RestTemplateParmas();
 		restTemplateParmas.setUser(ShiroUtils.getUser());
 		restTemplateParmas.setUserentity(Users);
-		System.out.println(Users);
 		return restTemplate.postForObject(sys_url + "/doSaveObject", restTemplateParmas, JsonResult.class);
 	}
 

@@ -102,7 +102,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int doSaveObject(Users user, Users entity) {
-		System.out.println(user);
 		if (entity == null)
 			throw new IllegalArgumentException("保存对象不能为空");
 		if (entity.getRole() == null)
@@ -111,22 +110,24 @@ public class UserServiceImpl implements UserService {
 			throw new IllegalArgumentException("该账号没有创建门店的权限");
 		if (entity.getRole() == 8)
 			throw new IllegalArgumentException("角色选择错误，不能创建超级管理员");
+		if (user.getRole() != 8 && entity.getRole() == 12) {
+			throw new IllegalArgumentException("创建角色错误，不能创建管理员");
+		}
 		if (user.getRole() == 10) {
 			if (entity.getRole() != 11 || entity.getRole() == null) {
 				throw new IllegalArgumentException("角色选择错误，请选择连锁门店角色");
 			}
-			Users Users = UsersMapper.doFindObjectById(user.getId());
-			if (Users.getDeptLimit() <= Users.getDeptNum()) {
-				throw new IllegalArgumentException("已经达到创建门店上限，请联系系统管理员");
-			}
 			entity.setParentId(user.getId());
 		}
-		if (user.getRole() == 12) {
-			if (user.getRole() != 8 && entity.getRole() != 9 && entity.getRole() != 10 && entity.getRole() != 11) {
-				throw new IllegalArgumentException("创建角色错误，不能创建管理员账号");
+		System.out.println(entity);
+		if (entity.getRole() == 11) {
+			Users Users = UsersMapper.doFindObjectById(entity.getParentId());
+			System.out.println(Users);
+			if (Users.getDeptLimit() <= Users.getDeptNum()) {
+				throw new IllegalArgumentException("已经达到创建下级门店上限，请联系系统管理员");
 			}
 		}
-		if(entity.getRole()==10) {
+		if (entity.getRole() == 10) {
 			entity.setParentId(1);
 		}
 		if (entity.getRole() != 8 && entity.getRole() != 12 && entity.getParentId() == null) {
