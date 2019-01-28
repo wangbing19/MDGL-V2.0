@@ -105,41 +105,48 @@ public class UserServiceImpl implements UserService {
 		if (entity == null)
 			throw new IllegalArgumentException("保存对象不能为空");
 		if (entity.getRole() == null)
-			throw new IllegalArgumentException("必须指定其角色");
+			throw new IllegalArgumentException("必须指定对应角色");
 		if (user.getRole() == 9 || user.getRole() == 11)
 			throw new IllegalArgumentException("该账号没有创建门店的权限");
 		if (entity.getRole() == 8)
 			throw new IllegalArgumentException("角色选择错误，不能创建超级管理员");
-		if (user.getRole() != 8 && entity.getRole() == 12) {
+		if (user.getRole() != 8 && entity.getRole() == 12)
 			throw new IllegalArgumentException("创建角色错误，不能创建管理员");
-		}
-		if (user.getRole() == 10) {
-			if (entity.getRole() != 11 || entity.getRole() == null) {
-				throw new IllegalArgumentException("角色选择错误，请选择连锁门店角色");
-			}
-			entity.setParentId(user.getId());
-		}
-		System.out.println(entity);
-		if (entity.getRole() == 11) {
-			Users Users = UsersMapper.doFindObjectById(entity.getParentId());
-			System.out.println(Users);
-			if (Users.getDeptLimit() <= Users.getDeptNum()) {
-				throw new IllegalArgumentException("已经达到创建下级门店上限，请联系系统管理员");
-			}
-		}
-		if (entity.getRole() == 10) {
-			entity.setParentId(1);
-		}
-		if (entity.getRole() != 8 && entity.getRole() != 12 && entity.getParentId() == null) {
-			throw new IllegalArgumentException("上级部门不能为空");
-		}
+		if((user.getRole()!=8||user.getRole()!=12)&&entity.getRole()==9)
+			throw new IllegalArgumentException("创建角色错误，不能创建普通门店");
 		if (StringUtils.isEmpty(entity.getUsername()))
 			throw new IllegalArgumentException("用户名不能为空");
 		if (StringUtils.isEmpty(entity.getPassword()))
 			throw new IllegalArgumentException("密码不能为空");
+		if (user.getRole() == 10) {
+			// 连锁门店创建账号时校验数据
+			entity.setRole(11);
+			entity.setParentId(user.getId());
+		}
+		if (entity.getRole() == 10 || entity.getRole() == 9) {
+			// 创建普通门店/连锁门店将上级设置为超级管理员
+			entity.setParentId(1);
+		}
+		if (entity.getRole() == 11) {
+			// 上级门店数据校验
+			if (entity.getParentId() == null) {
+				if (user.getRole() == 8) {
+					throw new IllegalArgumentException("请指定上级门店");
+				} else {
+					entity.setParentId(user.getId());
+				}
+			}
+			// 连锁普通门店数量校验
+			Users Users = UsersMapper.doFindObjectById(entity.getParentId());
+			if (Users.getDeptLimit() <= Users.getDeptNum()) {
+				throw new IllegalArgumentException("已经达到创建连锁门店上限，请联系系统管理员");
+			}
+		}
 		Users parentUser = UsersMapper.doFindObjectById(entity.getParentId());
 		if (entity.getRole() == 12) {
+			//创建普通管理员时父类id设置为null
 			entity.setParentId(null);
+			entity.setParentUsername(user.getUsername());
 		} else {
 			entity.setParentUsername(parentUser.getUsername());
 		}
@@ -155,6 +162,7 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		if (entity.getRole() == 9) {
+			entity.setParentId(1);
 			if (entity.getCustomerLimit() == null) {
 				// 创建普通门店，顾客档案上限数字为空时默认设置为200
 				entity.setCustomerLimit(500);
