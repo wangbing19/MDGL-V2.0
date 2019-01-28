@@ -11,9 +11,9 @@
 
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default btn-search">
-                                <i class="fa fa-search"></i>
+								<i class="fa fa-search"></i>
 							</button>
-							<button type="button" class="btn btn-default btn-add">添加</button>
+							<!-- <button type="button" class="btn btn-default btn-add">添加</button> -->
 						</div>
 					</div>
 				</div>
@@ -21,219 +21,176 @@
 			<!-- /.box-header -->
 			<div class="box-body table-responsive no-padding">
 				<form>
-				  <table class="table table-hover">
-					<thead>
-						<tr>
-						    <th>序号</th>
-							<th>姓名</th>
-							<!-- <th>电话</th> -->
-							<th>裸眼视力</th>
-							<th>评分</th>
-							<th>评价</th>
-							<th>项目内容</th>
-							<th>导师</th>
-							<th>时间</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody id="tbodyId">
-					
-					</tbody>
-				  </table>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>姓名</th>
+								<!-- <th>电话</th> -->
+								<th>裸眼视力</th>
+								<th>评分</th>
+								<th>评价</th>
+								<th>项目内容</th>
+								<th>导师</th>
+								<th>结束时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="tbodyId">
+
+						</tbody>
+					</table>
 				</form>
 			</div>
 			<!-- /.box-body -->
-			<div id="pageId" class="box-footer clearfix">
-            </div>
+			<div id="pageId" class="box-footer clearfix"></div>
 		</div>
 		<!-- /.box -->
 	</div>
 </div>
 <script type="text/javascript">
-   $(function(){
-	  $("#pageId").load("doPageUI.do",function(){
-		  doGetObjects();
-	  });
-	  $(".input-group-btn")
-	  .on("click",".btn-search",doQueryObjects)
-	  .on("click",".btn-add",doLoadEditUI)
-      
-	  $("#tbodyId")
-	  .on("click",".btn-delete",doDeleteObject)
-	  .on("click",".btn-update",doLoadEditUI)
-	  //.on("click",".btn-btn-training",docontent)
-   });
-   
-   
-  /*  function docontent(){
-	   var tel=$(this).parents("tr").data("tel");
-	   var params={"tel":tel};
-	   var url = "tra/doSelectTel.do"
-	   $.getJSON(url,params,function(result){
-	   		if(result.status==200){
-				   
-				$("#mainContentId").data("content",result.data);
-				// console.log("选中的行数据:");
-				// console.log(result);
+	$(function() {
+		$("#pageId").load("doPageUI.do", function() {
+			doGetObjects();
+		});
+		$(".input-group-btn").on("click", ".btn-search", doQueryObjects)
+
+		$("#tbodyId").on("click", ".btn-delete", doDeleteObject).on("click",
+				".btn-update", doLoadEditUI)
+	});
+
+
+
+	function doLoadEditUI() {
+
+		var title = "修改训练记录"
+		var id = $(this).parents("tr").data("id");
+		var params = {
+			"id" : id
+		};
+		var url = "tra/doSelectUI.do";
+		$.getJSON(url, params, function(result) {
+			if (result.status == 200) {
+
+				$("#mainContentId").data("data", result.data);
 				doLoadPageUI(title);//异步加载页面  
-			}else{
-				  alert(result.msg); 
+			} else {
+				alert(result.msg);
 			}
-   }
-   } */
-   
-   function doLoadEditUI(){
-	   
-	   var title;
-	   if($(this).hasClass('btn-add')){
-		   title="添加";
-		   doLoadPageUI(title);
-	   }else{
-		   
-		   title="修改"
-		   var id=$(this).parents("tr").data("id");
-		   var params={"id":id};
-		   //console.log("id:"+id);
-		   debugger
-		   var url="tra/doSelectUI.do";
-		   //console.log("测试");
-		   $.getJSON(url,params,function(result){
-			   debugger
-			   if(result.status==200){
-				   
-				  $("#mainContentId").data("data",result.data);
-				 // console.log("选中的行数据:");
-				 // console.log(result);
-				  doLoadPageUI(title);//异步加载页面  
-			   }else{
-				  alert(result.msg); 
-			   }
-		   });
-	   }
-   }
-  /*  function doTraInformationrecordUI(title){
-	   var url="traInformationrecord/doTraInformationrecordUI.do"
-	   $("#mainContentId")
-	   .load(url,function(){
-		   $(".box-title").html(title);
-	   })
-   } */
-   function doLoadPageUI(title){
-	   var url="tra/doUserEditUI.do"
-	   $("#mainContentId")
-	   .load(url,function(){
-		   $(".box-title").html(title);
-	   })
-   }
-   
-   
-   function doDeleteObject(){
-	   //1.params
-	   var id=$(this).parents("tr").data("id");
-	   //console.log("id:"+id);
-	   var params={"id":id};
-	   //2.url
-	   var url="tra/doDeleteObject.do"
-	   //3.ajax request
-	   console.log("params:"+params);
-	   console.log("params.id:"+params.id);
-	   $.post(url,params,function(result){
-		   if(result.status==200){	
-			   alert(result.data);
-			   doGetObjects();
-		   }else{
-			   alert(result.msg);
-		   }
-	   })
-	   
-   }
-   function doQueryObjects(){
-	   $("#pageId").data("pageCurrent",1);
-	   doGetObjects();
-   }
-   function doGetObjects(){
-	   //1.params
-	   //获取在Page.html中绑定的当前页码值
-	   var pageCurrent=$("#pageId").data("pageCurrent");
-	   //假如没有值,设置初始值为1
-	   if(!pageCurrent)pageCurrent=1;
-	   //var params="pageCurrrent="+pageCurrent;
-	   var params={"pageCurrent":pageCurrent};
-	   //获取查询时用户输入的名字
-	   var name=$("#searchNameId").val();
-	   console.log("name:"+name);
-	   if(name)params.name=name;
-	   //2.url
-	   var url="tra/doFindPageObjects.do";
-	   //3.ajax request
-	   console.log("params:"+params);
-	   $.getJSON(url,params,function(result){
-		   doHandleResponseResult(result);
-		   console.log(result);
-	   });
-   }
-   function doHandleResponseResult(result){
-	   
-	   if(result.status==200){
-		   
-		  doSetTableBodyRows(result.data.records);
-		  doSetPagination(result.data);
-	   }else{
-		  doSetTableBodyErrors(result.msg);
-	   }
-   }
-   function doSetTableBodyErrors(msg){
-	   //获取body对象并清空
-	   var tBody=$("#tbodyId");
-	   tBody.empty();
-	   //创建tr对象
-	   var tr=$("<tr></tr>");
-	   //创建td对象
-	   //var len=$("table thead").find("tr").find("th").length;
-	   var len=$("table th").length;
-	   var td=$("<td></td>");
-	   td.prop("colspan",len);
-	   td.append(msg);
-	   tr.append(td);
-	   //将tr追加到tbody
-	   tBody.append(tr);
-   }
-   function doSetTableBodyRows(records){
-	   
-	  //获取tbody对象,并清空
-	   var tBody=$("#tbodyId");
-	   tBody.empty();
-	   //2.迭代数据,并追加到tBody
-	   for(var i in records){
-		  //2.1构建tr对象
-		  var tr=$("<tr></tr>");
-		  tr.data("id",records[i].id);
-		  //2.2构建tds对象
-		  var tds=doCreateTds(records[i],i);
-		  //2.3将tds对象追加到tr中
-		  tr.append(tds);
-		  //2.4将tr追加到tbody中
-		  tBody.append(tr);
-	   }
-   }
-   function doCreateTds(row,i){
-	   console.log("row="+row)
-	   //debugger
-	   var tds=
-       "<td>"+(parseInt(i)+1)+"</td>"+
-	   "<td>"+row.name+"</td>"+
-	   //"<td>"+row.tel+"</td>"+
-       "<td>"+"R:"+row.rvision+"<br/>"+"L:"+row.lvision+"</td>"+
-       "<td>"+row.grade+"</td>"+
-       "<td>"+row.evaluate+"</td>"+
-       "<td>"+row.content+"</td>"+
-       "<td>"+row.tutor+"</td>"+
-       "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
-       "<td><button type='button' class='btn btn-default btn-delete'>"+"删除"+"</button>"+
-       "&nbsp;<button type='button' class='btn btn-default btn-update'>"+"修改:"+"</button></td>";
-       //"&nbsp;<button type='button' class='btn btn-default btn-training'>"+"训练内容"+"</button>
-       return tds;
-   }
+		});
+	}
+
+	function doLoadPageUI(title) {
+		var url = "tra/doUserEditUI.do"
+		$("#mainContentId").load(url, function() {
+			$(".box-title").html(title);
+		})
+	}
+
+	function doDeleteObject() {
+		//1.params
+		var id = $(this).parents("tr").data("id");
+		var params = {
+			"id" : id
+		};
+		//2.url
+		var url = "tra/doDeleteObject.do"
+		//3.ajax request
+		$.post(url, params, function(result) {
+			if (result.status == 200) {
+				alert(result.msg)
+				doGetObjects();
+			} else {
+				alert(result.msg);
+			}
+		})
+
+	}
+	function doQueryObjects() {
+		$("#pageId").data("pageCurrent", 1);
+		doGetObjects();
+	}
+	function doGetObjects() {
+		//1.params
+		//获取在Page.html中绑定的当前页码值
+		var pageCurrent = $("#pageId").data("pageCurrent");
+		//假如没有值,设置初始值为1
+		if (!pageCurrent)
+			pageCurrent = 1;
+		//var params="pageCurrrent="+pageCurrent;
+		var params = {
+			"pageCurrent" : pageCurrent
+		};
+		//获取查询时用户输入的名字
+		var name = $("#searchNameId").val();
+		if (name)
+			params.name = name;
+		//2.url
+		var url = "tra/doFindPageObjects.do";
+		//3.ajax request
+		$.getJSON(url, params, function(result) {
+			doHandleResponseResult(result);
+		});
+	}
+	function doHandleResponseResult(result) {
+
+		if (result.status == 200) {
+
+			doSetTableBodyRows(result.data.records);
+			doSetPagination(result.data);
+		} else {
+			doSetTableBodyErrors(result.msg);
+		}
+	}
+	function doSetTableBodyErrors(msg) {
+		//获取body对象并清空
+		var tBody = $("#tbodyId");
+		tBody.empty();
+		//创建tr对象
+		var tr = $("<tr></tr>");
+		//创建td对象
+		var len = $("table th").length;
+		var td = $("<td></td>");
+		td.prop("colspan", len);
+		td.append(msg);
+		tr.append(td);
+		//将tr追加到tbody
+		tBody.append(tr);
+	}
+	function doSetTableBodyRows(records) {
+
+		//获取tbody对象,并清空
+		var tBody = $("#tbodyId");
+		tBody.empty();
+		//2.迭代数据,并追加到tBody
+		for ( var i in records) {
+			//2.1构建tr对象
+			var tr = $("<tr></tr>");
+			tr.data("id", records[i].id);
+			//2.2构建tds对象
+			var tds = doCreateTds(records[i], i);
+			//2.3将tds对象追加到tr中
+			tr.append(tds);
+			//2.4将tr追加到tbody中
+			tBody.append(tr);
+		}
+	}
+	function doCreateTds(row, i) {
+		//  console.log("row="+row)
+		//debugger
+		var tds = 
+			"<td>" + (parseInt(i) + 1) + "</td>" +
+			"<td>" + row.name + "</td>" +
+			"<td>" + "R:" + row.rvision + "<br/>" + "L:" + row.lvision + "</td>" +
+			"<td>" + row.grade + "</td>" + 
+			"<td>" + row.evaluate + "</td>" + 
+			"<td>" + row.content + "</td>" + 
+			"<td>" + row.tutor + "</td>" + 
+			"<td>" + new Date(row.endTime).toLocaleString() + "</td>" + 
+			"<td><button type='button' class='btn btn-default btn-delete'>" + "删除" + "</button>" + 
+			"&nbsp;<button type='button' class='btn btn-default btn-update'>" + "修改:" + "</button></td>";
+		return tds;
+	}
 </script>
 
 

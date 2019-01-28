@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.vs.vision.pojo.cus.vo.CusVo;
 import com.vs.vision.pojo.exp.ExpRemoteDiagnoseVo;
 import com.vs.vision.pojo.exp.RemoteDiagnose;
 import com.vs.vision.pojo.pra.TraInformationrecord;
@@ -15,34 +16,35 @@ import com.vs.vision.service.TraInformationrecordService;
 import com.vs.vision.vo.PageObject;
 
 @Controller
+@RequestMapping("/traInformationrecord")
 public class TraInformationrecordController {
 	
 	@Autowired
 	private TraInformationrecordService traInformationrecordService;
 	
-	/**分页*/
+	/**训练记录分页及姓名查询*/
 	@RequestMapping("/doFindPageObjects")
 	@ResponseBody
-	public PageObject<TraInformationrecord> doFindPageObjects(@RequestBody Map map){
-		System.out.println("1111");
-		String name = (String)map.get("name");
-		Integer pageCurrent = (Integer)map.get("pageCurrent");
-		Integer userParentId = (Integer)map.get("userParentId");
-		System.out.println(name);
-		System.out.println(pageCurrent);
-		PageObject<TraInformationrecord> pageObject=
-				traInformationrecordService.findPageObjects(name,
-						pageCurrent,userParentId);
-		System.out.println(pageObject.getRowCount());
-		return pageObject;
+	public PageObject<TraInformationrecord> doFindPageObjects(@RequestBody CusVo cusVo){
+		try {
+			return traInformationrecordService.findPageObjects(cusVo);
+		} catch (Exception e) {
+			System.out.println("训练记录分页及姓名查询==============错误=======================");
+		}
+		return null;
 	}
 	
 	
-	/**添加*/
+	/**添加训练记录到数据库*/
 	@RequestMapping("doSaveObject")
 	@ResponseBody
 	public Integer doSaveObject(@RequestBody TraInformationrecord entity) {
-		return traInformationrecordService.doSaveObject(entity);
+		try {
+			return traInformationrecordService.doSaveObject(entity);
+		} catch (Exception e) {
+			System.out.println("添加训练记录到数据库==============错误=======================");
+		}
+		return null;
 	}
 	
 	
@@ -50,7 +52,12 @@ public class TraInformationrecordController {
 	@RequestMapping("doDeleteObject")
 	@ResponseBody
 	public Integer doDeleteObject(@RequestBody Integer id) {
-		return traInformationrecordService.doDeleteObject(id);
+		try {
+			return traInformationrecordService.doDeleteObject(id);
+		} catch (Exception e) {
+			System.out.println("从数据删除训练记录表信息==============错误=======================");
+		}
+		return null;
 	}
 	
 	
@@ -58,15 +65,24 @@ public class TraInformationrecordController {
 	@RequestMapping("doSelectUI")
 	@ResponseBody
 	public TraInformationrecord doSelect(@RequestBody Integer id) {
-		TraInformationrecord entity = traInformationrecordService.doSelect(id);
-		return entity;
+		try {
+			return traInformationrecordService.doSelect(id);
+		} catch (Exception e) {
+			System.out.println("通过id查询训练表信息==============错误=======================");
+		}
+		return null;
 	}
 	
 	
-	/**修改*/
+	/**通过id修改训练表信息*/
 	@RequestMapping("doUpdate")
 	@ResponseBody
 	public Integer doUpdate(@RequestBody TraInformationrecord entity) {
-		return traInformationrecordService.doUpdate(entity);
+		try {
+			return traInformationrecordService.doUpdate(entity);
+		} catch (Exception e) {
+			System.out.println("通过id修改训练表信息==============错误=======================");
+		}
+		return null;
 	}
 }

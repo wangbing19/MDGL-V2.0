@@ -2,6 +2,7 @@ package com.vs.cus.service;
 
 import com.vs.vision.pojo.cus.CusCustomer;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.pra.TraInformationrecord;
 import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.vo.PageObject;
 
@@ -24,5 +25,5 @@ public interface CusCustomerService {
 	/**基于用户id修改金额,余额及充值次数*/
 	Integer updateObjectByMoney(RecPayUser recPayUser);
 	/**基于训练记录表返回信息更改训练次数*/
-	Integer updateObjectByTimesOfTraining(Integer customerId);
+	Integer updateObjectByTimesOfTraining(TraInformationrecord entity);
 }

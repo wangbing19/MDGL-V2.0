@@ -4,11 +4,14 @@ import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vs.cus.mapper.CusConsultationMapper;
 import com.vs.cus.mapper.CusCustomerMapper;
+import com.vs.cus.mapper.CusScheduleMapper;
 import com.vs.cus.service.CusCustomerService;
 import com.vs.vision.exception.ServiceException;
 import com.vs.vision.pojo.cus.CusConsultation;
 import com.vs.vision.pojo.cus.CusCustomer;
+import com.vs.vision.pojo.cus.CusSchedule;
 import com.vs.vision.pojo.cus.vo.CusVo;
+import com.vs.vision.pojo.pra.TraInformationrecord;
 import com.vs.vision.pojo.rec.RecPayUser;
 import com.vs.vision.vo.PageObject;
 
@@ -25,6 +28,8 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 	private CusCustomerMapper cusCustomerMapper;
 	@Autowired
 	private CusConsultationMapper cusConsultationMapper;
+	@Autowired
+	private CusScheduleMapper cusScheduleMapper;
 
 	/**用户页面查看所有信息*/
 	@Override
@@ -207,14 +212,27 @@ public class CusCustomerServiceImpl implements CusCustomerService {
 		return rows;
 	}
 
-	/**基于训练记录表返回信息更改训练次数*/
+
+
+	/**基于训练记录表返回信息更改训练次数及余额*/
 	@Override
-	public Integer updateObjectByTimesOfTraining(Integer customerId) {
+	public Integer updateObjectByTimesOfTraining(TraInformationrecord entity) {
 		CusCustomer cusCustomer = new CusCustomer();
-		CusCustomer customer = cusCustomerMapper.selectById(customerId);
+		CusCustomer customer = cusCustomerMapper.selectById(entity.getCustomerId());
+		//获取训练课程的单价
+		CusSchedule cusSchedule = cusScheduleMapper.selectById(entity.getScheduleId());
+		Double priceOfCourse = cusSchedule.getPriceOfCourse();
+		//修改余额
+		Double balance = customer.getBalance();
+		balance = balance - priceOfCourse;
+		if(balance<0) {
+			cusCustomer.setState(0);
+		}
 		//获取训练次数并修改赋值
 		cusCustomer.setTimesOfTraining(customer.getTimesOfTraining()+1);
-		cusCustomer.setId(customerId);
+		//设置余额
+		cusCustomer.setBalance(balance);
+		cusCustomer.setId(entity.getCustomerId());
 		cusCustomer.setGmtCreate(new Date());
 		int rows = cusCustomerMapper.updateById(cusCustomer);
 		return rows;

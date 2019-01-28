@@ -12,4 +12,12 @@ public interface ResProjectConfigService {
 
 	PageObject<ResProjectConfig> dofindObjects(Map map);
 
+	Integer doSaveObject(ResProjectConfig entity);
+
+	Integer doUpdate(ResProjectConfig entity);
+
+	Integer doDelete(Integer[] ids);
+
+	Integer doprojectStateById(Map map);
+
 }

@@ -136,16 +136,25 @@
 				}
 			}
 		})
+		
 		var params = {
 			"diagnosisId" : $("#parentUserDesc").data("parentId")
 		};
 		$.post("diagnosis/doFindDescObject.do", params, function(result) { //通过症状id查询症状描述
 			if (result.status == 200) {
 				$("#descText").val(result.data.diagnosisDesc);
+				doSikpzhifu();
 			}
 		})
 
 	}
+	/* function doSikpzhifu() {
+		//debugger
+		var url = "skipzhifu";
+		$("#mainContentId").load(url, function() {
+
+		})
+	} */
 
 	function deleteDesc() {
 

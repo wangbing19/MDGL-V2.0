@@ -86,7 +86,7 @@ public class payController {
                     + "商户订单号：" + r6_Order + "<br/>"
                     + "支付成功时间：" + rp_PayDate+"<br/>"
                     +"3秒后返回主页");
-            response.setHeader("refresh", "3;url=http://localhost:8020/doIndexUI");
+            response.setHeader("refresh", "3;url=http://localhost:8020/doIndexUI.do");
         } else {
             pw.println("支付失败");
         }

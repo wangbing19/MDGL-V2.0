@@ -2,6 +2,7 @@
 <div class="box box-info">
 	<div class="box-header with-border">
 		<h3 class="box-title">课程表</h3>
+		<button type="button" onclick="doTest()" style="float: right;">测试</button>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -124,6 +125,17 @@
 	}
 	
 	
+	
+	//测试程序
+	function doTest(){
+		$("#courseTitleId").val("近视训练");
+		$("#priceOfCourseId").val("200");
+		$("#courseTrainingId").val("30");
+		$("#totalPriceId").val("6000");
+		$("#diagnosticsId").append("<option selected>" + "Tim" + "</option>");
+	}
+	
+	
 	function calculateTotalPriceId(numberOfTime) {
 		var unitPrice = $("#priceOfCourseId").val();
 		var quantity = numberOfTime.value;
@@ -190,7 +202,7 @@
 			customerId : customerId
 
 		}
-		console.log(params.diagnostics);
+	//	console.log(params.diagnostics);
 		//获取选择的训练项目
 		var symptomTypes = new Array();
 		$("#resSymptomTypeId input[name='roleId']").each(function() {

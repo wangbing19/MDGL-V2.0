@@ -9,7 +9,7 @@
 	<sql id="queryWhereId">
 		<where>
 			<if test="customerName!=null and customerName!=''">
-				customer_name like concat("%",#{customerName},"%")
+				customer_name like concat("%",#{customerName},"%") and
 			</if>
 
 			<if test="registerParentid !=null"> 

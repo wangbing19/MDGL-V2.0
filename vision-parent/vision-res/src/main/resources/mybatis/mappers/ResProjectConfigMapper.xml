@@ -10,4 +10,24 @@
 		limit #{startIndex},#{pageSize}
 		<!-- limit 子句为分页查询子句,第一个参数代表下标位置 -->
 	</select>
+	
+	
+	<sql id="queryWhereId">
+		<where>
+			<if test="projectName!=null and projectName!=''">
+				project_name like concat("%",#{projectName},"%") and
+			</if>
+
+			<if test="userId!=null and userId!=''"> 
+				user_id= #{userId} 
+			</if> 
+			
+		</where>
+	</sql>
+	
+	<select id="getRowCount" resultType="int">
+		select count(*) from res_project_config
+		<include refid="queryWhereId" />
+	</select>
+	
 </mapper>

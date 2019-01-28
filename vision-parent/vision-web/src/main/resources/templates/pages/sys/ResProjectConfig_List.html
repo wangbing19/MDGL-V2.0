@@ -15,6 +15,7 @@
 							</button>
 							<button type="button" class="btn btn-default btn-add">新增</button>
 							<button type="button" class="btn btn-default btn-update">修改</button>
+							<button type="button" class="btn btn-default btn-delete">删除</button>
 						</div>
 					</div>
 				</div>
@@ -24,13 +25,12 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>ID</th>
+							<th><input type="checkbox" id="checkAll">全选</th> 
 							<th>症状名称</th>
 							<th>症状描述</th>
 							<th>状态类型</th>
 							<th>创建时间</th>
 							<th>修改时间</th>
-							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody id="tbodyId"></tbody>
@@ -46,12 +46,18 @@
 <script type="text/javascript">
    $(document).ready(function(){
 	   $("#pageId").load("doPageUI",function(){
+		   //debugger
 		   doGetObjects();
 	   });
 	   $(".input-group-btn")
 	   .on("click",".btn-search",doQueryObjects)
-	   .on("click",".btn-add,.btn-update",doLoadEditUI);
+	   .on("click",".btn-add,.btn-update",doLoadEditUI)
+	   .on("click",".btn-delete",doDeleteObjects);//对应删除按钮
 	   $("tbody").on("click",".btn-projectState",doprojectStateId);
+	 //设置 thead 中checkbox对象的状态监听
+	   $("thead").on("change","#checkAll",doChangeTHeadCheckBoxState);//设置全选框是否选中
+	 //设置 tbody 中checkbox对象的状态监听
+	   $("#tbodyId").on("change",'.cBox',doChangeTBodyCheckBoxState);
    });
    
    function doLoadEditUI(){
@@ -95,6 +101,42 @@
 	   });
    } */
    
+   
+   //修改thead中checkbox对象的状态
+   function doChangeTHeadCheckBoxState(){
+	   //debugger
+	   //1.获取thead中checkbox对象的状态
+	   var state=$(this).prop("checked");
+	   //2.设置tbody中checkbox对象的状态
+	   //方法1
+	   //$("#tbodyId input[type='checkbox']")
+	   //.each(function(){
+	   $(this).prop("checked",state);
+	   //})
+	   //debugger
+	   //方法2
+	   $("#tbodyId input[type='checkbox']")
+	   .prop("checked",state);
+   }
+   
+   
+   //修改tbody中checkbox对象的状态
+   function doChangeTBodyCheckBoxState(){
+	   //1.获取tbody中所有checkbox对象状态&&操作的结果
+	      var flag=true;
+	     
+	      //debugger
+	      $("#tbodyId input[type='checkbox']")
+	      .each(function(){
+	    	  
+	    	  flag=flag&&$(this).prop("checked");
+	      });
+	      //2.设置thead中checkbox的状态值
+	      $("#checkAll").prop("checked",flag);
+   }
+   
+   
+   
    function doGetCheckedId(){
 	 return $("tbody input[name='radioId']:checked").val();
    }
@@ -105,23 +147,100 @@
 		   $(".box-title").html(title);
 	   }) 
    }
+   
+   
+   
+   
+   
+   
+   function doDeleteObjects(){
+		
+		
+		//console.log("confirm="+confirm("123"));
+		
+		//1.定义请求的URL
+		var url="ResProjectConfig/doDelete.do";
+		//2.定义请求的参数
+		var ids=doGetCheckedIds();//array数组
+		if(ids.length==0){
+			alert("请选择");
+			return;
+		}
+		var params={"ids":ids.toString()};
+		if(!confirm("你确认删除吗?"))return;
+		//3.执行异步删除操作
+		$.post(url,params,function(result){
+		//console.log("删除="+result.toString)
+		  if(result.status==200){
+			  //alert(result.message);
+			  doChangePageCode();
+			  doGetObjects();
+		  }else{
+			  alert(result.msg);
+		  }
+		  
+		})
+	}
+	
+	//删除事件中的方法
+	function doGetCheckedIds(){
+		 //<input type='checkbox' value='1' checked=true>
+		   //1.定义一数组
+		   var array=[];//new Array();
+		   //2.获取选中的checkbox的值并将其存储到数组
+		   //2.1获取tbody中的所有类型为checkbox的input元素
+		   $("#tbodyId input[type='checkbox']")
+		   //2.2迭代所有checkbox对象
+		   .each(function(){
+			   //2.3判定checked属性的值，假如为true表示选中
+			   if($(this).prop("checked")){
+				   //向数组放数据(input元素value属性的值)
+				   array.push($(this).val());
+			   }
+		   })
+		   //debugger
+		   //3.返回数组
+		   return array;
+	}
+	
+	
+	//删除后修改页码值(比如删了最后一页的最后一条需要将当前页码值减1)
+	function doChangePageCode(){
+	    //debugger
+		var pageCurrent=$("#pageId").data("pageCurrent");
+		var pageCount=$("#pageId").data("pageCount");
+		var state=$("#checkAll").prop("checked");
+		//console.log("state="+state);
+		//alert(state);
+		if(state&&pageCurrent==pageCount&&pageCurrent>1){
+			pageCurrent--;
+			$("#pageId").data("pageCurrent",pageCurrent);
+		}
+	}
+   
+   
+	
+	
+	
+	
+   
    //禁用和启用操作
    function doprojectStateId(){
 	   //params
 	   var rowData=$(this).parents("tr").data("rowData");
 	   var id=rowData.id;
-	   var newprojectState=rowData.projectState?0:1;
-	   var params={"id":rowData.id,"projectState":newprojectState};
+	   var projectState=rowData.projectState?0:1;
+	   var params={"id":rowData.id,"projectState":projectState};
 	   //url
 	   var url="ResProjectConfig/doprojectStateById.do";
 	   //ajax request
        var btn=$(this);//获取点击的button对象
 	   $.post(url,params,function(result){
     	   if(result.status==200){
-    		   alert(result.msg);
-    		   doGetObjects();//重新查询刷新
+    		   alert(result.data);
+    		   //doGetObjects();//重新查询刷新
     		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
-    		   //doEditRow(btn,rowData.projectState);
+    		   doEditRow(btn,rowData.projectState);
     	   }else{
     		   alert(result.msg);
     	   }
@@ -129,15 +248,19 @@
    }    
    function doEditRow(obj,projectState){
 	   //1.修改按钮上的内容
-	   $(obj).html(projectState?"生    效":"未生效");
+	   var projectState=projectState?0:1;
+	   $(obj).html(projectState?"已生效":"未生效");
 	   //2.修改tr中第5个td中的内容(查询API文档)
 	   var tr=$(obj).parents("tr");
-	   tr.find("td:eq(3)").text(projectState?"生    效":"未生效");
+	   tr.find("td:eq(3)").val(projectState?"已生效":"未生效");
 	   //3.获取当前行tr对象，然后重新绑定新的值
 	   var rowData=tr.data("rowData")
 	   rowData.projectState=projectState?0:1;
 	   tr.data("rowData",rowData);
    }
+   
+   
+   
    //处理查询按钮事件
    function doQueryObjects(){
 	   $("#pageId").data("pageCurrent",1);
@@ -152,19 +275,21 @@
 	   }
 	   var params={"pageCurrent":pageCurrent};
 	   //获取查询时用户输入的名字
-	   //var name=$("#searchNameId").val();
+	   var name=$("#searchNameId").val();
 	 //  console.log("name:"+name);
-	  // if(name)params.name=name;
+	   if(name)params.projectName=name;
 		 var url="ResProjectConfig/doFingPageObject";
-	   
+	   //debugger
 	   
 	   $.getJSON(url,params,function(result){
+		   //debugger
 		   console.log(result);
 		   doHandleResponseResult(result);
 	   });
    }
    
    function doHandleResponseResult(result){
+	   //debugger
 	   if(result.status==200){
 		   
 		   console.log(result.data);
@@ -191,13 +316,14 @@
    }
    function doCreateTds(row){
 	   var tds=
-		 "<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
+		  "<td><input type='checkbox' name='radioId' class='cBox' value='"+row.id+"'></td>"+
 	     "<td>"+row.projectName+"</td>"+
 	     "<td>"+row.projectChoose+"</td>"+
-	     "<td>"+(row.projectState?"生    效":"未生效")+"</td>"+
+	     "<td><button type='button' class='btn btn-default btn-projectState'>"+(row.projectState?"已生效":"未生效")+"</button></td>"+
+	     //"<td>"+(row.projectState?"生    效":"未生效")+"</td>"+
 	     "<td>"+new Date(row.gmtCreate).toLocaleString()+"</td>"+
-	     "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>"+
-	     "<td><button type='button' class='btn btn-default btn-projectState'>"+(row.projectState?"生    效":"未生效")+"</button></td>";
+	     "<td>"+new Date(row.gmtModified).toLocaleString()+"</td>";
+	     
        return tds;
    }
 </script>
