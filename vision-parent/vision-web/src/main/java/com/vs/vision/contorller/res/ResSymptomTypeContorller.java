@@ -21,7 +21,7 @@ import com.vs.vision.vo.JsonResult;
 public class ResSymptomTypeContorller {
 
 
-	private static final String provider_url = "http://localhost:8028";
+	private static final String provider_url = "http://176.198.114.246:8028";
 
 	@Autowired
 	private RestTemplate restTemplate;

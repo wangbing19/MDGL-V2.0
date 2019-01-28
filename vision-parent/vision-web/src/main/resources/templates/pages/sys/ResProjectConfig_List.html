@@ -252,7 +252,7 @@
 	   $(obj).html(projectState?"已生效":"未生效");
 	   //2.修改tr中第5个td中的内容(查询API文档)
 	   var tr=$(obj).parents("tr");
-	   tr.find("td:eq(3)").text(projectState?"已生效":"未生效");
+	   tr.find("td:eq(3)").val(projectState?"已生效":"未生效");
 	   //3.获取当前行tr对象，然后重新绑定新的值
 	   var rowData=tr.data("rowData")
 	   rowData.projectState=projectState?0:1;
