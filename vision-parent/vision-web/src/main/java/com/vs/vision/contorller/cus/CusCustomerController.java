@@ -111,24 +111,24 @@ public class CusCustomerController {
 	public JsonResult doSaveObject(CusCustomer cusCustomer) {
 		try {
 			//获取登录用户信息
-        	Users user = ShiroUtils.getUser();
+        	Users Users = ShiroUtils.getUser();
         	//获取登录用户创建客户数量
 			
-			  if(user.getDeptNum()>=user.getDeptLimit()) { return JsonResult.build(201,
+			  if(Users.getDeptNum()>=Users.getDeptLimit()) { return JsonResult.build(201,
 			  "创建客户数量已达上限,无法再次创建客户,请联系总店208-62825475"); }
 			  
 			 
         	
-			cusCustomer.setCreatedUser(user.getUsername());
+			cusCustomer.setCreatedUser(Users.getUsername());
 			cusCustomer.setModifiedUser(cusCustomer.getCreatedUser());
-			cusCustomer.setUserId(user.getId());
-			cusCustomer.setUserParentId(user.getParentId());
+			cusCustomer.setUserId(Users.getId());
+			cusCustomer.setUserParentId(Users.getParentId());
 			
 			Integer row = restTemplate.postForObject(provider_url+"/customer/saveObject", cusCustomer, Integer.class);
 			if(row != 0 && row != null) {
 				  //添加登录用户创建客户数量 
-				  user.setDeptNum(user.getDeptNum()+1);
-				  restTemplate.postForObject("http://176.198.114.212:8029/user/dodoUpdateObject", user, Integer.class);
+				Users.setDeptNum(Users.getDeptNum()+1);
+				  restTemplate.postForObject("http://176.198.114.212.:8029/user/doUpdateObject", Users, JsonResult.class);//176.198.114.212
 				return JsonResult.oK();
 			}
 		} catch (Exception e) {
