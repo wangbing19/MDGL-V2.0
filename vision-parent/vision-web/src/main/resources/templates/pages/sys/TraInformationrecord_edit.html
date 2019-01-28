@@ -2,7 +2,7 @@
 <div class="box box-info">
 	<div class="box-header with-border">
 		<h3 class="box-title ">添加</h3>
-
+		<button type="button" onclick="doTest()" style="float: right;">测试</button>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -121,6 +121,14 @@
 	    });
 	}
 	
+	//测试程序
+	function doTest(){
+		$("#l_visionId").val("3.8");
+		$("#r_visionId").val("3.5");
+		$("#gradeId").val("8");
+		$("#evaluateId").val("这次训练的效果很好,同学也很配合训练");
+		$("#tutorId").append("<option selected>" + "Linda" + "</option>");
+	}
 	
 	function doInitFormData() {
 		var data = $("#mainContentId").data("data");//取出之前放在data域中的数据(你选中的哪一行的数据)

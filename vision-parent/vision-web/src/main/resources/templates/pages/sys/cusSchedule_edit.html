@@ -2,6 +2,7 @@
 <div class="box box-info">
 	<div class="box-header with-border">
 		<h3 class="box-title">课程表</h3>
+		<button type="button" onclick="doTest()" style="float: right;">测试</button>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -121,6 +122,17 @@
 	    		$("#diagnosticsId").append("<option >" + result.data[i].trainerName + "</option>");
 	    	}  	
 	    }) 
+	}
+	
+	
+	
+	//测试程序
+	function doTest(){
+		$("#courseTitleId").val("近视训练");
+		$("#priceOfCourseId").val("200");
+		$("#courseTrainingId").val("30");
+		$("#totalPriceId").val("6000");
+		$("#diagnosticsId").append("<option selected>" + "Tim" + "</option>");
 	}
 	
 	

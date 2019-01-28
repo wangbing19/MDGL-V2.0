@@ -112,6 +112,12 @@ public class CusCustomerController {
 		try {
 			//获取登录用户信息
         	Users user = ShiroUtils.getUser();
+        	//获取登录用户创建客户数量
+			/*
+			 * if(user.getDeptNum()>=user.getDeptLimit()) { return JsonResult.build(201,
+			 * "创建客户数量已达上限,无法再次创建客户,请联系总店208-62825475"); }
+			 * 
+			 */
         	
 			cusCustomer.setCreatedUser(user.getUsername());
 			cusCustomer.setModifiedUser(cusCustomer.getCreatedUser());
@@ -120,6 +126,11 @@ public class CusCustomerController {
 			
 			Integer row = restTemplate.postForObject(provider_url+"/customer/saveObject", cusCustomer, Integer.class);
 			if(row != 0 && row != null) {
+				/*
+				 * //添加登录用户创建客户数量 
+				 * user.setDeptNum(user.getDeptNum()+1);
+				 * restTemplate.postForObject("", user, Integer.class);
+				 */
 				return JsonResult.oK();
 			}
 		} catch (Exception e) {
